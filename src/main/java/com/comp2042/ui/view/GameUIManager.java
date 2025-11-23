@@ -5,7 +5,10 @@ import com.comp2042.ui.components.GameOverPanel;
 import com.comp2042.ui.components.NotificationManager;
 import com.comp2042.ui.render.GameRenderer;
 import javafx.beans.property.IntegerProperty;
+import javafx.scene.Group;
 import javafx.scene.effect.Reflection;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
@@ -20,14 +23,14 @@ public class GameUIManager {
     private final Label scoreLabel;
     private final GridPane gamePanel;
 
-    public GameUIManager(GameRenderer gameRenderer, NotificationManager notificationManager,
-                         GameOverPanel gameOverPanel, Label scoreLabel, GridPane gamePanel) {
-        this.gameRenderer = gameRenderer;
-        this.notificationManager = notificationManager;
+    public GameUIManager(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, Group groupNotification, GameOverPanel gameOverPanel, Label scoreLabel) {
+        this.gamePanel = gamePanel;
         this.gameOverPanel = gameOverPanel;
         this.scoreLabel = scoreLabel;
-        this.gamePanel = gamePanel;
 
+
+        this.notificationManager = new NotificationManager(groupNotification);
+        this.gameRenderer = new GameRenderer(gameBoard, gamePanel, brickPanel);
         setupVisuals();
     }
 

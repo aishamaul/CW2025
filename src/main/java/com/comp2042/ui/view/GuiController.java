@@ -56,9 +56,7 @@ public class GuiController implements Initializable, GameView {
 
     private GameLoopManager gameLoopManager;
 
-    private GameRenderer gameRenderer;
-
-    private NotificationManager notificationManager;
+    private GameUIManager uiManager;
 
     private PauseStateManager pauseStateManager;
 
@@ -69,24 +67,12 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
-        gamePanel.setFocusTraversable(true);
-        gamePanel.requestFocus();
-
-        this.gameRenderer = new GameRenderer(gameBoard, gamePanel, brickPanel);
-        this.notificationManager = new NotificationManager(groupNotification);
-
-        gameOverPanel.setVisible(false);
-
-        final Reflection reflection = new Reflection();
-        reflection.setFraction(0.8);
-        reflection.setTopOpacity(0.9);
-        reflection.setTopOffset(-12);
+        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, groupNotification, gameOverPanel, scoreLabel);
     }
 
     @Override
     public void initGameView(int[][] boardMatrix, ViewData brick) {
-        gameRenderer.initGameView(boardMatrix, brick);
+        uiManager.initGameView(boardMatrix, brick);
 
         gamePanel.setOnKeyPressed(new InputHandler(this, dispatcher, isPause, isGameOver, this::moveDown, () -> newGame(null), () -> pauseGame(null)));
 
@@ -101,13 +87,13 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void refreshBrick(ViewData brick) {
         if (isPause.getValue() == Boolean.FALSE) {
-            gameRenderer.refreshBrick(brick);
+            uiManager.refresh(brick);
         }
     }
 
     @Override
     public void refreshGameBackground(int[][] board) {
-        gameRenderer.refreshGameBackground(board);
+        uiManager.refreshBackground(board);
     }
 
     public void moveDown(EventType eventType, EventSource source) {
@@ -115,7 +101,7 @@ public class GuiController implements Initializable, GameView {
             DownData downData = dispatcher.moveDown(eventType, source);
             refreshBrick(downData.getViewData());
         }
-        gamePanel.requestFocus();
+        uiManager.requestFocus();
     }
 
     @Override
@@ -131,20 +117,20 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void gameOver() {
         gameLoopManager.stop();
-        gameOverPanel.setVisible(true);
+        uiManager.showGameOver();
         isGameOver.setValue(Boolean.TRUE);
     }
 
     @Override
     public void showScoreNotification(String text) {
-        notificationManager.showScore(text);
+        uiManager.showNotification(text);
     }
 
     public void newGame(ActionEvent actionEvent) {
         gameLoopManager.stop();
-        gameOverPanel.setVisible(false);
+        uiManager.hideGameOver();
         dispatcher.newGame();
-        gamePanel.requestFocus();
+        uiManager.requestFocus();
         gameLoopManager.play();
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
@@ -160,7 +146,7 @@ public class GuiController implements Initializable, GameView {
         }
 
         pauseStateManager.togglePause(actionEvent);
-        gamePanel.requestFocus();
+        uiManager.requestFocus();
 
     }
 }
