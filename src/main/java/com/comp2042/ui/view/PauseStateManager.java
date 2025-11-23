@@ -18,7 +18,7 @@ public class PauseStateManager {
 
     }
 
-    public void  togglePause(ActionEvent actionEvent) {
+    public void  togglePause() {
         if (pauseButton.isSelected()) {
             isPause.setValue(Boolean.TRUE);
             gameLoopManager.pause();
