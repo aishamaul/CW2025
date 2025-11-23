@@ -8,6 +8,11 @@ import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 import com.comp2042.ui.view.GameView;
 
+/**
+ * The GameController class serves as the central hub for managing game interactions.
+ * It processes user input events, updates the game board, and coordinates with the game lifecycle manager
+ * to handle scoring and view updates.
+ */
 public class GameController implements InputEventListener {
 
     private final Board board;
@@ -19,6 +24,13 @@ public class GameController implements InputEventListener {
 
     }
 
+    /**
+     * Handles the specific 'Down' movement event.
+     * If the brick cannot move down, this method triggers the turn end logic (locking the bricks).
+     *
+     * @param event The move event context
+     * @return DownData containing the view update information or row clearing results
+     */
     @Override
     public DownData onDownEvent(MoveEvent event) {
         if (board.moveBrickDown()){

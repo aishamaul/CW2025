@@ -2,6 +2,10 @@ package com.comp2042.model;
 
 import com.comp2042.util.MatrixOperations;
 
+/**
+ * Data Transfer Object (DTO) used to pass game state to the UI renderer
+ * Immutable class that holds a snapshot of the current brick and its position
+ */
 public final class ViewData {
 
     private final int[][] brickData;

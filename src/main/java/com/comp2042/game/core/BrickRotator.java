@@ -5,11 +5,23 @@ import com.comp2042.game.bricks.Brick;
 
 import java.awt.*;
 
+/**
+ * Handles the rotation logic for bricks on the Tetris board.
+ * It attempts to rotate the brick and applies wall kicks if necessary.
+ */
 public class BrickRotator {
 
     private Brick brick;
     private int currentShape = 0;
 
+    /**
+     * Attempts to rotate the current brick
+     * Tries the standard rotation first, then applies wall kicks if needed
+     *
+     * @param grid The current state of the board grid
+     * @param currentOffset The x, y coordinates of the brick on the board
+     * @return true if rotation succeeded (possibly with a kick), false if rotation is not possible
+     */
     public boolean tryRotate(BoardGrid grid, Point currentOffset) {
         NextShapeInfo nextShapeInfo = getNextShape();
         int[][] nextMatrix = nextShapeInfo.getShape();

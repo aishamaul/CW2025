@@ -1,5 +1,9 @@
 package com.comp2042.game.config;
 
+/**
+ * Global configuration constants for the game
+ * Centralizes settings for board dimensions, speed and rendering sizes to avoid "magic numbers" in the code
+ */
 public class GameConfig {
     //board dimensions
     public static final int BOARD_WIDTH = 10;
