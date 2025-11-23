@@ -131,7 +131,7 @@ public class GuiController implements Initializable, GameView {
         uiManager.showNotification(text);
     }
 
-    public void newGame(ActionEvent actionEvent) {
+    public void newGame() {
         gameLoopManager.stop();
         uiManager.hideGameOver();
         dispatcher.newGame();
