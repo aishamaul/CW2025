@@ -74,7 +74,14 @@ public class GuiController implements Initializable, GameView {
     public void initGameView(int[][] boardMatrix, ViewData brick) {
         uiManager.initGameView(boardMatrix, brick);
 
-        gamePanel.setOnKeyPressed(new InputHandler(this, dispatcher, isPause, isGameOver, this::moveDown, () -> newGame(null), () -> pauseGame(null)));
+        gamePanel.setOnKeyPressed(new InputHandler(
+                this,
+                dispatcher,
+                isPause,
+                isGameOver,
+                this::moveDown,
+                this:: newGame,
+                () -> pauseGame(null)));
 
         gameLoopManager = new GameLoopManager(() -> moveDown(EventType.DOWN, EventSource.THREAD));
         gameLoopManager.play();
