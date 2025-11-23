@@ -140,8 +140,7 @@ public class GuiController implements Initializable, GameView {
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
 
-        pauseButton.setDisable(false);
-        pauseButton.setSelected(false);
+        pauseStateManager.reset();
     }
 
     @FXML
