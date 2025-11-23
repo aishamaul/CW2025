@@ -149,7 +149,7 @@ public class GuiController implements Initializable, GameView {
             pauseButton.setSelected(!pauseButton.isSelected());
         }
 
-        pauseStateManager.togglePause(actionEvent);
+        pauseStateManager.togglePause();
         uiManager.requestFocus();
 
     }
