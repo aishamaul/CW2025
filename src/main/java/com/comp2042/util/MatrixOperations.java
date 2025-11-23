@@ -1,24 +1,25 @@
 package com.comp2042.util;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MatrixOperations {
 
 
-    //We don't want to instantiate this utility class
-    private MatrixOperations(){
-
-    }
+    //private constructor to prevent instantiation
+    private MatrixOperations(){}
 
     public static boolean intersect(final int[][] matrix, final int[][] brick, int x, int y) {
         for (int i = 0; i < brick.length; i++) {
             for (int j = 0; j < brick[i].length; j++) {
                 int targetX = x + i;
                 int targetY = y + j;
-                if (brick[j][i] != 0 && (checkOutOfBound(matrix, targetX, targetY) || matrix[targetY][targetX] != 0)) {
-                    return true;
+
+                //if the brick has a block at this local position
+                if (brick[j][i] != 0) {
+                    if (checkOutOfBound(matrix, targetX, targetY) || matrix[targetY][targetX] != 0) {
+                        return true;
+                    }
                 }
             }
         }
@@ -26,32 +27,29 @@ public class MatrixOperations {
     }
 
     private static boolean checkOutOfBound(int[][] matrix, int targetX, int targetY) {
-        boolean returnValue = true;
-        if (targetX >= 0 && targetY < matrix.length && targetX < matrix[targetY].length) {
-            returnValue = false;
-        }
-        return returnValue;
+        return targetY<0||targetX>=matrix.length||
+                targetX<0||targetX>=matrix[0].length;
     }
 
     public static int[][] copy(int[][] original) {
-        int[][] myInt = new int[original.length][];
+        int[][] copy = new int[original.length][];
         for (int i = 0; i < original.length; i++) {
-            int[] aMatrix = original[i];
-            int aLength = aMatrix.length;
-            myInt[i] = new int[aLength];
-            System.arraycopy(aMatrix, 0, myInt[i], 0, aLength);
+            copy[i] = original[i].clone();
         }
-        return myInt;
+        return copy;
     }
 
     public static int[][] merge(int[][] filledFields, int[][] brick, int x, int y) {
         int[][] copy = copy(filledFields);
         for (int i = 0; i < brick.length; i++) {
             for (int j = 0; j < brick[i].length; j++) {
-                int targetX = x + i;
-                int targetY = y + j;
                 if (brick[j][i] != 0) {
-                    copy[targetY][targetX] = brick[j][i];
+                    int targetX = x + i;
+                    int targetY = y + j;
+
+                    if (!checkOutOfBound(copy, targetX, targetY)) {
+                        copy[targetY][targetX] = brick[j][i];
+                    }
                 }
             }
         }
