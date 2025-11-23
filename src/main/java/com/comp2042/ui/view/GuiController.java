@@ -104,10 +104,8 @@ public class GuiController implements Initializable, GameView {
     }
 
     public void moveDown(EventType eventType, EventSource source) {
-        if (isPause.getValue() == Boolean.FALSE) {
-            DownData downData = dispatcher.moveDown(eventType, source);
-            refreshBrick(downData.getViewData());
-        }
+        DownData downData = dispatcher.moveDown(eventType, source);
+        refreshBrick(downData.getViewData());
         uiManager.requestFocus();
     }
 
