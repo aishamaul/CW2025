@@ -36,7 +36,7 @@ public class BoardGrid {
     }
 
     public int[][] getMatrix() {
-        return matrix;
+        return MatrixOperations.copy(matrix);
     }
 
     public int getWidth() {return width; }
