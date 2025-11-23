@@ -18,6 +18,10 @@ public class GameRenderer {
 
     private final BrickColor brickColor;
 
+    private static final int HIDDEN_ROWS = 2;
+    private double gridOriginX;
+    private double gridOriginY;
+
 
     public GameRenderer(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel) {
         this.gameBoard = gameBoard;
@@ -27,8 +31,11 @@ public class GameRenderer {
     }
 
     public void initGameView(int[][] boardMatrix, ViewData brick) {
+        this.gridOriginX = gameBoard.getLayoutX() + gamePanel.getLayoutX();
+        this.gridOriginY = gameBoard.getLayoutY() + gamePanel.getLayoutY();
+
         displayMatrix = new Rectangle[boardMatrix.length][boardMatrix[0].length];
-        for (int i = 2; i < boardMatrix.length; i++) {
+        for (int i = HIDDEN_ROWS; i < boardMatrix.length; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
                 Rectangle rectangle = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                 rectangle.setFill(brickColor.getFillColor(0));
@@ -50,8 +57,8 @@ public class GameRenderer {
     }
 
     public void refreshBrick(ViewData brick) {
-        brickPanel.setLayoutX(gameBoard.getLayoutX() + gamePanel.getLayoutX() + (brick.getxPosition() * (BRICK_SIZE + brickPanel.getHgap())));
-        brickPanel.setLayoutY(gameBoard.getLayoutY() + gamePanel.getLayoutY() + (brick.getyPosition() - 2) * (BRICK_SIZE + brickPanel.getVgap()));
+        brickPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition() * (BRICK_SIZE + brickPanel.getHgap())));
+        brickPanel.setLayoutY(gridOriginY + gamePanel.getLayoutY() + (brick.getyPosition() - HIDDEN_ROWS) * (BRICK_SIZE + brickPanel.getVgap()));
         for (int i = 0; i < brick.getBrickData().length; i++) {
             for (int j = 0; j < brick.getBrickData()[i].length; j++) {
                 setRectangleData(brick.getBrickData()[i][j], rectangles[i][j]);
