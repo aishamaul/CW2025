@@ -1,5 +1,6 @@
 package com.comp2042.game.core;
 
+import com.comp2042.game.config.GameConfig;
 import com.comp2042.game.scoring.RowScoreCalculator;
 import com.comp2042.game.scoring.Score;
 import com.comp2042.game.bricks.Brick;
@@ -79,7 +80,7 @@ public class SimpleBoard implements Board {
     public boolean createNewBrick() {
         Brick currentBrick = brickGenerator.getBrick();
         brickRotator.setBrick(currentBrick);
-        currentOffset = new Point(4, 1);
+        currentOffset = new Point(GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
         return grid.intersects(brickRotator.getCurrentShape(), (int)currentOffset.getX(), (int)currentOffset.getY());
     }
 

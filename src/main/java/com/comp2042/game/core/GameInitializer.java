@@ -1,5 +1,6 @@
 package com.comp2042.game.core;
 
+import com.comp2042.game.config.GameConfig;
 import com.comp2042.game.scoring.ScoreEvaluator;
 import com.comp2042.ui.view.GameView;
 import com.comp2042.ui.view.GameViewAdapter;
@@ -7,7 +8,7 @@ import com.comp2042.ui.view.GameViewAdapter;
 public class GameInitializer {
 
     public GameInitializer(GameView view){
-        Board board = new SimpleBoard(25,10);
+        Board board = new SimpleBoard(GameConfig.BOARD_HEIGHT, GameConfig.BOARD_WIDTH);
         ScoreEvaluator scoreEvaluator = new ScoreEvaluator();
         GameViewAdapter viewAdapter = new GameViewAdapter(view);
         GameLifecycleManager lifecycleManager = new GameLifecycleManager(board, scoreEvaluator, viewAdapter);
