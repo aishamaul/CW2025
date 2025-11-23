@@ -37,4 +37,14 @@ public class PauseStateManager {
             }
         }
     }
+
+    public void reset(){
+        isPause.setValue(Boolean.FALSE);
+        pauseButton.setDisable(false);
+        pauseButton.setSelected(false);
+        pauseButton.getStyleClass().remove("playButton");
+        if(!pauseButton.getStyleClass().contains("pauseButton")) {
+            pauseButton.getStyleClass().add("pauseButton");
+        }
+    }
 }
