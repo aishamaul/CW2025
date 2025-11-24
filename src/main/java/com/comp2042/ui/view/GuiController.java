@@ -52,6 +52,9 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private Label scoreLabel;
 
+    @FXML
+    private GridPane ghostPanel;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -67,7 +70,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, groupNotification, gameOverPanel, scoreLabel);
+        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel,  groupNotification, gameOverPanel, scoreLabel);
     }
 
     @Override

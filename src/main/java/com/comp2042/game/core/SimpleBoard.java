@@ -7,11 +7,7 @@ import com.comp2042.game.bricks.Brick;
 import com.comp2042.game.bricks.BrickGenerator;
 import com.comp2042.game.bricks.RandomBrickGenerator;
 import com.comp2042.model.ClearRow;
-import com.comp2042.model.NextShapeInfo;
 import com.comp2042.model.ViewData;
-import com.comp2042.util.MatrixOperations;
-import com.comp2042.util.RowClearer;
-import com.comp2042.util.RowClearingOutput;
 
 import java.awt.*;
 
@@ -46,6 +42,18 @@ public class SimpleBoard implements Board {
         }
         return false;
 
+    }
+
+    private int calculateGhostY(){
+        int currentX = (int) currentOffset.getX();
+        int ghostY = (int) currentOffset.getY();
+        int[][] shape = brickRotator.getCurrentShape();
+
+        //simulate dropping until collision
+        while(!grid.intersects(shape, currentX, ghostY + 1)){
+            ghostY++;
+        }
+        return ghostY;
     }
 
     @Override
@@ -95,7 +103,7 @@ public class SimpleBoard implements Board {
 
     @Override
     public ViewData getViewData() {
-        return new ViewData(brickRotator.getCurrentShape(), (int) currentOffset.getX(), (int) currentOffset.getY(), brickGenerator.getNextBrick().getShapeMatrix().get(0));
+        return new ViewData(brickRotator.getCurrentShape(), (int) currentOffset.getX(), (int) currentOffset.getY(), brickGenerator.getNextBrick().getShapeMatrix().get(0), calculateGhostY());
     }
 
     @Override
