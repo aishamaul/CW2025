@@ -40,7 +40,7 @@ public class MatrixOperations {
     }
 
     private static boolean checkOutOfBound(int[][] matrix, int targetX, int targetY) {
-        return targetY<0||targetX>=matrix.length||
+        return targetY<0||targetY>=matrix.length||
                 targetX<0||targetX>=matrix[0].length;
     }
 

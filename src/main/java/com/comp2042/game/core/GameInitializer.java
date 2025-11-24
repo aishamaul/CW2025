@@ -8,7 +8,7 @@ import com.comp2042.ui.view.GameViewAdapter;
 public class GameInitializer {
 
     public GameInitializer(GameView view){
-        Board board = new SimpleBoard(GameConfig.BOARD_HEIGHT, GameConfig.BOARD_WIDTH);
+        Board board = new SimpleBoard(GameConfig.BOARD_WIDTH, GameConfig.BOARD_HEIGHT);
         ScoreEvaluator scoreEvaluator = new ScoreEvaluator();
         GameViewAdapter viewAdapter = new GameViewAdapter(view);
         GameLifecycleManager lifecycleManager = new GameLifecycleManager(board, scoreEvaluator, viewAdapter);

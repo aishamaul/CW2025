@@ -13,7 +13,7 @@ public class BoardGrid {
     public BoardGrid(int width, int height) {
         this.width = width;
         this.height = height;
-        this.matrix = new int[width][height];
+        this.matrix = new int[height][width];
         this.rowClearer = new RowClearer();
     }
 
@@ -32,7 +32,7 @@ public class BoardGrid {
     }
 
     public void clear() {
-        this.matrix = new int[width][height];
+        this.matrix = new int[height][width];
     }
 
     public int[][] getMatrix() {
