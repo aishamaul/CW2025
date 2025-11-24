@@ -24,8 +24,12 @@ public class Main extends Application {
         GuiController c = fxmlLoader.getController();
 
         primaryStage.setTitle("TetrisJFX");
-        Scene scene = new Scene(root, 300, 510);
+        Scene scene = new Scene(root, 400, 700);
         primaryStage.setScene(scene);
+        // Enable Resizing
+        primaryStage.setResizable(true);
+        primaryStage.setMinWidth(350);
+        primaryStage.setMinHeight(650);
         primaryStage.show();
         new GameInitializer(c);
     }

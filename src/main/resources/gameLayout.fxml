@@ -8,33 +8,40 @@
 <?import java.net.URL?>
 
 <?import javafx.scene.control.skin.VirtualFlow?>
-<Pane fx:controller="com.comp2042.ui.view.GuiController"
-      xmlns:fx="http://javafx.com/fxml">
+<StackPane fx:id="rootPane" fx:controller="com.comp2042.ui.view.GuiController" xmlns:fx="http://javafx.com/fxml" style="'fx'background-color: black;">
 
-    <VBox alignment="CENTER" layoutX="275" layoutY="520">
-        <children>
-            <Label text="SCORE" styleClass="nextBrickLabel"/>
-            <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0"/>
-        </children>
-    </VBox>
+    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: black;">
 
-    <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="85" layoutX="40">
-        <center>
-            <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="40"/>
-        </center>
-    </BorderPane>
+        <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="91">
+            <center>
+                <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="40"/>
+            </center>
+        </BorderPane>
 
-    <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
-    <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
+        <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
+        <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-    <Group fx:id="groupNotification" layoutX="14" layoutY="203">
-        <VBox alignment="CENTER">
-            <GameOverPanel fx:id="gameOverPanel"/>
+        <VBox alignment="CENTER" layoutX="315" layoutY="500">
+            <children>
+                <Label text="SCORE" styleClass="nextBrickLabel"/>
+                <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0"/>
+            </children>
         </VBox>
-    </Group>
 
-    <ToggleButton fx:id="pauseButton" layoutX="275" layoutY="80" onAction="#pauseGame" styleClass="pauseButton"/>
+        <ToggleButton fx:id="pauseButton" layoutX="315" layoutY="75" onAction="#pauseGame" styleClass="pauseButton"/>
+
+
+        <Group fx:id="groupNotification" layoutX="15" layoutY="203">
+            <VBox alignment="CENTER">
+                <GameOverPanel fx:id="gameOverPanel"/>
+            </VBox>
+        </Group>
+
+    </Pane>
+
     <stylesheets>
         <URL value="@window_style.css"/>
     </stylesheets>
-</Pane>
+
+</StackPane>
+

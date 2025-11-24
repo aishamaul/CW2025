@@ -20,16 +20,25 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.layout.GridPane;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
+import javafx.scene.transform.Scale;
 
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GuiController implements Initializable, GameView {
+
+    @FXML
+    private StackPane rootPane;
+
+    @FXML
+    private Pane contentPane;
 
     @FXML
     private GridPane gamePanel;
@@ -67,17 +76,56 @@ public class GuiController implements Initializable, GameView {
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
 
+    private static final double DESIGN_WIDTH = 400.0;
+    private static final double DESIGN_HEIGHT = 700.0;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel,  groupNotification, gameOverPanel, scoreLabel);
+
+        setupScaling();
+    }
+
+    private void setupScaling() {
+        //create a scale transform
+        Scale scale = new Scale(1,1);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        contentPane.getTransforms().add(scale);
+
+        //Listener to handle window resizing
+        Runnable resizeHandler = () -> {
+            double windowWidth = rootPane.getWidth();
+            double windowHeight = rootPane.getHeight();
+
+            //calculate the scale factor to fit the window while maintaining the aspect ratio
+            double scaleFactor = Math.min(
+                    windowHeight/DESIGN_HEIGHT,
+                    windowWidth/DESIGN_WIDTH
+            );
+
+            //apply the scale
+            scale.setX(scaleFactor);
+            scale.setY(scaleFactor);
+        };
+        // bind the listener to the root pane's dimensions
+        rootPane.widthProperty().addListener((obs,oldVal, newVal)-> resizeHandler.run());
+        rootPane.heightProperty().addListener((obs,oldVal, newVal)-> resizeHandler.run());
+
+        //run once to set the initial state
+        resizeHandler.run();
+
+
     }
 
     @Override
     public void initGameView(int[][] boardMatrix, ViewData brick) {
         uiManager.initGameView(boardMatrix, brick);
 
-        gamePanel.setOnKeyPressed(new InputHandler(
+        rootPane.setFocusTraversable(true);
+        rootPane.requestLayout();
+        rootPane.setOnKeyPressed(new InputHandler(
                 this,
                 dispatcher,
                 isPause,
@@ -109,7 +157,7 @@ public class GuiController implements Initializable, GameView {
     public void moveDown(EventType eventType, EventSource source) {
         DownData downData = dispatcher.moveDown(eventType, source);
         refreshBrick(downData.getViewData());
-        uiManager.requestFocus();
+        rootPane.requestFocus();
     }
 
     @Override
@@ -138,7 +186,7 @@ public class GuiController implements Initializable, GameView {
         gameLoopManager.stop();
         uiManager.hideGameOver();
         dispatcher.newGame();
-        uiManager.requestFocus();
+        rootPane.requestFocus();
         gameLoopManager.play();
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
@@ -153,7 +201,7 @@ public class GuiController implements Initializable, GameView {
         }
 
         pauseStateManager.togglePause();
-        uiManager.requestFocus();
+        rootPane.requestFocus();
 
     }
 }
