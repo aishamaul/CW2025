@@ -107,45 +107,32 @@ public class GameRenderer {
         refreshHoldBrick(brick.getHoldBrickData());
     }
 
-    private void refreshNextBricks(List<int[][]> nextBricksData){
-       //iterate through available data
-        for(int i = 0; i < nextBricksData.size() && i  < nextBrickGrids.size(); i++){
-           int[][] brickMatrix = nextBricksData.get(i);
-           GridPane targetGrid = nextBrickGrids.get(i);
+    private void drawMatrixToGrid(GridPane targetGrid, int[][] matrix){
+        targetGrid.getChildren().clear();
+        if(matrix==null) return;
 
-           // clear previous shape
-            targetGrid.getChildren().clear();
-
-            //draw new shape
-            for (int row = 0; row < brickMatrix.length; row++){
-                for (int col = 0; col < brickMatrix[row].length; col++){
-                    int colorCode = brickMatrix[row][col];
-                    if (colorCode != 0){
-                        Rectangle rectangle = new Rectangle(18,18);
-                        rectangle.setFill(brickColor.getFillColor(colorCode));
-                        targetGrid.add(rectangle, col, row);
-                    }
-                }
-            }
-       }
-
-    }
-
-    private void refreshHoldBrick(int[][] holdBrickData){
-        holdBrickGrid.getChildren().clear();
-
-        if(holdBrickData != null){
-            for (int row = 0; row < holdBrickData.length; row++){
-                for (int col = 0; col < holdBrickData[row].length; col++){
-                    int colorCode = holdBrickData[row][col];
-                    if (colorCode != 0){
-                        Rectangle rectangle = new Rectangle(18,18);
-                        rectangle.setFill(brickColor.getFillColor(colorCode));
-                        holdBrickGrid.add(rectangle, col, row);
-                    }
+        for(int row = 0; row < matrix.length; row++){
+            for (int col = 0; col < matrix[row].length; col++){
+                int colorCode = matrix[row][col];
+                if (colorCode != 0){
+                    Rectangle rectangle = new Rectangle(18, 18);
+                    rectangle.setFill(brickColor.getFillColor(colorCode));
+                    targetGrid.add(rectangle, col, row);
                 }
             }
         }
+    }
+
+
+    private void refreshNextBricks(List<int[][]> nextBricksData){
+       //iterate through available data
+        for(int i = 0; i < nextBricksData.size() && i  < nextBrickGrids.size(); i++){
+           drawMatrixToGrid(nextBrickGrids.get(i), nextBricksData.get(i));
+       }
+    }
+
+    private void refreshHoldBrick(int[][] holdBrickData){
+        drawMatrixToGrid(holdBrickGrid, holdBrickData);
 
     }
 
