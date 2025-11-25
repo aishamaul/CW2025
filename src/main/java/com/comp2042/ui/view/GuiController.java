@@ -91,9 +91,6 @@ public class GuiController implements Initializable, GameView {
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
 
-    private static final double DESIGN_WIDTH = 400.0;
-    private static final double DESIGN_HEIGHT = 700.0;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -101,41 +98,9 @@ public class GuiController implements Initializable, GameView {
 
         this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid,  groupNotification, gameOverPanel, scoreLabel);
 
-        setupScaling();
+        WindowScaler.bindScaling(rootPane, contentPane);
 
         if(pauseMenu!=null)pauseMenu.setVisible(false);
-    }
-
-    private void setupScaling() {
-        //create a scale transform
-        Scale scale = new Scale(1,1);
-        scale.setPivotX(0);
-        scale.setPivotY(0);
-        contentPane.getTransforms().add(scale);
-
-        //Listener to handle window resizing
-        Runnable resizeHandler = () -> {
-            double windowWidth = rootPane.getWidth();
-            double windowHeight = rootPane.getHeight();
-
-            //calculate the scale factor to fit the window while maintaining the aspect ratio
-            double scaleFactor = Math.min(
-                    windowHeight/DESIGN_HEIGHT,
-                    windowWidth/DESIGN_WIDTH
-            );
-
-            //apply the scale
-            scale.setX(scaleFactor);
-            scale.setY(scaleFactor);
-        };
-        // bind the listener to the root pane's dimensions
-        rootPane.widthProperty().addListener((obs,oldVal, newVal)-> resizeHandler.run());
-        rootPane.heightProperty().addListener((obs,oldVal, newVal)-> resizeHandler.run());
-
-        //run once to set the initial state
-        resizeHandler.run();
-
-
     }
 
     @Override
