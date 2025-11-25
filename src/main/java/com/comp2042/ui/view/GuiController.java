@@ -76,6 +76,9 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private GridPane holdBrickGrid;
 
+    @FXML
+    private VBox pauseMenu;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -99,6 +102,8 @@ public class GuiController implements Initializable, GameView {
         this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid,  groupNotification, gameOverPanel, scoreLabel);
 
         setupScaling();
+
+        if(pauseMenu!=null)pauseMenu.setVisible(false);
     }
 
     private void setupScaling() {
@@ -146,12 +151,13 @@ public class GuiController implements Initializable, GameView {
                 isGameOver,
                 this::moveDown,
                 this:: newGame,
-                () -> pauseGame(null)));
+                this::togglePauseMenu));
 
         gameLoopManager = new GameLoopManager(() -> moveDown(EventType.DOWN, EventSource.THREAD));
+        this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
         gameLoopManager.play();
 
-        this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause);
+
     }
 
 
@@ -202,20 +208,44 @@ public class GuiController implements Initializable, GameView {
         dispatcher.newGame();
         rootPane.requestFocus();
         gameLoopManager.play();
-        isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
 
         pauseStateManager.reset();
     }
 
+    private void togglePauseMenu() {
+        pauseStateManager.togglePause();
+    }
+
     @FXML
     public void pauseGame(ActionEvent actionEvent) {
-        if(actionEvent==null){
-            pauseButton.setSelected(!pauseButton.isSelected());
-        }
-
         pauseStateManager.togglePause();
         rootPane.requestFocus();
 
     }
+
+    @FXML
+    public void resumeGame(ActionEvent actionEvent) {
+        // return to game button
+        pauseStateManager.hidePauseMenu();
+        rootPane.requestFocus();
+    }
+
+    @FXML
+    public void restartGame(ActionEvent actionEvent) {
+        // restart button
+        newGame();
+    }
+
+    @FXML
+    public void goToHome(ActionEvent actionEvent) {
+        //go to homescreen (not implemented yet)
+    }
+
+    @FXML
+    public void showGameControls(ActionEvent actionEvent) {
+        //go to show game controls screen (not implemented yet)
+    }
+
+
 }

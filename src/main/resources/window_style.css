@@ -95,3 +95,34 @@
 .gamePanel{
     -fx-background-color: #222222;
 }
+
+.pauseMenu{
+    -fx-background-color: rgba(0, 0, 0, 0.85);
+}
+
+.menuButton{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 30px;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px 20px;
+    -fx-cusor: hand;
+    -fx-min-width: 250px;
+    -fx-alignment: center;
+}
+
+.menuButton:hover{
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-text-fill: yellow;
+    -fx-border-color: yellow;;
+}
+
+.menuButton:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
