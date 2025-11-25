@@ -67,12 +67,6 @@
         </VBox>
 
 
-        <Group fx:id="groupNotification" layoutX="15" layoutY="203">
-            <VBox alignment="CENTER">
-                <GameOverPanel fx:id="gameOverPanel"/>
-            </VBox>
-        </Group>
-
     </Pane>
 
     <VBox fx:id="pauseMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
@@ -80,6 +74,12 @@
         <Button text="RESTART" onAction="#restartGame" styleClass="menuButton"/>
         <Button text="HOMESCREEN" onAction="#goToHome" styleClass="menuButton"/>
         <Button text="GAME CONTROLS" onAction="#showGameControls" styleClass="menuButton"/>
+    </VBox>
+
+    <VBox fx:id="gameOverMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
+        <Label text="GAME OVER" styleClass="gameOverStyle" style="-fx-text-fill: red; -fx-background-color: transparent; -fx-font-size: 100px; "/>
+        <Button text="REPLAY" onAction="#restartGame" styleClass="menuButton"/>
+        <Button text="HOMEPAGE" onAction="#goToHome" styleClass="menuButton"/>
     </VBox>
 
     <stylesheets>

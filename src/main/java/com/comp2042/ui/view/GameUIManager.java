@@ -21,15 +21,13 @@ public class GameUIManager {
 
     private final GameRenderer gameRenderer;
     private final NotificationManager notificationManager;
-    private final GameOverPanel gameOverPanel;
     private final Label scoreLabel;
     private final GridPane gamePanel;
 
     public GameUIManager(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel,
                          List<GridPane> nextBrickGrids, GridPane holdBrickGrid,
-                         Group groupNotification, GameOverPanel gameOverPanel, Label scoreLabel) {
+                         Group groupNotification, Label scoreLabel) {
         this.gamePanel = gamePanel;
-        this.gameOverPanel = gameOverPanel;
         this.scoreLabel = scoreLabel;
 
 
@@ -47,7 +45,6 @@ public class GameUIManager {
 
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
-        gameOverPanel.setVisible(false);
 
         final Reflection reflection = new Reflection();
         reflection.setFraction(0.8);
@@ -65,14 +62,6 @@ public class GameUIManager {
 
     public void refreshBackground(int[][] board) {
         gameRenderer.refreshGameBackground(board);
-    }
-
-    public void showGameOver(){
-        gameOverPanel.setVisible(true);
-    }
-
-    public void hideGameOver(){
-        gameOverPanel.setVisible(false);
     }
 
     public void bindScore(IntegerProperty scoreProperty){

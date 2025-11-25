@@ -55,9 +55,6 @@ public class GuiController implements Initializable, GameView {
     private ToggleButton pauseButton;
 
     @FXML
-    private GameOverPanel gameOverPanel;
-
-    @FXML
     private Label scoreLabel;
 
     @FXML
@@ -79,6 +76,9 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private VBox pauseMenu;
 
+    @FXML
+    private VBox gameOverMenu;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -96,7 +96,7 @@ public class GuiController implements Initializable, GameView {
     public void initialize(URL location, ResourceBundle resources) {
         List<GridPane> nextBrickGrids = Arrays.asList(nextBrick1, nextBrick2, nextBrick3);
 
-        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid,  groupNotification, gameOverPanel, scoreLabel);
+        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid, groupNotification, scoreLabel);
 
         WindowScaler.bindScaling(rootPane, contentPane);
 
@@ -158,7 +158,10 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void gameOver() {
         gameLoopManager.stop();
-        uiManager.showGameOver();
+
+        gameOverMenu.setVisible(true);
+        gameOverMenu.toFront();
+
         isGameOver.setValue(Boolean.TRUE);
     }
 
@@ -169,7 +172,9 @@ public class GuiController implements Initializable, GameView {
 
     public void newGame() {
         gameLoopManager.stop();
-        uiManager.hideGameOver();
+
+        gameOverMenu.setVisible(false);
+
         dispatcher.newGame();
         rootPane.requestFocus();
         gameLoopManager.play();
