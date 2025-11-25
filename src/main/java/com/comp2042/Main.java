@@ -28,7 +28,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         // Enable Resizing
         primaryStage.setResizable(true);
-        primaryStage.setMinWidth(350);
+        primaryStage.setMinWidth(550);
         primaryStage.setMinHeight(650);
         primaryStage.show();
         new GameInitializer(c);
