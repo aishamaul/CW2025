@@ -13,25 +13,35 @@
 
     <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: black;">
 
-        <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="91">
+        <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="140">
             <center>
                 <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="40"/>
             </center>
         </BorderPane>
 
+        <VBox layoutX="1" layoutY="70" prefWidth="120" prefHeight="100" spacing="5" alignment="CENTER" style="-fx-background-color: rgba(234,168,241,0.15);">
+            <Label text="HOLD" styleClass = "nextBrickLabel" style="-fx-font-size: 30px"/>
+            <GridPane fx:id="holdBrickGrid" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="65"
+                      style="-fx-background-color: rgba(234,168,241,0.2); -fx-padding: 5; -fx-background-radius: 5">
+                <VBox.margin>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </VBox.margin>
+            </GridPane>
+        </VBox>
+
         <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
         <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-        <VBox alignment="CENTER" layoutX="315" layoutY="500">
+        <VBox alignment="CENTER" layoutX="228" layoutY="565">
             <children>
                 <Label text="SCORE" styleClass="nextBrickLabel"/>
                 <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0"/>
             </children>
         </VBox>
 
-        <ToggleButton fx:id="pauseButton" layoutX="315" layoutY="75" onAction="#pauseGame" styleClass="pauseButton"/>
+        <ToggleButton fx:id="pauseButton" layoutX="380" layoutY="70" onAction="#pauseGame" styleClass="pauseButton"/>
 
-        <VBox layoutX="320" layoutY="130" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" style="-fx-background-color: rgba(234,168,241,0.15);">
+        <VBox layoutX="380" layoutY="130" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" style="-fx-background-color: rgba(234,168,241,0.15);">
             <Label text="NEXT" styleClass="nextBrickLabel" style="-fx-font-size: 30px"/>
 
             <GridPane fx:id="nextBrick1" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"

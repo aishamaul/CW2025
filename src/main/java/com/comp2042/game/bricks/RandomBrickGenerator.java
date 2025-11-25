@@ -55,4 +55,9 @@ public class RandomBrickGenerator implements BrickGenerator {
 
         return new ArrayList<>(nextBricks).subList(0, count);
     }
+
+    @Override
+    public void returnBrick(Brick brick) {
+        nextBricks.addFirst(brick);
+    }
 }

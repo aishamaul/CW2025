@@ -73,6 +73,9 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private GridPane nextBrick3;
 
+    @FXML
+    private GridPane holdBrickGrid;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -93,7 +96,7 @@ public class GuiController implements Initializable, GameView {
     public void initialize(URL location, ResourceBundle resources) {
         List<GridPane> nextBrickGrids = Arrays.asList(nextBrick1, nextBrick2, nextBrick3);
 
-        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids,  groupNotification, gameOverPanel, scoreLabel);
+        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid,  groupNotification, gameOverPanel, scoreLabel);
 
         setupScaling();
     }

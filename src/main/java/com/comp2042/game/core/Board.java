@@ -76,4 +76,6 @@ public interface Board {
      * Resets the board to start a new game
      */
     void newGame();
+
+    void holdBrick();
 }

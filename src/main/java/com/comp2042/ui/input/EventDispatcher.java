@@ -40,4 +40,8 @@ public class EventDispatcher {
             return eventListener.onDownEvent(event);
         }
     }
+
+    public ViewData hold(){
+        return eventListener.onHoldEvent(new MoveEvent(EventType.HOLD, EventSource.USER));
+    }
 }

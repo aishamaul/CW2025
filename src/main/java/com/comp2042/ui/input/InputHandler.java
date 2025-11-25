@@ -92,6 +92,12 @@ public class InputHandler implements EventHandler<KeyEvent> {
                 onMoveDown.accept(EventType.DROP, EventSource.USER);
                 keyEvent.consume();
             }
+
+            case H -> {
+                gameView.refreshBrick(dispatcher.hold());
+                keyEvent.consume();
+            }
+
             default -> {
             }
         }

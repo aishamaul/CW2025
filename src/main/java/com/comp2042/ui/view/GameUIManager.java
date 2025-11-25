@@ -25,14 +25,16 @@ public class GameUIManager {
     private final Label scoreLabel;
     private final GridPane gamePanel;
 
-    public GameUIManager(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel, List<GridPane> nextBrickGrids, Group groupNotification, GameOverPanel gameOverPanel, Label scoreLabel) {
+    public GameUIManager(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel,
+                         List<GridPane> nextBrickGrids, GridPane holdBrickGrid,
+                         Group groupNotification, GameOverPanel gameOverPanel, Label scoreLabel) {
         this.gamePanel = gamePanel;
         this.gameOverPanel = gameOverPanel;
         this.scoreLabel = scoreLabel;
 
 
         this.notificationManager = new NotificationManager(groupNotification);
-        this.gameRenderer = new GameRenderer(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids);
+        this.gameRenderer = new GameRenderer(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid);
         setupVisuals();
     }
 

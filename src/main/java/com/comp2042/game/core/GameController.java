@@ -75,4 +75,11 @@ public class GameController implements InputEventListener {
     public void createNewGame() {
         lifecycleManager.handleNewGame();
     }
+
+    @Override
+    public ViewData onHoldEvent(MoveEvent event){
+        board.holdBrick();
+        lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
+        return lifecycleManager.getViewData();
+    }
 }

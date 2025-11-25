@@ -25,6 +25,7 @@ public class SimpleBoard implements Board {
     private Point currentOffset;
     private final Score score;
     private final RowScoreCalculator scoreCalculator;
+    private Brick heldBrick;
 
     public SimpleBoard(int width, int height) {
         this.grid = new BoardGrid(width, height);
@@ -32,6 +33,7 @@ public class SimpleBoard implements Board {
         this.brickRotator = new BrickRotator();
         this.score = new Score();
         this.scoreCalculator = new RowScoreCalculator();
+
     }
 
     private boolean tryMove(int dX, int dY) {
@@ -104,6 +106,32 @@ public class SimpleBoard implements Board {
     }
 
     @Override
+    public void holdBrick(){
+        Brick currentBrick = brickRotator.getBrick();
+
+        if(heldBrick == null){
+            // case 1: held is empty
+            // put current in hold
+            heldBrick = currentBrick;
+            // spawn next brick
+            createNewBrick();
+        } else{
+            //case 2: hold has a brick
+            // current changes to brick in hold, hold becomes empty
+            Brick brickFromHold = heldBrick;
+            heldBrick = null;
+
+            //push the current falling brick to the generator
+            brickGenerator.returnBrick(currentBrick);
+
+            //set the current brick to the one that was in hold
+            brickRotator.setBrick(brickFromHold);
+            currentOffset = new Point(GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
+
+        }
+    }
+
+    @Override
     public ViewData getViewData() {
         List<Brick> nextBricks = brickGenerator.getPeekNextBricks(3);
         List<int[][]> nextShapes = new ArrayList<>();
@@ -111,12 +139,16 @@ public class SimpleBoard implements Board {
             nextShapes.add(b.getShapeMatrix().get(0));
         }
 
+        //get held brick shape
+        int [][] holdShape = (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
+
         return new ViewData(
                 brickRotator.getCurrentShape(),
                 (int) currentOffset.getX(),
                 (int) currentOffset.getY(),
                 calculateGhostY(),
-                nextShapes
+                nextShapes,
+                holdShape
         );
     }
 
@@ -144,6 +176,7 @@ public class SimpleBoard implements Board {
     public void newGame() {
         grid.clear();
         score.reset();
+        heldBrick = null; //reset hold
         createNewBrick();
     }
 

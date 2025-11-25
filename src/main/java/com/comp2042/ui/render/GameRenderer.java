@@ -17,6 +17,7 @@ public class GameRenderer {
     private final GridPane brickPanel;
     private final GridPane ghostPanel;
     private final List<GridPane> nextBrickGrids;
+    private final GridPane holdBrickGrid;
 
     private Rectangle[][] displayMatrix;
     private Rectangle[][] rectangles;
@@ -28,12 +29,14 @@ public class GameRenderer {
     private double gridOriginY;
 
 
-    public GameRenderer(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel, List<GridPane> nextBrickGrids) {
+    public GameRenderer(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel,
+                        List<GridPane> nextBrickGrids, GridPane holdBrickGrid) {
         this.gameBoard = gameBoard;
         this.gamePanel = gamePanel;
         this.brickPanel = brickPanel;
         this.ghostPanel = ghostPanel;
         this.nextBrickGrids = nextBrickGrids;
+        this.holdBrickGrid = holdBrickGrid;
         this.brickColor = new BrickColor();
     }
 
@@ -101,6 +104,7 @@ public class GameRenderer {
             }
         }
         refreshNextBricks(brick.getNextBricksData());
+        refreshHoldBrick(brick.getHoldBrickData());
     }
 
     private void refreshNextBricks(List<int[][]> nextBricksData){
@@ -124,6 +128,24 @@ public class GameRenderer {
                 }
             }
        }
+
+    }
+
+    private void refreshHoldBrick(int[][] holdBrickData){
+        holdBrickGrid.getChildren().clear();
+
+        if(holdBrickData != null){
+            for (int row = 0; row < holdBrickData.length; row++){
+                for (int col = 0; col < holdBrickData[row].length; col++){
+                    int colorCode = holdBrickData[row][col];
+                    if (colorCode != 0){
+                        Rectangle rectangle = new Rectangle(18,18);
+                        rectangle.setFill(brickColor.getFillColor(colorCode));
+                        holdBrickGrid.add(rectangle, col, row);
+                    }
+                }
+            }
+        }
 
     }
 
