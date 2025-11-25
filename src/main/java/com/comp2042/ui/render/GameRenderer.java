@@ -81,30 +81,37 @@ public class GameRenderer {
 
     public void refreshBrick(ViewData brick) {
 
-        //position of real brick
-        brickPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap())));
-        brickPanel.setLayoutY(gridOriginY + gamePanel.getLayoutY() + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap()));
-        for (int i = 0; i < brick.getBrickData().length; i++) {
-            for (int j = 0; j < brick.getBrickData()[i].length; j++) {
-                setRectangleData(brick.getBrickData()[i][j], rectangles[i][j]);
-            }
-        }
+        updateActiveBrickVisuals(brick);
+        updateGhostBrickVisuals(brick);
 
-        //position of ghost brick
-        ghostPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition() * (GameConfig.BRICK_SIZE + ghostPanel.getHgap())));
-        ghostPanel.setLayoutY(gridOriginY + gamePanel.getLayoutY() + (brick.getGhostYPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + ghostPanel.getVgap()));
-
-        for (int i = 0; i < brick.getBrickData().length; i++) {
-            for(int j = 0; j < brick.getBrickData()[i].length; j++){
-                int colorIndex = brick.getBrickData()[i][j];
-
-                setRectangleData(colorIndex, rectangles[i][j]);
-                setRectangleData(colorIndex, ghostRectangles[i][j]);
-
-            }
-        }
         refreshNextBricks(brick.getNextBricksData());
         refreshHoldBrick(brick.getHoldBrickData());
+    }
+
+    private void updateActiveBrickVisuals(ViewData brick) {
+        brickPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition()* (GameConfig.BRICK_SIZE + brickPanel.getHgap())));
+        brickPanel.setLayoutY(gridOriginY +  gamePanel.getLayoutY() + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap()));
+
+        updateRectangles(brick.getBrickData(), rectangles);
+    }
+
+    private void updateGhostBrickVisuals(ViewData brick) {
+        ghostPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition()* (GameConfig.BRICK_SIZE + brickPanel.getHgap())));
+        ghostPanel.setLayoutY(gridOriginY + gamePanel.getLayoutY() + (brick.getGhostYPosition() - GameConfig.HIDDEN_ROWS)* (GameConfig.BRICK_SIZE + ghostPanel.getVgap()));
+
+        for (int i = 0; i < brick.getBrickData().length; i++) {
+            for(int j = 0; j < brick.getBrickData()[i].length; j++) {
+                setRectangleData(brick.getBrickData()[i][j], ghostRectangles[i][j]);
+            }
+        }
+    }
+
+    private void updateRectangles(int[][] data, Rectangle[][] targets) {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                setRectangleData(data[i][j], targets[i][j]);
+            }
+        }
     }
 
     private void drawMatrixToGrid(GridPane targetGrid, int[][] matrix){
