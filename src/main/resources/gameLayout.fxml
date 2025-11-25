@@ -68,6 +68,8 @@
 
 
     </Pane>
+<Group fx:id="groupNotification" layoutX="15" layoutY="203"/>
+
 
     <VBox fx:id="pauseMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
         <Button text="RETURN TO GAME" onAction="#resumeGame" styleClass="menuButton"/>
