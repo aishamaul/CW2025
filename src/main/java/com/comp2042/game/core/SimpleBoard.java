@@ -49,15 +49,11 @@ public class SimpleBoard implements Board {
     }
 
     private int calculateGhostY(){
-        int currentX = (int) currentOffset.getX();
-        int ghostY = (int) currentOffset.getY();
-        int[][] shape = brickRotator.getCurrentShape();
-
-        //simulate dropping until collision
-        while(!grid.intersects(shape, currentX, ghostY + 1)){
-            ghostY++;
-        }
-        return ghostY;
+        return grid.calculateDropPosition(
+                brickRotator.getCurrentShape(),
+                (int) currentOffset.getX(),
+                (int) currentOffset.getY()
+        );
     }
 
     @Override

@@ -41,4 +41,13 @@ public class BoardGrid {
 
     public int getWidth() {return width; }
     public int getHeight() {return height; }
+
+    public int calculateDropPosition(int[][] shape, int startX, int startY){
+        int ghostY = startY;
+        //simulate dropping until collision
+        while(!intersects(shape, startX, ghostY + 1)){
+            ghostY ++;
+        }
+        return ghostY;
+    }
 }
