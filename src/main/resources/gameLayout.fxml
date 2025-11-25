@@ -8,9 +8,10 @@
 <?import java.net.URL?>
 
 <?import javafx.scene.control.skin.VirtualFlow?>
+<?import javafx.geometry.Insets?>
 <StackPane fx:id="rootPane" fx:controller="com.comp2042.ui.view.GuiController" xmlns:fx="http://javafx.com/fxml" style="'fx'background-color: black;">
 
-    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: black;">
+    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: black;">
 
         <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="91">
             <center>
@@ -29,6 +30,31 @@
         </VBox>
 
         <ToggleButton fx:id="pauseButton" layoutX="315" layoutY="75" onAction="#pauseGame" styleClass="pauseButton"/>
+
+        <VBox layoutX="320" layoutY="130" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" style="-fx-background-color: rgba(234,168,241,0.15);">
+            <Label text="NEXT" styleClass="nextBrickLabel" style="-fx-font-size: 30px"/>
+
+            <GridPane fx:id="nextBrick1" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"
+                      style="-fx-background-color: rgba(234,168,241,0.16); -fx-padding: 5; -fx-background-radius: 5;">
+                <VBox.margin>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </VBox.margin>
+            </GridPane>
+
+            <GridPane fx:id="nextBrick2" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"
+                      style="-fx-background-color: rgba(234,168,241,0.16); -fx-padding: 5; -fx-background-radius: 5;">
+                <VBox.margin>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </VBox.margin>
+            </GridPane>
+
+            <GridPane fx:id="nextBrick3" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"
+                      style="-fx-background-color: rgba(234,168,241,0.16); -fx-padding: 5; -fx-background-radius: 5;">
+                <VBox.margin>
+                    <Insets top="10" right="10" bottom="20" left="10"/>
+                </VBox.margin>
+            </GridPane>
+        </VBox>
 
 
         <Group fx:id="groupNotification" layoutX="15" layoutY="203">

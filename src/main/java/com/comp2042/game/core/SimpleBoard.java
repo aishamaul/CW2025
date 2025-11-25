@@ -10,6 +10,8 @@ import com.comp2042.model.ClearRow;
 import com.comp2042.model.ViewData;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Standard implementation of the Board interface
@@ -103,7 +105,19 @@ public class SimpleBoard implements Board {
 
     @Override
     public ViewData getViewData() {
-        return new ViewData(brickRotator.getCurrentShape(), (int) currentOffset.getX(), (int) currentOffset.getY(), brickGenerator.getNextBrick().getShapeMatrix().get(0), calculateGhostY());
+        List<Brick> nextBricks = brickGenerator.getPeekNextBricks(3);
+        List<int[][]> nextShapes = new ArrayList<>();
+        for (Brick b:nextBricks){
+            nextShapes.add(b.getShapeMatrix().get(0));
+        }
+
+        return new ViewData(
+                brickRotator.getCurrentShape(),
+                (int) currentOffset.getX(),
+                (int) currentOffset.getY(),
+                calculateGhostY(),
+                nextShapes
+        );
     }
 
     @Override

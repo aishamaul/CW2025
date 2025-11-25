@@ -19,17 +19,16 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Reflection;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.layout.GridPane;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 import javafx.scene.transform.Scale;
 
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GuiController implements Initializable, GameView {
@@ -64,6 +63,16 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private GridPane ghostPanel;
 
+    @FXML
+    private VBox nextBrickContainer;
+
+    @FXML
+    private GridPane nextBrick1;
+    @FXML
+    private GridPane nextBrick2;
+    @FXML
+    private GridPane nextBrick3;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -82,7 +91,9 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel,  groupNotification, gameOverPanel, scoreLabel);
+        List<GridPane> nextBrickGrids = Arrays.asList(nextBrick1, nextBrick2, nextBrick3);
+
+        this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids,  groupNotification, gameOverPanel, scoreLabel);
 
         setupScaling();
     }

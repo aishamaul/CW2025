@@ -2,6 +2,9 @@ package com.comp2042.model;
 
 import com.comp2042.util.MatrixOperations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Data Transfer Object (DTO) used to pass game state to the UI renderer
  * Immutable class that holds a snapshot of the current brick and its position
@@ -11,14 +14,14 @@ public final class ViewData {
     private final int[][] brickData;
     private final int xPosition;
     private final int yPosition;
-    private final int[][] nextBrickData;
+    private final List<int[][]> nextBricksData;
     private final int ghostYPosition;
 
-    public ViewData(int[][] brickData, int xPosition, int yPosition, int[][] nextBrickData, int ghostYPosition) {
+    public ViewData(int[][] brickData, int xPosition, int yPosition, int ghostYPosition, List<int[][]> nextBricksData) {
         this.brickData = brickData;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        this.nextBrickData = nextBrickData;
+        this.nextBricksData = nextBricksData;
         this.ghostYPosition = ghostYPosition;
     }
 
@@ -38,7 +41,11 @@ public final class ViewData {
         return ghostYPosition;
     }
 
-    public int[][] getNextBrickData() {
-        return MatrixOperations.copy(nextBrickData);
+    public List<int[][]> getNextBricksData() {
+        List<int[][]> copy = new ArrayList<>();
+        for(int[][] matrix:nextBricksData){
+            copy.add(MatrixOperations.copy(matrix));
+        }
+        return copy;
     }
 }
