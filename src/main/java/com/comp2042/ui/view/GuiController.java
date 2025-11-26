@@ -175,6 +175,17 @@ public class GuiController implements Initializable, GameView {
         uiManager.showNotification(text);
     }
 
+    @Override
+    public void onLineClear(List<Integer> lines, Runnable onAnimationFinished){
+        gameLoopManager.pause();
+
+        uiManager.animateClear(lines, ()->{
+            onAnimationFinished.run();
+
+            gameLoopManager.play();
+        });
+    }
+
     public void newGame() {
         gameLoopManager.stop();
 

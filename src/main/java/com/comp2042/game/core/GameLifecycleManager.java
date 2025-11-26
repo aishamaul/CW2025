@@ -21,14 +21,20 @@ public class GameLifecycleManager {
     public DownData processTurnEnd() {
         board.mergeBrickToBackground();
         ClearRow clearRow = board.clearRows();
+
         if (clearRow.getLinesRemoved() > 0) {
             scoreEvaluator.scoreLineClear(clearRow.getScoreBonus(), board.getScore());
             viewAdapter.showScoreNotification(clearRow.getScoreBonus());
+
+            viewAdapter.onLineClear(clearRow.getClearedIndices(), ()->{
+                viewAdapter.refreshGameBackground(board.getBoardMatrix());
+            });
+        } else {
+            viewAdapter.refreshGameBackground(board.getBoardMatrix());
         }
         if (board.createNewBrick()) {
             viewAdapter.gameOver();
         }
-        viewAdapter.refreshGameBackground(board.getBoardMatrix());
         return new DownData(clearRow, board.getViewData());
     }
 

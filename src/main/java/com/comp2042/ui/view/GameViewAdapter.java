@@ -34,4 +34,8 @@ public class GameViewAdapter {
     public void showScoreNotification(int scoreBonus) {
         view.showScoreNotification("+" + scoreBonus);
     }
+
+    public void onLineClear(java.util.List<Integer> lines, Runnable onAnimationFinished) {
+        view.onLineClear(lines, onAnimationFinished);
+    }
 }

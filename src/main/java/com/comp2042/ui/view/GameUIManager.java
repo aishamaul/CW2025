@@ -76,5 +76,9 @@ public class GameUIManager {
         gamePanel.requestFocus();
     }
 
+    public void animateClear(List<Integer> lines, Runnable onFinished){
+        gameRenderer.animateClear(lines, onFinished);
+    }
+
 
 }

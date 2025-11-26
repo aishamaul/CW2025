@@ -20,7 +20,7 @@ public class RowClearer {
                 newRows.addLast(matrix[i].clone());
             }
         }
-        return new RowClearingOutput(clearedRows.size(), buildNewMatrix(newRows, matrix.length, matrix[0].length));
+        return new RowClearingOutput(clearedRows.size(), buildNewMatrix(newRows, matrix.length, matrix[0].length), clearedRows);
     }
 
     private boolean isRowFull(int[] row) {

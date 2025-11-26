@@ -158,7 +158,7 @@ public class SimpleBoard implements Board {
         var clearingOutput = grid.clearRows();
         int linesRemoved = clearingOutput.getLinesRemoved();
         int scoreBonus = scoreCalculator.calculateScoreBonus(linesRemoved);
-        return new ClearRow(linesRemoved, clearingOutput.getNewMatrix(), scoreBonus);
+        return new ClearRow(linesRemoved, clearingOutput.getNewMatrix(), scoreBonus, clearingOutput.getClearedIndices());
 
     }
 
