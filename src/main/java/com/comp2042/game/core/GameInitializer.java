@@ -19,5 +19,6 @@ public class GameInitializer {
         viewAdapter.view.setEventListener(controller);
         viewAdapter.initializeView(board.getBoardMatrix(), lifecycleManager.getViewData());
         viewAdapter.bindScore(board.getScore().scoreProperty());
+        viewAdapter.bindLines(board.getScore().linesProperty());
     }
 }

@@ -32,10 +32,13 @@
         <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
         <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-        <VBox alignment="CENTER" layoutX="228" layoutY="565">
+        <VBox alignment="CENTER" layoutX="380" layoutY="445">
             <children>
                 <Label text="SCORE" styleClass="nextBrickLabel"/>
                 <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0"/>
+
+                <Label text="LINES CLEARED" styleClass="nextBrickLabel" style="-fx-padding: 7;"/>
+                <Label fx:id="linesLabel" styleClass="scoreClass" text="0"/>
             </children>
         </VBox>
 

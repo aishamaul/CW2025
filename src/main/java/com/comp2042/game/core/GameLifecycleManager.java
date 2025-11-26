@@ -24,6 +24,9 @@ public class GameLifecycleManager {
 
         if (clearRow.getLinesRemoved() > 0) {
             scoreEvaluator.scoreLineClear(clearRow.getScoreBonus(), board.getScore());
+
+            board.getScore().addLines(clearRow.getLinesRemoved());
+
             viewAdapter.showScoreNotification(clearRow.getScoreBonus());
 
             viewAdapter.onLineClear(clearRow.getClearedIndices(), ()->{

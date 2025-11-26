@@ -18,6 +18,8 @@ public interface GameView {
 
     void bindScore(IntegerProperty scoreProperty);
 
+    void bindLines(IntegerProperty linesProperty);
+
     void setEventListener(InputEventListener eventListener);
 
     void showScoreNotification(String text);

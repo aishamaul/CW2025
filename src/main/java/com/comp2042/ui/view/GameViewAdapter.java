@@ -19,6 +19,8 @@ public class GameViewAdapter {
         view.bindScore(scoreProperty);
     }
 
+    public void bindLines(IntegerProperty linesProperty) { view.bindLines(linesProperty); }
+
     public void refreshGameBackground(int[][] board) {
         view.refreshGameBackground(board);
     }

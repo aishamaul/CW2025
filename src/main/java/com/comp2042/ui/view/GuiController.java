@@ -84,6 +84,9 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private VBox gameOverMenu;
 
+    @FXML
+    private Label linesLabel;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -158,6 +161,11 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void bindScore(IntegerProperty integerProperty) {
         scoreLabel.textProperty().bind(integerProperty.asString());
+    }
+
+    @Override
+    public void bindLines(IntegerProperty integerProperty) {
+        linesLabel.textProperty().bind(integerProperty.asString());
     }
 
     @Override
