@@ -14,7 +14,8 @@
     <VBox alignment="CENTER" spacing="20">
         <Label text="SELECT MODE" styleClass="titleStyle" style="-fx-font-size: 50px;"/>
 
-        <Button text="PRACTICE MODE" onAction="#onPracticeClicked" styleClass="menuButton"/>
+        <Button text="PRACTICE" onAction="#onPracticeClicked" styleClass="menuButton"/>
+        <Button text="CLASSIC" onAction="#onClassicClicked" styleClass="menuButton"/>
         <Button text="other" styleClass="menuButton"/>
         <Button text="BACK" onAction="#onBackClicked" styleClass="menuButton"/>
     </VBox>

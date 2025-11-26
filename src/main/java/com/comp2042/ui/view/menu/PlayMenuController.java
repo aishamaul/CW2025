@@ -16,13 +16,14 @@ import java.io.IOException;
 public class PlayMenuController {
 
     @FXML
-    public void onPracticeClicked(ActionEvent event) throws IOException {
+    public void launchGame(ActionEvent event, boolean  isClassic) throws IOException {
         // load the game layout
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gameLayout.fxml"));
         Parent gameRoot = loader.load();
 
         // initialize the game
         GuiController controller = loader.getController();
+        controller.setClassicMode(isClassic);
         new GameInitializer(controller);
 
         //switch to the game scene
@@ -35,6 +36,16 @@ public class PlayMenuController {
         stage.setScene(gameScene);
         stage.show();
 
+    }
+
+    @FXML
+    public void onPracticeClicked(ActionEvent event) throws IOException {
+        launchGame(event, false);
+    }
+
+    @FXML
+    public void onClassicClicked(ActionEvent event) throws IOException {
+        launchGame(event, true);
     }
 
     @FXML

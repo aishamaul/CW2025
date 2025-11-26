@@ -99,6 +99,10 @@ public class GuiController implements Initializable, GameView {
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
 
+    private boolean isClearingLines = false;
+
+    private boolean isClassicMode = false;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -109,6 +113,10 @@ public class GuiController implements Initializable, GameView {
         WindowScaler.bindScaling(rootPane, contentPane);
 
         if(pauseMenu!=null)pauseMenu.setVisible(false);
+    }
+
+    public void setClassicMode(boolean isClassic) {
+        this.isClassicMode = isClassic;
     }
 
     @Override
@@ -137,7 +145,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void refreshBrick(ViewData brick) {
-        if (isPause.getValue() == Boolean.FALSE) {
+        if (isPause.getValue() == Boolean.FALSE ||  isClearingLines) {
             uiManager.refresh(brick);
         }
     }
@@ -166,6 +174,17 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void bindLines(IntegerProperty integerProperty) {
         linesLabel.textProperty().bind(integerProperty.asString());
+
+        // add listener to update speed if in classic mode
+        integerProperty.addListener((observable, oldValue, newValue) -> {
+            if (isClassicMode && gameLoopManager != null) {
+                int lines = newValue.intValue();
+                //increase speed every 10 lines
+                double newRate = 1.0 + (lines / 5) * 0.5;
+                gameLoopManager.setRate(newRate);
+
+            }
+        });
     }
 
     @Override
@@ -185,9 +204,20 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void onLineClear(List<Integer> lines, Runnable onAnimationFinished){
+        isClearingLines = true;
+        isPause.setValue(Boolean.TRUE);
         gameLoopManager.pause();
 
+        if (brickPanel != null) brickPanel.setVisible(false);
+        if (ghostPanel != null) ghostPanel.setVisible(false);
+
         uiManager.animateClear(lines, ()->{
+            isClearingLines = false;
+            isPause.setValue(Boolean.FALSE); // Unblock input
+
+            if (brickPanel != null) brickPanel.setVisible(true);
+            if (ghostPanel != null) ghostPanel.setVisible(true);
+
             onAnimationFinished.run();
 
             gameLoopManager.play();
@@ -196,6 +226,10 @@ public class GuiController implements Initializable, GameView {
 
     public void newGame() {
         gameLoopManager.stop();
+
+        isClearingLines = false;
+        if (brickPanel != null) brickPanel.setVisible(true);
+        if (ghostPanel != null) ghostPanel.setVisible(true);
 
         gameOverMenu.setVisible(false);
 
@@ -208,6 +242,7 @@ public class GuiController implements Initializable, GameView {
     }
 
     private void togglePauseMenu() {
+        if (isClearingLines) return;
         pauseStateManager.togglePause();
     }
 
