@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<StackPane fx:id="rootPane" xmlns="htt://javafx.com/javafx" xmlns:fx="https://javafx.com/fxml" fx:controller="com.comp2042.ui.view.menu.HomeController" prefHeight="650.0" prefWidth="750.0" styleClass="root">
+    <VBox alignment="CENTER" spacing="20">
+        <Label text="TETRIS" styleClass="titleStyle"/>
+
+        <Button text="PLAY" onAction="#onPlayClicked" styleClass="menuButton"/>
+        <Button text="GAME CONTROLS" onAction="#onControlsClicked" styleClass="menuButton"/>
+        <Button text="HIGH SCORES" onAction="#onHighScoreClicked" styleClass="menuButton"/>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@window_style.css"/>
+    </stylesheets>
+
+
+
+</StackPane>

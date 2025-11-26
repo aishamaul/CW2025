@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.comp2042.ui.view.menu.PlayMenuController"
+           prefHeight="650.0" prefWidth="750.0" styleClass="root">
+    <VBox alignment="CENTER" spacing="20">
+        <Label text="SELECT MODE" styleClass="titleStyle" style="-fx-font-size: 50px;"/>
+
+        <Button text="PRACTICE MODE" onAction="#onPracticeClicked" styleClass="menuButton"/>
+        <Button text="other" styleClass="menuButton"/>
+        <Button text="BACK" onAction="#onBackClicked" styleClass="menuButton"/>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@window_style.css"/>
+    </stylesheets>
+
+
+
+</StackPane>

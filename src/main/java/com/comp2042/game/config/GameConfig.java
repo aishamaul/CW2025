@@ -20,5 +20,8 @@ public class GameConfig {
     public static final int BRICK_SIZE = 20;
     public static final int HIDDEN_ROWS = 2;
 
+    public static final int MANUAL_X_OFFSET = 140;
+    public static final int MANUAL_Y_OFFSET = 70;
+
     private GameConfig(){}
 }

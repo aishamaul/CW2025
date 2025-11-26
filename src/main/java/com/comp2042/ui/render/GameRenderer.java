@@ -41,8 +41,6 @@ public class GameRenderer {
     }
 
     public void initGameView(int[][] boardMatrix, ViewData brick) {
-        this.gridOriginX = gameBoard.getLayoutX() + gamePanel.getLayoutX();
-        this.gridOriginY = gameBoard.getLayoutY() + gamePanel.getLayoutY();
 
         displayMatrix = new Rectangle[boardMatrix.length][boardMatrix[0].length];
         for (int i = GameConfig.HIDDEN_ROWS; i < boardMatrix.length; i++) {
@@ -57,6 +55,7 @@ public class GameRenderer {
         rectangles = new Rectangle[brick.getBrickData().length][brick.getBrickData()[0].length];
         //initialize ghost brick rectangles
         ghostRectangles = new Rectangle[brick.getBrickData().length][brick.getBrickData()[0].length];
+
         for (int i = 0; i < brick.getBrickData().length; i++) {
             for (int j = 0; j < brick.getBrickData()[i].length; j++) {
 
@@ -89,15 +88,21 @@ public class GameRenderer {
     }
 
     private void updateActiveBrickVisuals(ViewData brick) {
-        brickPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition()* (GameConfig.BRICK_SIZE + brickPanel.getHgap())));
-        brickPanel.setLayoutY(gridOriginY +  gamePanel.getLayoutY() + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap()));
+        double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap())) + GameConfig.MANUAL_X_OFFSET;
+        double yPos = gridOriginY + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap()) + GameConfig.MANUAL_Y_OFFSET;
+
+        brickPanel.setLayoutX(xPos);
+        brickPanel.setLayoutY(yPos);
 
         updateRectangles(brick.getBrickData(), rectangles);
     }
 
     private void updateGhostBrickVisuals(ViewData brick) {
-        ghostPanel.setLayoutX(gridOriginX + gamePanel.getLayoutX() + (brick.getxPosition()* (GameConfig.BRICK_SIZE + brickPanel.getHgap())));
-        ghostPanel.setLayoutY(gridOriginY + gamePanel.getLayoutY() + (brick.getGhostYPosition() - GameConfig.HIDDEN_ROWS)* (GameConfig.BRICK_SIZE + ghostPanel.getVgap()));
+        double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap())) + GameConfig.MANUAL_X_OFFSET;
+        double yPos = gridOriginY + (brick.getGhostYPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + ghostPanel.getVgap()) + GameConfig.MANUAL_Y_OFFSET;
+
+        ghostPanel.setLayoutX(xPos);
+        ghostPanel.setLayoutY(yPos);
 
         for (int i = 0; i < brick.getBrickData().length; i++) {
             for(int j = 0; j < brick.getBrickData()[i].length; j++) {

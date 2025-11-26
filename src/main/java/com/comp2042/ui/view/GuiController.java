@@ -14,8 +14,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Reflection;
@@ -24,6 +28,7 @@ import javafx.scene.text.Font;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 
 
 import java.net.URL;
@@ -208,9 +213,25 @@ public class GuiController implements Initializable, GameView {
     }
 
     @FXML
-    public void goToHome(ActionEvent actionEvent) {
-        //go to homescreen (not implemented yet)
+    public void goToHome(ActionEvent actionEvent){
+        //stop the game loop before leaving
+        if (gameLoopManager != null){
+            gameLoopManager.stop();
+        }
+        try{
+            //load  the  home screen
+            Parent homeRoot = FXMLLoader.load(getClass().getClassLoader().getResource("home.fxml"));
+            Scene homeScene = new Scene(homeRoot);
+
+            //get stage from the event source
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(homeScene);
+            stage.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     public void showGameControls(ActionEvent actionEvent) {
