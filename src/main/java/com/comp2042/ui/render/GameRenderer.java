@@ -28,6 +28,7 @@ public class GameRenderer {
     private Rectangle[][] ghostRectangles;
 
     private final BrickColor brickColor;
+    private final GridAnimator gridAnimator;
 
     private double gridOriginX;
     private double gridOriginY;
@@ -42,6 +43,7 @@ public class GameRenderer {
         this.nextBrickGrids = nextBrickGrids;
         this.holdBrickGrid = holdBrickGrid;
         this.brickColor = new BrickColor();
+        this.gridAnimator = new GridAnimator();
     }
 
     public void initGameView(int[][] boardMatrix, ViewData brick) {
@@ -169,57 +171,7 @@ public class GameRenderer {
 
 
     public void animateClear(List<Integer> clearedIndices, Runnable onFinished){
-        ParallelTransition parallelTransition = new ParallelTransition();
-        Random rand = new Random();
-
-        for (Integer rowIndex : clearedIndices) {
-            if (rowIndex < 0 || rowIndex >= displayMatrix.length) continue;
-
-            for (int col = 0; col < displayMatrix[rowIndex].length; col++){
-                Rectangle rect = displayMatrix[rowIndex][col];
-                if (rect==null) continue;
-
-                //flash
-                FillTransition flash = new FillTransition(Duration.millis(50), rect, (Color) rect.getFill(), Color.WHITE);
-
-                // move: calculate randomness inline
-                TranslateTransition move = new TranslateTransition(Duration.millis(200), rect);
-                move.setByX((rand.nextDouble() - 0.5) * 600);
-                move.setByY((rand.nextDouble() - 0.5) * 600);
-
-                // shrink: use constructor for duration and node
-                ScaleTransition shrink = new ScaleTransition(Duration.millis(200), rect);
-                shrink.setToX(0.1);
-                shrink.setToY(0.1);
-
-                FadeTransition fade = new FadeTransition(Duration.millis(220), rect);
-                fade.setFromValue(1.0);
-                fade.setToValue(0.0);
-
-                SequentialTransition fullSeq = new SequentialTransition(flash, new ParallelTransition(move, shrink, fade));
-
-                parallelTransition.getChildren().add(fullSeq);
-
-            }
-        }
-
-        parallelTransition.setOnFinished(e ->{
-            for(Integer rowIndex : clearedIndices){
-                for (int col = 0; col < displayMatrix[rowIndex].length; col++){
-                    Rectangle rect = displayMatrix[rowIndex][col];
-                    if(rect != null){
-                        rect.setOpacity(1.0);
-                        rect.setTranslateX(0);
-                        rect.setTranslateY(0);
-                        rect.setScaleX(1.0);
-                        rect.setScaleY(1.0);
-                    }
-                }
-            }
-            onFinished.run();
-        });
-
-        parallelTransition.play();
+        gridAnimator.animateClear(this.displayMatrix, clearedIndices, onFinished);
     }
 
 }
