@@ -2,9 +2,10 @@ package com.comp2042.ui.view.menu;
 
 import com.comp2042.game.core.GameInitializer;
 import com.comp2042.ui.view.GuiController;
+import com.comp2042.ui.view.SceneNavigator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -50,12 +51,6 @@ public class PlayMenuController {
 
     @FXML
     public void onBackClicked(ActionEvent event) throws IOException {
-        // return to home screen
-        Parent homeRoot = FXMLLoader.load(getClass().getClassLoader().getResource("home.fxml"));
-        Scene homeScene = new Scene(homeRoot);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(homeScene);
-        stage.show();
+        SceneNavigator.switchTo("playMenu.fxml", event);
     }
 }

@@ -274,13 +274,7 @@ public class GuiController implements Initializable, GameView {
         }
         try{
             //load  the  home screen
-            Parent homeRoot = FXMLLoader.load(getClass().getClassLoader().getResource("home.fxml"));
-            Scene homeScene = new Scene(homeRoot);
-
-            //get stage from the event source
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(homeScene);
-            stage.show();
+            SceneNavigator.switchTo("home.fxml", actionEvent);
         } catch (Exception e){
             e.printStackTrace();
         }

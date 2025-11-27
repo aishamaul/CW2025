@@ -1,5 +1,6 @@
 package com.comp2042.ui.view.menu;
 
+import com.comp2042.ui.view.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +15,7 @@ public class HomeController {
 
     @FXML
     public void onPlayClicked(ActionEvent event) throws IOException {
-        // load the play menu
-        Parent playMenuRoot = FXMLLoader.load(getClass().getClassLoader().getResource("playMenu.fxml"));
-        Scene playMenuScene = new  Scene(playMenuRoot);
-
-        // get the current stage and set the new scene
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(playMenuScene);
-        stage.show();
+        SceneNavigator.switchTo("playMenu.fxml", event);
     }
 
     @FXML
