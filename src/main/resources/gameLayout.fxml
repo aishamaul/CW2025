@@ -91,5 +91,7 @@
         <URL value="@window_style.css"/>
     </stylesheets>
 
+    <fx:include fx:id="levelMenus" source="challenge_menus.fxml"/>
+
 </StackPane>
 

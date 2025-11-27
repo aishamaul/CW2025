@@ -16,7 +16,7 @@
 
         <Button text="PRACTICE" onAction="#onPracticeClicked" styleClass="menuButton"/>
         <Button text="CLASSIC" onAction="#onClassicClicked" styleClass="menuButton"/>
-        <Button text="other" styleClass="menuButton"/>
+        <Button text="CHALLENGE" onAction="#onChallengeClicked" styleClass="menuButton"/>
         <Button text="BACK" onAction="#onBackClicked" styleClass="menuButton"/>
     </VBox>
 

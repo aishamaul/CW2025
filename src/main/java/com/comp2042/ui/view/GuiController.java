@@ -29,8 +29,11 @@ import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import com.comp2042.game.mode.GameMode;
+import com.comp2042.ui.view.menu.LevelMenuController;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -87,6 +90,9 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private Label linesLabel;
 
+    @FXML
+    private LevelMenuController levelMenusController;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -103,6 +109,8 @@ public class GuiController implements Initializable, GameView {
 
     private boolean isClassicMode = false;
 
+    private GameMode currentGameMode;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -112,8 +120,21 @@ public class GuiController implements Initializable, GameView {
 
         WindowScaler.bindScaling(rootPane, contentPane);
 
-        if(pauseMenu!=null)pauseMenu.setVisible(false);
+        if (levelMenusController != null) {
+            levelMenusController.setCallbacks(
+                    this::startCurrentLevel,  // onStart
+                    this::startNextLevel,     // onNext
+                    this :: navigateToHome    // onExit (requires wrapping ActionEvent)
+            );
+            levelMenusController.hideAll();
+        }
+        if (pauseMenu != null) pauseMenu.setVisible(false);
     }
+
+    public void setGameMode(GameMode mode) {
+        this.currentGameMode = mode;
+    }
+
 
     public void setClassicMode(boolean isClassic) {
         this.isClassicMode = isClassic;
@@ -136,11 +157,43 @@ public class GuiController implements Initializable, GameView {
 
         gameLoopManager = new GameLoopManager(() -> moveDown(EventType.DOWN, EventSource.THREAD));
         this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
-        gameLoopManager.play();
 
-
+        if (currentGameMode != null){
+            showLevelStartScreen();
+        } else{
+            gameLoopManager.play();
+        }
     }
 
+
+    private void showLevelStartScreen() {
+        isPause.setValue(true);
+        levelMenusController.showStartScreen(currentGameMode.getName());
+    }
+
+    public void startCurrentLevel() {
+        levelMenusController.hideAll();
+        isPause.setValue(false);
+        gameLoopManager.play();
+        rootPane.requestFocus();
+    }
+
+    public void startNextLevel() {
+        levelMenusController.hideAll();
+        if (currentGameMode.getNextLevel() != null) {
+            setGameMode(currentGameMode.getNextLevel());
+            showLevelStartScreen();
+        } else {
+            goToHome(null);
+        }
+    }
+
+    private void handleLevelCompleted() {
+        gameLoopManager.stop();
+        // Delegate to sub-controller
+        boolean hasNext = (currentGameMode.getNextLevel() != null);
+        levelMenusController.showLevelComplete(hasNext);
+    }
 
 
     @Override
@@ -175,14 +228,15 @@ public class GuiController implements Initializable, GameView {
     public void bindLines(IntegerProperty integerProperty) {
         linesLabel.textProperty().bind(integerProperty.asString());
 
-        // add listener to update speed if in classic mode
         integerProperty.addListener((observable, oldValue, newValue) -> {
-            if (isClassicMode && gameLoopManager != null) {
-                int lines = newValue.intValue();
-                //increase speed every 10 lines
-                double newRate = 1.0 + (lines / 5) * 0.5;
-                gameLoopManager.setRate(newRate);
+            int lines = newValue.intValue();
 
+            if (currentGameMode != null && gameLoopManager != null) {
+                currentGameMode.onLinesUpdated(lines, gameLoopManager);
+            }
+            else if (isClassicMode && gameLoopManager != null) {
+                double newRate = 1.0 + (lines/5) * 0.5;
+                gameLoopManager.setRate(newRate);
             }
         });
     }
@@ -213,14 +267,17 @@ public class GuiController implements Initializable, GameView {
 
         uiManager.animateClear(lines, ()->{
             isClearingLines = false;
-            isPause.setValue(Boolean.FALSE); // Unblock input
 
-            if (brickPanel != null) brickPanel.setVisible(true);
-            if (ghostPanel != null) ghostPanel.setVisible(true);
-
-            onAnimationFinished.run();
-
-            gameLoopManager.play();
+            int currentLines = Integer.parseInt(linesLabel.getText());
+            if (currentGameMode != null && currentGameMode.isWinConditionMet(currentLines)) {
+                handleLevelCompleted();
+            } else{
+                isPause.setValue(Boolean.FALSE);
+                if (brickPanel != null) brickPanel.setVisible(true);
+                if (ghostPanel != null) ghostPanel.setVisible(true);
+                onAnimationFinished.run();
+                gameLoopManager.play();
+            }
         });
     }
 
@@ -232,13 +289,20 @@ public class GuiController implements Initializable, GameView {
         if (ghostPanel != null) ghostPanel.setVisible(true);
 
         gameOverMenu.setVisible(false);
+        if(levelMenusController != null) levelMenusController.hideAll();
 
         dispatcher.newGame();
         rootPane.requestFocus();
-        gameLoopManager.play();
+
+        gameLoopManager.setRate(1.0);
+        pauseStateManager.reset();
         isGameOver.setValue(Boolean.FALSE);
 
-        pauseStateManager.reset();
+        if (currentGameMode != null) {
+            showLevelStartScreen(); // This sets isPause to true
+        } else {
+            gameLoopManager.play();
+        }
     }
 
     private void togglePauseMenu() {
@@ -264,6 +328,20 @@ public class GuiController implements Initializable, GameView {
     public void restartGame(ActionEvent actionEvent) {
         // restart button
         newGame();
+    }
+
+    private void navigateToHome() {
+        if (gameLoopManager != null) gameLoopManager.stop();
+        try {
+            // Use rootPane to find the window since we might not have an event
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getClassLoader().getResource("home.fxml"));
+            Parent root = loader.load();
+            stage.setScene(new Scene(root, 750, 650));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
