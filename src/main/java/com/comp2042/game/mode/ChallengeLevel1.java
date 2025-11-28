@@ -26,6 +26,6 @@ public class ChallengeLevel1 implements GameMode{
 
     @Override
     public GameMode getNextLevel(){
-        return null;
+        return new ChallengeLevel2();
     }
 }

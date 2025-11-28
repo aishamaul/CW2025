@@ -1,5 +1,6 @@
 package com.comp2042.game.mode;
 
+import com.comp2042.game.core.Board;
 import com.comp2042.game.core.GameLoopManager;
 
 public interface GameMode {
@@ -23,4 +24,16 @@ public interface GameMode {
      */
 
     GameMode getNextLevel();
+
+    /**
+     * Called every game frame.
+     * @return true if gravity should happen (brick falls), false if frozen.
+     */
+    default boolean onGameTick(Board board) {
+        return true;
+    }
+
+    default String getOverlayMessage(){
+        return null;
+    }
 }

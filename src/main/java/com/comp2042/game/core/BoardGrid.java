@@ -50,4 +50,24 @@ public class BoardGrid {
         }
         return ghostY;
     }
+
+    public boolean addGarbageLine(){
+        // check if top row has blocks (game over condition)
+        for (int col = 0; col < width; col ++){
+            if (matrix[0][col] != 0) return true;
+        }
+
+        // shift rows up
+        for (int row = 0; row < height - 1; row++){
+            matrix[row] = matrix[row+1];
+        }
+
+        // generate solid garbage row
+        int[]  newRow = new int [width];
+        for (int col = 0; col< width; col++){
+            newRow[col] = 8;
+        }
+        matrix[height - 1] = newRow;
+        return false;
+    }
 }

@@ -33,6 +33,8 @@ public class BrickColor {
             case 7:
                 returnPaint = Color.DEEPPINK;
                 break;
+            case 8:
+                returnPaint = Color.GREY;
             default:
                 returnPaint = Color.WHITE;
                 break;

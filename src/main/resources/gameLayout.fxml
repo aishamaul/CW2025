@@ -15,7 +15,10 @@
 
         <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="140">
             <center>
-                <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="40"/>
+                <StackPane>
+                    <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="40"/>
+                    <Label fx:id="timerLabel" text="10" visible="false" styleClass="timerStyle" mouseTransparent="true"/>
+                </StackPane>
             </center>
         </BorderPane>
 
@@ -92,6 +95,10 @@
     </stylesheets>
 
     <fx:include fx:id="levelMenus" source="challenge_menus.fxml"/>
+
+    <Label fx:id="overlayMessageLabel" text="TIME FREEZE !"
+           styleClass="freezeTextStyle"
+           mouseTransparent="true" visible="false"/>
 
 </StackPane>
 

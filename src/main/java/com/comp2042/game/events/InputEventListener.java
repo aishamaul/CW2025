@@ -1,5 +1,6 @@
 package com.comp2042.game.events;
 
+import com.comp2042.game.mode.GameMode;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 
@@ -18,4 +19,6 @@ public interface InputEventListener {
     ViewData onHoldEvent(MoveEvent event);
 
     void createNewGame();
+
+    boolean onGameTick(GameMode mode);
 }

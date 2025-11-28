@@ -176,4 +176,9 @@ public class SimpleBoard implements Board {
         createNewBrick();
     }
 
+    @Override
+    public boolean addGarbageLine(){
+        return grid.addGarbageLine();
+    }
+
 }

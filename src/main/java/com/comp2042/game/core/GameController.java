@@ -1,5 +1,8 @@
 package com.comp2042.game.core;
 
+import com.comp2042.game.events.EventSource;
+import com.comp2042.game.events.EventType;
+import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.GameViewAdapter;
 import com.comp2042.game.scoring.ScoreEvaluator;
 import com.comp2042.game.events.InputEventListener;
@@ -81,5 +84,21 @@ public class GameController implements InputEventListener {
         board.holdBrick();
         lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
         return lifecycleManager.getViewData();
+    }
+
+    @Override
+    public boolean onGameTick(GameMode mode) {
+        // default behavior (practice/classic), always apply gravity
+        if (mode == null) {
+            return true;
+        }
+
+        // challenge behavior, ask the level logic
+        boolean applyGravity = mode.onGameTick(board);
+
+        lifecycleManager.getViewAdapter().refreshGameBackground(board.getBoardMatrix());
+        lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
+
+        return applyGravity;
     }
 }

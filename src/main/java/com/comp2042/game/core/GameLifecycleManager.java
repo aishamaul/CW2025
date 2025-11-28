@@ -44,6 +44,7 @@ public class GameLifecycleManager {
     public void handleNewGame() {
         board.newGame();
         viewAdapter.refreshGameBackground(board.getBoardMatrix());
+        viewAdapter.refreshBrick(board.getViewData());
     }
 
     public ScoreEvaluator getScoreEvaluator() {

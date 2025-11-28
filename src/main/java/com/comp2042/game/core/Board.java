@@ -78,4 +78,10 @@ public interface Board {
     void newGame();
 
     void holdBrick();
+
+    /**
+     * Shifts all blocks up and adds a random garbage line t the bottom
+     * @return true if the blocks hit the ceiling (Game Over)
+     */
+    boolean addGarbageLine();
 }

@@ -44,4 +44,8 @@ public class EventDispatcher {
     public ViewData hold(){
         return eventListener.onHoldEvent(new MoveEvent(EventType.HOLD, EventSource.USER));
     }
+
+    public boolean onGameTick(com.comp2042.game.mode.GameMode mode) {
+        return eventListener.onGameTick(mode);
+    }
 }

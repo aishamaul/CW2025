@@ -14,7 +14,7 @@ public class RowClearer {
         List<Integer> clearedRows = new ArrayList<>();
 
         for (int i = 0; i < matrix.length; i++) {
-            if(isRowFull(matrix[i])) {
+            if(isRowFull(matrix[i]) && !isGarbageRow(matrix[i])) {
                 clearedRows.add(i);
             } else {
                 newRows.addLast(matrix[i].clone());
@@ -44,6 +44,13 @@ public class RowClearer {
             }
         }
         return tmp;
+    }
+
+    private boolean isGarbageRow(int[] row) {
+        for (int cell : row){
+            if (cell == 8) return true;
+        }
+        return false;
     }
 
 }

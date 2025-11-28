@@ -9,6 +9,7 @@ import com.comp2042.ui.components.NotificationManager;
 import com.comp2042.ui.input.EventDispatcher;
 import com.comp2042.ui.input.InputHandler;
 import com.comp2042.ui.render.GameRenderer;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -31,6 +32,7 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.menu.LevelMenuController;
+import javafx.util.Duration;
 
 
 import java.io.IOException;
@@ -93,6 +95,12 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private LevelMenuController levelMenusController;
 
+    @FXML
+    private Label overlayMessageLabel;
+
+    @FXML
+    private Label timerLabel;
+
     private EventDispatcher dispatcher;
 
     private GameLoopManager gameLoopManager;
@@ -110,6 +118,8 @@ public class GuiController implements Initializable, GameView {
     private boolean isClassicMode = false;
 
     private GameMode currentGameMode;
+
+    private boolean wasFrozen = false;
 
 
     @Override
@@ -155,7 +165,39 @@ public class GuiController implements Initializable, GameView {
                 this:: newGame,
                 this::togglePauseMenu));
 
-        gameLoopManager = new GameLoopManager(() -> moveDown(EventType.DOWN, EventSource.THREAD));
+        gameLoopManager = new GameLoopManager(() -> {
+            boolean applyGravity = dispatcher.onGameTick(currentGameMode);
+            if (applyGravity) {
+                moveDown(EventType.DOWN, EventSource.THREAD);
+            }
+
+            if (currentGameMode != null){
+                String status = currentGameMode.getOverlayMessage();
+
+                // text display (bricks frozen, timer hidden)
+                if ("SHOW_TEXT".equals(status)) {
+                    timerLabel.setVisible(false); // ensure numbers don't overlap
+
+                    if (!wasFrozen) {
+                        showFreezeNotification(); // trigger the text animation once
+                        wasFrozen = true;
+                    }
+                }
+
+                // countdown (bricks frozen, timer visible, text gone)
+                else if (status != null){
+                    timerLabel.setText(status);
+                    timerLabel.setVisible(true);
+                    wasFrozen = true;
+                }
+
+                else{
+                    timerLabel.setVisible(false);
+                    wasFrozen = false;
+                }
+            }
+        });
+
         this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
 
         if (currentGameMode != null){
@@ -165,6 +207,19 @@ public class GuiController implements Initializable, GameView {
         }
     }
 
+    private void showFreezeNotification() {
+        overlayMessageLabel.setOpacity(1.0);
+        overlayMessageLabel.setVisible(true);
+        overlayMessageLabel.toFront();
+
+        FadeTransition fade = new FadeTransition(Duration.seconds(3), overlayMessageLabel);
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setDelay(Duration.seconds(0.5));
+        fade.setOnFinished(e -> overlayMessageLabel.setVisible(false));
+        fade.play();
+    }
+
 
     private void showLevelStartScreen() {
         isPause.setValue(true);
@@ -172,20 +227,25 @@ public class GuiController implements Initializable, GameView {
     }
 
     public void startCurrentLevel() {
-        levelMenusController.hideAll();
+        if (levelMenusController != null) {
+            levelMenusController.hideAll();
+        }
+
         isPause.setValue(false);
         gameLoopManager.play();
         rootPane.requestFocus();
     }
 
     public void startNextLevel() {
-        levelMenusController.hideAll();
-        if (currentGameMode.getNextLevel() != null) {
+        if (levelMenusController != null) levelMenusController.hideAll();
+
+        if (currentGameMode != null && currentGameMode.getNextLevel() != null) {
             setGameMode(currentGameMode.getNextLevel());
-            showLevelStartScreen();
-        } else {
+            newGame();;
+        } else{
             goToHome(null);
         }
+
     }
 
     private void handleLevelCompleted() {
@@ -268,6 +328,7 @@ public class GuiController implements Initializable, GameView {
         uiManager.animateClear(lines, ()->{
             isClearingLines = false;
 
+            onAnimationFinished.run();
             int currentLines = Integer.parseInt(linesLabel.getText());
             if (currentGameMode != null && currentGameMode.isWinConditionMet(currentLines)) {
                 handleLevelCompleted();
