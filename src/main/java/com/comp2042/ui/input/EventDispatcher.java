@@ -4,6 +4,7 @@ import com.comp2042.game.events.EventSource;
 import com.comp2042.game.events.EventType;
 import com.comp2042.game.events.InputEventListener;
 import com.comp2042.game.events.MoveEvent;
+import com.comp2042.game.mode.GameMode;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 
@@ -15,6 +16,9 @@ public class EventDispatcher {
         this.eventListener = eventListener;
     }
 
+    public void setGameMode(GameMode mode) {
+        eventListener.setGameMode(mode);
+    }
 
     public ViewData moveLeft() {
         return eventListener.onLeftEvent(new MoveEvent(EventType.LEFT, EventSource.USER));

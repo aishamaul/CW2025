@@ -36,4 +36,7 @@ public interface GameMode {
     default String getOverlayMessage(){
         return null;
     }
+
+    default void onStart(Board board) {}
+    default void onBrickMerged(Board board) {}
 }

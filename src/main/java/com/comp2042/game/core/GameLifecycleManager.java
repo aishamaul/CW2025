@@ -1,5 +1,6 @@
 package com.comp2042.game.core;
 
+import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.GameViewAdapter;
 import com.comp2042.game.scoring.ScoreEvaluator;
 import com.comp2042.model.ClearRow;
@@ -18,17 +19,20 @@ public class GameLifecycleManager {
         this.viewAdapter = viewAdapter;
     }
 
-    public DownData processTurnEnd() {
+    public DownData processTurnEnd(GameMode mode) {
         board.mergeBrickToBackground();
+
+        // Bomb Logic Hook
+        if (mode != null) {
+            mode.onBrickMerged(board);
+        }
+
         ClearRow clearRow = board.clearRows();
 
         if (clearRow.getLinesRemoved() > 0) {
             scoreEvaluator.scoreLineClear(clearRow.getScoreBonus(), board.getScore());
-
             board.getScore().addLines(clearRow.getLinesRemoved());
-
             viewAdapter.showScoreNotification(clearRow.getScoreBonus());
-
             viewAdapter.onLineClear(clearRow.getClearedIndices(), ()->{
                 viewAdapter.refreshGameBackground(board.getBoardMatrix());
             });
@@ -41,8 +45,12 @@ public class GameLifecycleManager {
         return new DownData(clearRow, board.getViewData());
     }
 
-    public void handleNewGame() {
+    public void handleNewGame(GameMode mode) {
         board.newGame();
+
+        if (mode != null) {
+            mode.onStart(board);
+        }
         viewAdapter.refreshGameBackground(board.getBoardMatrix());
         viewAdapter.refreshBrick(board.getViewData());
     }

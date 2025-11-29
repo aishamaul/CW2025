@@ -2,6 +2,7 @@ package com.comp2042.ui.view.menu;
 
 import com.comp2042.game.core.GameInitializer;
 import com.comp2042.game.mode.ChallengeLevel1;
+import com.comp2042.game.mode.ChallengeLevel3;
 import com.comp2042.ui.view.GuiController;
 import com.comp2042.ui.view.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ public class PlayMenuController {
 
         // initialize the game
         GuiController controller = loader.getController();
+
         if (isChallenge) {
             // Set the mode to Challenge Level 1
             controller.setGameMode(new ChallengeLevel1());

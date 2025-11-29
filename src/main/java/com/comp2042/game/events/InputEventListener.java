@@ -21,4 +21,6 @@ public interface InputEventListener {
     void createNewGame();
 
     boolean onGameTick(GameMode mode);
+
+    void setGameMode(GameMode mode);
 }

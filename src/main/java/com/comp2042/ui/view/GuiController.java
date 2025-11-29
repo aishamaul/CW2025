@@ -143,6 +143,10 @@ public class GuiController implements Initializable, GameView {
 
     public void setGameMode(GameMode mode) {
         this.currentGameMode = mode;
+
+        if (dispatcher != null) {
+            dispatcher.setGameMode(mode);
+        }
     }
 
 
@@ -153,6 +157,8 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void initGameView(int[][] boardMatrix, ViewData brick) {
         uiManager.initGameView(boardMatrix, brick);
+
+        dispatcher.setGameMode(currentGameMode);
 
         rootPane.setFocusTraversable(true);
         rootPane.requestLayout();

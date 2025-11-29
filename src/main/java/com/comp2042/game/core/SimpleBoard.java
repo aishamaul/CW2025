@@ -20,7 +20,7 @@ import java.util.List;
 public class SimpleBoard implements Board {
 
     private final BoardGrid grid;
-    private final BrickGenerator brickGenerator;
+    private BrickGenerator brickGenerator;
     private final BrickRotator brickRotator;
     private Point currentOffset;
     private final Score score;
@@ -179,6 +179,35 @@ public class SimpleBoard implements Board {
     @Override
     public boolean addGarbageLine(){
         return grid.addGarbageLine();
+    }
+
+    @Override
+    public boolean addLevel3GarbageLine() {
+        return grid.addLevel3GarbageLine();
+    }
+
+    @Override
+    public void setBrickGenerator(BrickGenerator generator) {
+        this.brickGenerator = generator;
+    }
+
+    @Override
+    public Point getCurrentOffset(){
+        return new Point(currentOffset);
+    }
+
+    @Override
+    public Brick getCurrentBrick() {
+        return brickRotator.getBrick();
+    }
+
+    @Override
+    public void explode(int x, int y, int radius) {
+        for (int i = x - radius; i <= x + radius; i++) {
+            for (int j = y - radius; j <= y + radius; j++) {
+                grid.clearCell(i, j);
+            }
+        }
     }
 
 }

@@ -20,6 +20,7 @@ public class GameController implements InputEventListener {
 
     private final Board board;
     private final GameLifecycleManager lifecycleManager;
+    private GameMode currentMode;
 
     public GameController(Board board, GameLifecycleManager lifecycleManager) {
         this.board = board;
@@ -41,7 +42,7 @@ public class GameController implements InputEventListener {
             lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
             return new DownData(null, lifecycleManager.getViewData());
         }else{
-            return lifecycleManager.processTurnEnd();
+            return lifecycleManager.processTurnEnd(currentMode);
         }
     }
 
@@ -49,7 +50,7 @@ public class GameController implements InputEventListener {
     public DownData onDropEvent(MoveEvent event){
         int rowsDropped = board.dropBrick();
         lifecycleManager.getScoreEvaluator().scoreDrop(rowsDropped, board.getScore());
-        return lifecycleManager.processTurnEnd();
+        return lifecycleManager.processTurnEnd(currentMode);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class GameController implements InputEventListener {
 
     @Override
     public void createNewGame() {
-        lifecycleManager.handleNewGame();
+        lifecycleManager.handleNewGame(currentMode);
     }
 
     @Override
@@ -100,5 +101,10 @@ public class GameController implements InputEventListener {
         lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
 
         return applyGravity;
+    }
+
+    @Override
+    public void setGameMode(GameMode mode) {
+        this.currentMode = mode;
     }
 }

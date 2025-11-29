@@ -1,8 +1,12 @@
 package com.comp2042.game.core;
 
+import com.comp2042.game.bricks.Brick;
+import com.comp2042.game.bricks.BrickGenerator;
 import com.comp2042.game.scoring.Score;
 import com.comp2042.model.ClearRow;
 import com.comp2042.model.ViewData;
+
+import java.awt.*;
 
 public interface Board {
 
@@ -84,4 +88,14 @@ public interface Board {
      * @return true if the blocks hit the ceiling (Game Over)
      */
     boolean addGarbageLine();
+
+    boolean addLevel3GarbageLine();
+
+    void setBrickGenerator(BrickGenerator generator);
+
+    Brick getCurrentBrick();
+
+    Point getCurrentOffset();
+
+    void explode(int x, int y, int radius);
 }
