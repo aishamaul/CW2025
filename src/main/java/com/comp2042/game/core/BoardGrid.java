@@ -73,32 +73,19 @@ public class BoardGrid {
         return false;
     }
 
-    public boolean addLevel3GarbageLine() {
-
-        for (int col = 0; col < width; col++) {
-            if (matrix[0][col] != 0) return true;
+    public boolean insertRowAtBottom(int[] newRow){
+        if (newRow.length != width){
+            throw new IllegalArgumentException("Row width does not match board width");
         }
 
-        for (int row = 0; row < height - 1; row++) {
+        for (int col = 0; col < width; col ++){
+            if (matrix[0][col] !=0) return true;
+        }
+
+        for (int row = 0; row < height - 1; row ++){
             matrix[row] = matrix[row + 1];
         }
 
-        int[] newRow = new int[width];
-        // ensure at least one hole so it's playable
-        int mandatoryHole = ThreadLocalRandom.current().nextInt(width);
-
-        for (int col = 0; col < width; col++) {
-            if (col == mandatoryHole) {
-                newRow[col] = 0;
-            } else {
-                // 40% chance of random hole, else random color (IDs 1-7)
-                if (ThreadLocalRandom.current().nextDouble() < 0.4) {
-                    newRow[col] = 0;
-                } else {
-                    newRow[col] = ThreadLocalRandom.current().nextInt(1, 8);
-                }
-            }
-        }
         matrix[height - 1] = newRow;
         return false;
     }

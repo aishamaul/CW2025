@@ -90,8 +90,6 @@ public interface Board {
      */
     boolean addGarbageLine();
 
-    boolean addLevel3GarbageLine();
-
     void setBrickGenerator(BrickGenerator generator);
 
     Brick getCurrentBrick();
@@ -99,4 +97,6 @@ public interface Board {
     Point getCurrentOffset();
 
     List<Point> explode(int x, int y, int radius);
+
+    boolean insertRowAtBottom(int[] row);
 }

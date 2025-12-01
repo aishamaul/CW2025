@@ -182,8 +182,8 @@ public class SimpleBoard implements Board {
     }
 
     @Override
-    public boolean addLevel3GarbageLine() {
-        return grid.addLevel3GarbageLine();
+    public boolean insertRowAtBottom(int[] row){
+        return grid.insertRowAtBottom(row);
     }
 
     @Override

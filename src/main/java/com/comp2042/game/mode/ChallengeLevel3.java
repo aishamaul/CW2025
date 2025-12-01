@@ -4,6 +4,7 @@ import com.comp2042.game.bricks.BombBrick;
 import com.comp2042.game.bricks.Level3BrickGenerator;
 import com.comp2042.game.core.Board;
 import com.comp2042.game.core.GameLoopManager;
+import com.comp2042.game.core.GarbageRowFactory;
 
 import java.awt.*;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class ChallengeLevel3  implements GameMode{
 
     private static final int GOAL_LINES = 25;
+    private final GarbageRowFactory garbageFactory = new GarbageRowFactory();
 
     @Override
     public String getName(){
@@ -24,7 +26,8 @@ public class ChallengeLevel3  implements GameMode{
 
         // Fill 3/4 of the board (approx 18 rows) with garbage
         for (int i = 0; i < 12; i++) {
-            board.addLevel3GarbageLine();
+            int[] row = garbageFactory.createLevel3Row(10);
+            board.insertRowAtBottom(row);
         }
     }
 
