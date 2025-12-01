@@ -5,6 +5,9 @@ import com.comp2042.game.bricks.Level3BrickGenerator;
 import com.comp2042.game.core.Board;
 import com.comp2042.game.core.GameLoopManager;
 
+import java.awt.*;
+import java.util.List;
+
 public class ChallengeLevel3  implements GameMode{
 
     private static final int GOAL_LINES = 25;
@@ -43,13 +46,14 @@ public class ChallengeLevel3  implements GameMode{
     }
 
     @Override
-    public void onBrickMerged(Board board) {
+    public List<Point> onBrickMerged(Board board) {
         if (board.getCurrentBrick() instanceof BombBrick) {
             int x = (int) board.getCurrentOffset().getX() + 1;
             int y = (int) board.getCurrentOffset().getY() + 1;
-            // radius 1 means 3x3 area (center + 1 in all directions)
-            board.explode(x, y, 1);
+            // Return the points that were exploded
+            return board.explode(x, y, 1);
         }
+        return new java.util.ArrayList<>();
     }
 
 

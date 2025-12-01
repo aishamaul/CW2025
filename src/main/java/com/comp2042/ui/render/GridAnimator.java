@@ -1,18 +1,23 @@
 package com.comp2042.ui.render;
 
 import javafx.animation.*;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
 public class GridAnimator {
 
-    public void animateClear (Rectangle[][] displayMatrix, List<Integer> clearIndices, Runnable onFinished){
+    private final BrickColor brickColor = new BrickColor();
+    private final Random random = new Random();
+
+    public void animateClear(Rectangle[][] displayMatrix, List<Integer> clearIndices, Runnable onFinished) {
         ParallelTransition parallelTransition = new ParallelTransition();
-        Random random = new Random();
 
         for (Integer rowIndex : clearIndices) {
             if (rowIndex < 0 || rowIndex >= displayMatrix.length) continue;
@@ -21,7 +26,7 @@ public class GridAnimator {
                 Rectangle rect = displayMatrix[rowIndex][col];
                 if (rect == null) continue;
 
-                //flash
+                // flash
                 FillTransition flash = new FillTransition(Duration.millis(50), rect, (Color) rect.getFill(), Color.WHITE);
 
                 // move: calculate randomness inline
@@ -40,31 +45,155 @@ public class GridAnimator {
 
                 SequentialTransition fullSeq = new SequentialTransition(flash, new ParallelTransition(move, shrink, fade));
                 parallelTransition.getChildren().add(fullSeq);
-
             }
         }
 
-        parallelTransition.setOnFinished(e->{
+        parallelTransition.setOnFinished(e -> {
             resetAnimatedRectangles(displayMatrix, clearIndices);
             onFinished.run();
         });
         parallelTransition.play();
     }
 
-    private void resetAnimatedRectangles(Rectangle[][] displayMatrix, List<Integer> clearIndices){
+    public void animateExplosion(Rectangle[][] displayMatrix, List<Point> explodedPoints, Runnable onFinished) {
+        ParallelTransition parallel = new ParallelTransition();
+
+        // bomb center is the middle of the block list provided
+        Point center = explodedPoints.get(0);
+        double cx = center.x;
+        double cy = center.y;
+
+        for (Point p : explodedPoints) {
+            int r = p.y;
+            int c = p.x;
+
+            if (r < 0 || r >= displayMatrix.length || c < 0 || c >= displayMatrix[0].length) continue;
+
+            Rectangle rect = displayMatrix[r][c];
+            if (rect == null) continue;
+
+            performExplosionOnBlock(parallel, rect, cx, cy, c, r);
+        }
+
+        parallel.setOnFinished(e -> {
+            // reset the exploded bricks
+            for (Point p : explodedPoints) {
+                if (p.y >= 0 && p.y < displayMatrix.length && p.x >= 0 && p.x < displayMatrix[0].length) {
+                    Rectangle rect = displayMatrix[p.y][p.x];
+                    if (rect != null) resetRectangle(rect);
+                }
+            }
+            onFinished.run();
+        });
+
+        parallel.play();
+    }
+
+    /**
+     * Handles the animation for a single block in the explosion:
+     * Flashes and shrinks the original block.
+     * Spawns chaotic particles.
+     */
+    private void performExplosionOnBlock(ParallelTransition parentTransition,
+                                         Rectangle rect,
+                                         double centerX, double centerY,
+                                         int col, int row) {
+
+        // instant flash
+        FillTransition flash = new FillTransition(Duration.millis(20), rect, (Color) rect.getFill(), Color.WHITE);
+
+        // calculate outward vector
+        double dx = col - centerX;
+        double dy = row - centerY;
+        double len = Math.sqrt(dx * dx + dy * dy);
+        if (len != 0) { dx /= len; dy /= len; }
+
+        // instant collapse
+        ScaleTransition shrink = new ScaleTransition(Duration.millis(100), rect);
+        shrink.setToX(0.0);
+        shrink.setToY(0.0);
+
+        FadeTransition fade = new FadeTransition(Duration.millis(100), rect);
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+
+        ParallelTransition blockCollapse = new ParallelTransition(shrink, fade);
+        SequentialTransition blockSequence = new SequentialTransition(flash, blockCollapse);
+
+        parentTransition.getChildren().add(blockSequence);
+
+        // spawn particles
+        if (rect.getParent() instanceof Pane) {
+            Pane parentPane = (Pane) rect.getParent();
+            spawnExplosionParticles(parentPane, rect, dx, dy);
+        }
+    }
+
+    /**
+     * Generates multiple tiny particles that fly outward from the block's position.
+     */
+    private void spawnExplosionParticles(Pane parentPane, Rectangle sourceRect, double dirX, double dirY) {
+        javafx.geometry.Bounds bounds = sourceRect.getBoundsInParent();
+        double originX = bounds.getMinX() + (bounds.getWidth() / 2);
+        double originY = bounds.getMinY() + (bounds.getHeight() / 2);
+
+        // increased particle count
+        int particleCount = 8;
+
+        for (int i = 0; i < particleCount; i++) {
+            int colorIndex = random.nextInt(7) + 1;
+            Color pColor = (Color) brickColor.getFillColor(colorIndex);
+
+            // varied sizes
+            double pSize = 3 + random.nextDouble() * 8;
+            Rectangle particle = new Rectangle(pSize, pSize, pColor);
+
+            particle.setTranslateX(originX);
+            particle.setTranslateY(originY);
+
+            parentPane.getChildren().add(particle);
+
+            double spread = 1.5;
+            double randX = dirX + (random.nextDouble() - 0.5) * spread;
+            double randY = dirY + (random.nextDouble() - 0.5) * spread;
+
+            double distance = 100 + random.nextDouble() * 150;
+
+            double duration = 150 + random.nextDouble() * 200;
+
+            TranslateTransition fly = new TranslateTransition(Duration.millis(duration), particle);
+            fly.setByX(randX * distance);
+            fly.setByY(randY * distance);
+
+            fly.setInterpolator(Interpolator.EASE_OUT);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(duration), particle);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setDelay(Duration.millis(50));
+
+            ParallelTransition particleAnim = new ParallelTransition(fly, fadeOut);
+
+            particleAnim.setOnFinished(ev -> parentPane.getChildren().remove(particle));
+
+            particleAnim.play();
+        }
+    }
+
+    private void resetAnimatedRectangles(Rectangle[][] displayMatrix, List<Integer> clearIndices) {
         for (Integer rowIndex : clearIndices) {
             for (int col = 0; col < displayMatrix[rowIndex].length; col++) {
                 Rectangle rect = displayMatrix[rowIndex][col];
-                if (rect != null){
-                    rect.setOpacity(1.0);
-                    rect.setTranslateX(0);
-                    rect.setTranslateY(0);
-                    rect.setScaleX(1.0);
-                    rect.setScaleY(1.0);
-                }
+                if (rect != null) resetRectangle(rect);
             }
         }
     }
 
+    private void resetRectangle(Rectangle rect) {
+        rect.setOpacity(1.0);
+        rect.setTranslateX(0);
+        rect.setTranslateY(0);
+        rect.setScaleX(1.0);
+        rect.setScaleY(1.0);
+    }
 }
-

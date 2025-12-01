@@ -174,4 +174,8 @@ public class GameRenderer {
         gridAnimator.animateClear(this.displayMatrix, clearedIndices, onFinished);
     }
 
+    public void animateExplosion(List<java.awt.Point> explodedPoints, Runnable onFinished){
+        gridAnimator.animateExplosion(this.displayMatrix, explodedPoints, onFinished);
+    }
+
 }

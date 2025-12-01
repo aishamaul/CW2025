@@ -431,5 +431,31 @@ public class GuiController implements Initializable, GameView {
         //go to show game controls screen (not implemented yet)
     }
 
+    @Override
+    public void onExplosion(List<java.awt.Point> explodedPoints, Runnable onAnimationFinished) {
+        // pause game logic/input
+        isPause.setValue(Boolean.TRUE);
+        gameLoopManager.pause();
+
+        // hide active components temporarily
+        if (brickPanel != null) brickPanel.setVisible(false);
+        if (ghostPanel != null) ghostPanel.setVisible(false);
+
+        uiManager.animateExplosion(explodedPoints, () -> {
+            // animation done
+            isPause.setValue(Boolean.FALSE);
+
+            // restore visibility
+            if (brickPanel != null) brickPanel.setVisible(true);
+            if (ghostPanel != null) ghostPanel.setVisible(true);
+
+            // run callback (which will likely trigger line clears or new brick)
+            onAnimationFinished.run();
+
+            // resume loop
+            gameLoopManager.play();
+        });
+    }
+
 
 }

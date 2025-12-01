@@ -40,4 +40,8 @@ public class GameViewAdapter {
     public void onLineClear(java.util.List<Integer> lines, Runnable onAnimationFinished) {
         view.onLineClear(lines, onAnimationFinished);
     }
+
+    public void onExplosion(java.util.List<java.awt.Point> explodedPoints, Runnable onAnimationFinished) {
+        view.onExplosion(explodedPoints, onAnimationFinished);
+    }
 }

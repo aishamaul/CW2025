@@ -80,5 +80,8 @@ public class GameUIManager {
         gameRenderer.animateClear(lines, onFinished);
     }
 
+    public void animateExplosion(List<java.awt.Point> explodedPoints, Runnable onFinished){
+        gameRenderer.animateExplosion(explodedPoints, onFinished);
+    }
 
 }

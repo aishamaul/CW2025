@@ -5,6 +5,7 @@ import com.comp2042.game.bricks.BrickGenerator;
 import com.comp2042.game.scoring.Score;
 import com.comp2042.model.ClearRow;
 import com.comp2042.model.ViewData;
+import java.util.List;
 
 import java.awt.*;
 
@@ -97,5 +98,5 @@ public interface Board {
 
     Point getCurrentOffset();
 
-    void explode(int x, int y, int radius);
+    List<Point> explode(int x, int y, int radius);
 }

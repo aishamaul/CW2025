@@ -3,6 +3,10 @@ package com.comp2042.game.mode;
 import com.comp2042.game.core.Board;
 import com.comp2042.game.core.GameLoopManager;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public interface GameMode {
     /**
      * @return The display name of the level
@@ -38,5 +42,8 @@ public interface GameMode {
     }
 
     default void onStart(Board board) {}
-    default void onBrickMerged(Board board) {}
+
+    default List<Point> onBrickMerged(Board board) {
+        return new ArrayList<>();
+    }
 }

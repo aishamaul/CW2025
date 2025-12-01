@@ -202,12 +202,24 @@ public class SimpleBoard implements Board {
     }
 
     @Override
-    public void explode(int x, int y, int radius) {
+    public List<Point> explode(int x, int y, int radius) {
+        List<Point> explodedPoints = new ArrayList<>();
+        // get a copy to check presence before clearing
+        int[][] currentMatrix = grid.getMatrix();
+
         for (int i = x - radius; i <= x + radius; i++) {
             for (int j = y - radius; j <= y + radius; j++) {
-                grid.clearCell(i, j);
+                // boundary checks
+                if (i >= 0 && i < grid.getWidth() && j >= 0 && j < grid.getHeight()) {
+                    // only add if there was a block there
+                    if (currentMatrix[j][i] != 0) {
+                        explodedPoints.add(new Point(i, j));
+                        grid.clearCell(i, j);
+                    }
+                }
             }
         }
+        return explodedPoints;
     }
 
 }
