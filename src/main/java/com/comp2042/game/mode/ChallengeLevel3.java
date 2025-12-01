@@ -7,12 +7,14 @@ import com.comp2042.game.core.GameLoopManager;
 import com.comp2042.game.core.GarbageRowFactory;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChallengeLevel3  implements GameMode{
 
     private static final int GOAL_LINES = 25;
     private final GarbageRowFactory garbageFactory = new GarbageRowFactory();
+
 
     @Override
     public String getName(){
@@ -56,7 +58,7 @@ public class ChallengeLevel3  implements GameMode{
             // Return the points that were exploded
             return board.explode(x, y, 1);
         }
-        return new java.util.ArrayList<>();
+        return new ArrayList<>();
     }
 
 

@@ -8,6 +8,7 @@ import com.comp2042.game.bricks.BrickGenerator;
 import com.comp2042.game.bricks.RandomBrickGenerator;
 import com.comp2042.model.ClearRow;
 import com.comp2042.model.ViewData;
+import com.comp2042.util.ExplosionManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class SimpleBoard implements Board {
     private final Score score;
     private final RowScoreCalculator scoreCalculator;
     private Brick heldBrick;
+    private final ExplosionManager explosionManager;
 
     public SimpleBoard(int width, int height) {
         this.grid = new BoardGrid(width, height);
@@ -33,6 +35,7 @@ public class SimpleBoard implements Board {
         this.brickRotator = new BrickRotator();
         this.score = new Score();
         this.scoreCalculator = new RowScoreCalculator();
+        this.explosionManager = new ExplosionManager();
 
     }
 
@@ -203,23 +206,7 @@ public class SimpleBoard implements Board {
 
     @Override
     public List<Point> explode(int x, int y, int radius) {
-        List<Point> explodedPoints = new ArrayList<>();
-        // get a copy to check presence before clearing
-        int[][] currentMatrix = grid.getMatrix();
-
-        for (int i = x - radius; i <= x + radius; i++) {
-            for (int j = y - radius; j <= y + radius; j++) {
-                // boundary checks
-                if (i >= 0 && i < grid.getWidth() && j >= 0 && j < grid.getHeight()) {
-                    // only add if there was a block there
-                    if (currentMatrix[j][i] != 0) {
-                        explodedPoints.add(new Point(i, j));
-                        grid.clearCell(i, j);
-                    }
-                }
-            }
-        }
-        return explodedPoints;
+        return explosionManager.processExplosion(grid, x, y, radius);
     }
 
 }
