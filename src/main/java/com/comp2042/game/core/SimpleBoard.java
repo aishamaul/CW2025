@@ -22,8 +22,7 @@ public class SimpleBoard implements Board {
 
     private final BoardGrid grid;
     private BrickGenerator brickGenerator;
-    private final BrickRotator brickRotator;
-    private Point currentOffset;
+    private final ActivePiece activePiece;
     private final Score score;
     private final RowScoreCalculator scoreCalculator;
     private Brick heldBrick;
@@ -32,71 +31,51 @@ public class SimpleBoard implements Board {
     public SimpleBoard(int width, int height) {
         this.grid = new BoardGrid(width, height);
         this.brickGenerator = new RandomBrickGenerator();
-        this.brickRotator = new BrickRotator();
+        this.activePiece = new ActivePiece();
         this.score = new Score();
         this.scoreCalculator = new RowScoreCalculator();
         this.explosionManager = new ExplosionManager();
 
     }
 
-    private boolean tryMove(int dX, int dY) {
-        int  targetX = (int) currentOffset.getX() + dX;
-        int targetY = (int) currentOffset.getY() + dY;
-
-        if(!grid.intersects(brickRotator.getCurrentShape(), targetX, targetY)){
-            currentOffset.translate(dX, dY);
-            return true;
-        }
-        return false;
-
-    }
-
-    private int calculateGhostY(){
-        return grid.calculateDropPosition(
-                brickRotator.getCurrentShape(),
-                (int) currentOffset.getX(),
-                (int) currentOffset.getY()
-        );
-    }
 
     @Override
     public boolean moveBrickDown() {
-        return tryMove(0, 1);
+        return activePiece.move(0, 1, grid);
     }
 
 
     @Override
     public boolean moveBrickLeft() {
-        return tryMove(-1, 0);
+        return activePiece.move(-1, 0, grid);
     }
 
     @Override
     public boolean moveBrickRight() {
-        return tryMove(1, 0);
+        return activePiece.move(1, 0, grid);
     }
 
     @Override
     public int dropBrick(){
-        int startY = (int) currentOffset.getY();
+        int startY = (int) activePiece.getY();
 
-        while (tryMove(0,1)) {
+        while (activePiece.move(0,1, grid)) {
             //loop body empty, tryMove updates state
         }
-        return(int) currentOffset.getY() - startY;
+        return(int) activePiece.getY() - startY;
 
     }
 
     @Override
     public boolean rotateLeftBrick() {
-        return brickRotator.tryRotate(grid, currentOffset);
+        return activePiece.rotate(grid);
     }
 
     @Override
     public boolean createNewBrick() {
         Brick currentBrick = brickGenerator.getBrick();
-        brickRotator.setBrick(currentBrick);
-        currentOffset = new Point(GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
-        return grid.intersects(brickRotator.getCurrentShape(), (int)currentOffset.getX(), (int)currentOffset.getY());
+        activePiece.spawn(currentBrick, GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
+        return grid.intersects(activePiece.getShape(), activePiece.getX(), activePiece.getY());
     }
 
     @Override
@@ -106,7 +85,7 @@ public class SimpleBoard implements Board {
 
     @Override
     public void holdBrick(){
-        Brick currentBrick = brickRotator.getBrick();
+        Brick currentBrick = activePiece.getBrick();
 
         if(heldBrick == null){
             // case 1: held is empty
@@ -124,9 +103,7 @@ public class SimpleBoard implements Board {
             brickGenerator.returnBrick(currentBrick);
 
             //set the current brick to the one that was in hold
-            brickRotator.setBrick(brickFromHold);
-            currentOffset = new Point(GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
-
+            activePiece.spawn(brickFromHold, GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
         }
     }
 
@@ -142,10 +119,10 @@ public class SimpleBoard implements Board {
         int [][] holdShape = (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
 
         return new ViewData(
-                brickRotator.getCurrentShape(),
-                (int) currentOffset.getX(),
-                (int) currentOffset.getY(),
-                calculateGhostY(),
+                activePiece.getShape(),
+                activePiece.getX(),
+                activePiece.getY(),
+                activePiece.calculateGhostY(grid),
                 nextShapes,
                 holdShape
         );
@@ -153,7 +130,7 @@ public class SimpleBoard implements Board {
 
     @Override
     public void mergeBrickToBackground() {
-        grid.merge(brickRotator.getCurrentShape(), (int)currentOffset.getX(), (int)currentOffset.getY());
+        grid.merge(activePiece.getShape(), activePiece.getX(), activePiece.getY());
     }
 
     @Override
@@ -196,12 +173,12 @@ public class SimpleBoard implements Board {
 
     @Override
     public Point getCurrentOffset(){
-        return new Point(currentOffset);
+        return new Point(activePiece.getX(), activePiece.getY());
     }
 
     @Override
     public Brick getCurrentBrick() {
-        return brickRotator.getBrick();
+        return activePiece.getBrick();
     }
 
     @Override
