@@ -181,4 +181,25 @@ public class GameRenderer {
     public void playLandingAnimation(){
         gridAnimator.animateBoardShake(this.gamePanel);
     }
+
+    public void playHardDropParticleEffect(ViewData brick) {
+        int[][] shape = brick.getBrickData();
+        int brickX = brick.getxPosition();
+        int brickY = brick.getyPosition();
+
+        for (int row = 0; row < shape.length; row++) {
+            for (int col = 0; col < shape[row].length; col++) {
+                if (shape[row][col] != 0) {
+                    // calculate display coordinates for this block
+                    double screenX = (brickX + col) * (GameConfig.BRICK_SIZE + 2); // +2 for gap
+                    double screenY = (brickY + row - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + 2);
+
+                    if (screenY >= 0) {
+                        Color c = (Color) brickColor.getFillColor(shape[row][col]);
+                        gridAnimator.spawnSplashParticles(gamePanel, screenX, screenY, c);
+                    }
+                }
+            }
+        }
+    }
 }

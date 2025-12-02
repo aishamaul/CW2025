@@ -213,4 +213,38 @@ public class GridAnimator {
 
 
     }
+
+    public void spawnSplashParticles(Pane parentPane, double x, double y, Color color) {
+        int particleCount = 2;
+        for (int i=0; i < particleCount; i++){
+            double size = 2+ random.nextDouble() * 4;
+            Rectangle p = new Rectangle(size, size, color);
+
+            p.setTranslateX(x + 10);
+            p.setTranslateY(y + 20);
+
+            parentPane.getChildren().add(p);
+
+            double angle = 270 + (random.nextDouble() - 0.5) * 60;
+            double velocity = 50 + random.nextDouble() * 100;
+
+            double rad = Math.toRadians(angle);
+            double moveX = Math.cos(rad) * velocity;
+            double moveY = Math.sin(rad) * velocity;
+
+            // animation
+            TranslateTransition move = new TranslateTransition(Duration.millis(300 + random.nextDouble() * 200), p);
+            move.setByX(moveX);
+            move.setByY(moveY);
+            move.setInterpolator(Interpolator.EASE_OUT);
+
+            FadeTransition fade = new FadeTransition(Duration.millis(400), p);
+            fade.setFromValue(1.0);
+            fade.setToValue(0.0);
+
+            ParallelTransition anim = new ParallelTransition(move, fade);
+            anim.setOnFinished(e -> parentPane.getChildren().remove(p));
+            anim.play();
+        }
+    }
 }

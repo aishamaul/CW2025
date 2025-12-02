@@ -48,4 +48,8 @@ public class GameViewAdapter {
     public void onBrickLanded(){
         view.onBrickLanded();
     }
+
+    public void onHardDrop(ViewData brick){
+        view.onHardDrop(brick);
+    }
 }

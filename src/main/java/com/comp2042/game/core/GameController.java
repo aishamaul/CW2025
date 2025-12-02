@@ -50,6 +50,7 @@ public class GameController implements InputEventListener {
     public DownData onDropEvent(MoveEvent event){
         int rowsDropped = board.dropBrick();
         lifecycleManager.getScoreEvaluator().scoreDrop(rowsDropped, board.getScore());
+        lifecycleManager.getViewAdapter().onHardDrop(board.getViewData());
         return lifecycleManager.processTurnEnd(currentMode);
     }
 

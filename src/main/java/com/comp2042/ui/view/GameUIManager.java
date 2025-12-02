@@ -88,4 +88,8 @@ public class GameUIManager {
         gameRenderer.playLandingAnimation();
     }
 
+    public void animateHardDrop(ViewData brick){
+        gameRenderer.playHardDropParticleEffect(brick);
+    }
+
 }

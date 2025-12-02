@@ -462,5 +462,10 @@ public class GuiController implements Initializable, GameView {
         uiManager.animateLanding();
     }
 
+    @Override
+    public void  onHardDrop(ViewData brick){
+        uiManager.animateHardDrop(brick);
+    }
+
 
 }

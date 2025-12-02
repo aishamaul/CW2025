@@ -29,4 +29,6 @@ public interface GameView {
     void onExplosion(List<java.awt.Point> explodedPoints, Runnable onAnimationFinished);
 
     void onBrickLanded();
+
+    void onHardDrop(ViewData brick);
 }
