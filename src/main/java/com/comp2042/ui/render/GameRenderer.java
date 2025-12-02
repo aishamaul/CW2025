@@ -178,4 +178,7 @@ public class GameRenderer {
         gridAnimator.animateExplosion(this.displayMatrix, explodedPoints, onFinished);
     }
 
+    public void playLandingAnimation(){
+        gridAnimator.animateBoardShake(this.gamePanel);
+    }
 }

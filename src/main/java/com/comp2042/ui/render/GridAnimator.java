@@ -196,4 +196,21 @@ public class GridAnimator {
         rect.setScaleX(1.0);
         rect.setScaleY(1.0);
     }
+
+    public void animateBoardShake (Node boardNode){
+        //push down quickly
+        TranslateTransition down = new TranslateTransition(Duration.millis(50), boardNode);
+        down.setByY(5.0);
+        down.setInterpolator(Interpolator.EASE_OUT);
+
+        //return to normal (bounce back)
+        TranslateTransition up = new TranslateTransition(Duration.millis(120), boardNode);
+        up.setByY(-5.0);
+        up.setInterpolator(Interpolator.EASE_IN);
+
+        SequentialTransition shake = new SequentialTransition(down, up);
+        shake.play();
+
+
+    }
 }

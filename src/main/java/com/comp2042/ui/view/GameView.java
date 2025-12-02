@@ -27,4 +27,6 @@ public interface GameView {
     void onLineClear(List<Integer> lines, Runnable onAnimationFinished);
 
     void onExplosion(List<java.awt.Point> explodedPoints, Runnable onAnimationFinished);
+
+    void onBrickLanded();
 }

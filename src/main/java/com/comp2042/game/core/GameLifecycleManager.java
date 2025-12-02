@@ -27,6 +27,8 @@ public class GameLifecycleManager {
     public DownData processTurnEnd(GameMode mode) {
         board.mergeBrickToBackground();
 
+        viewAdapter.onBrickLanded();
+
         // check for Bomb Logic
         List<Point> explodedPoints = new ArrayList<>();
         if (mode != null) {

@@ -84,4 +84,8 @@ public class GameUIManager {
         gameRenderer.animateExplosion(explodedPoints, onFinished);
     }
 
+    public void animateLanding(){
+        gameRenderer.playLandingAnimation();
+    }
+
 }

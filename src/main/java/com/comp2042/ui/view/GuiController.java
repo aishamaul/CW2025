@@ -457,5 +457,10 @@ public class GuiController implements Initializable, GameView {
         });
     }
 
+    @Override
+    public void onBrickLanded(){
+        uiManager.animateLanding();
+    }
+
 
 }

@@ -44,4 +44,8 @@ public class GameViewAdapter {
     public void onExplosion(java.util.List<java.awt.Point> explodedPoints, Runnable onAnimationFinished) {
         view.onExplosion(explodedPoints, onAnimationFinished);
     }
+
+    public void onBrickLanded(){
+        view.onBrickLanded();
+    }
 }
