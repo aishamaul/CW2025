@@ -8,9 +8,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomBrickGenerator implements BrickGenerator {
 
-    private final List<Brick> brickList;
+    protected final List<Brick> brickList;
 
-    private final Deque<Brick> nextBricks = new ArrayDeque<>();
+    protected final Deque<Brick> nextBricks = new ArrayDeque<>();
 
     public RandomBrickGenerator() {
         brickList = new ArrayList<>();
@@ -21,30 +21,34 @@ public class RandomBrickGenerator implements BrickGenerator {
         brickList.add(new SBrick());
         brickList.add(new TBrick());
         brickList.add(new ZBrick());
-        nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
-        nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
 
+        fillQueue();
+
+    }
+
+    protected void fillQueue(){
         while (nextBricks.size()<4){
             nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
+
         }
     }
 
     @Override
     public Brick getBrick() {
         if (nextBricks.size() <= 1) {
-            nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
+            fillQueue();
         }
         Brick brick = nextBricks.poll();
-
-        while(nextBricks.size()<4){
-            nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
-        }
+        fillQueue();
         return brick;
     }
 
     @Override
     public Brick getNextBrick() {
-        return nextBricks.peek();
+            if(nextBricks.isEmpty()){
+                fillQueue();
+            }
+            return nextBricks.peek();
     }
 
     @Override
