@@ -119,8 +119,6 @@ public class GuiController implements Initializable, GameView {
 
     private GameMode currentGameMode;
 
-    private boolean wasFrozen = false;
-
     private FreezeOverlayManager freezeOverlayManager;
 
 
