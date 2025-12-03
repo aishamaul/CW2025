@@ -122,7 +122,9 @@ public class GuiController implements Initializable, GameView {
 
     private FreezeOverlayManager freezeOverlayManager;
 
-    private InputController inputController;
+    private InputController inputController = new InputController();
+
+    private final LevelStartManager levelStartManager = new LevelStartManager();
 
 
     @Override
@@ -135,14 +137,11 @@ public class GuiController implements Initializable, GameView {
 
         WindowScaler.bindScaling(rootPane, contentPane);
 
-        if (levelMenusController != null) {
-            levelMenusController.setCallbacks(
-                    this::startCurrentLevel,  // onStart
-                    this::startNextLevel,     // onNext
-                    this :: navigateToHome    // onExit (requires wrapping ActionEvent)
-            );
-            levelMenusController.hideAll();
-        }
+        levelStartManager.registerCallbacks(levelMenusController,
+                this::startCurrentLevel,
+                this::startNextLevel,
+                this::navigateToHome);
+
         if (pauseMenu != null) pauseMenu.setVisible(false);
     }
 
@@ -167,6 +166,7 @@ public class GuiController implements Initializable, GameView {
 
         rootPane.setFocusTraversable(true);
         rootPane.requestLayout();
+
         inputController.bindInputs(rootPane, this, dispatcher, isPause, isGameOver, this::moveDown, this::newGame, this::togglePauseMenu);
 
         gameLoopManager = new GameLoopManager(() -> {
@@ -203,7 +203,7 @@ public class GuiController implements Initializable, GameView {
 
     private void showLevelStartScreen() {
         isPause.setValue(true);
-        levelMenusController.showStartScreen(currentGameMode.getName());
+        levelStartManager.showStartScreen(levelMenusController, currentGameMode.getName());
     }
 
     public void startCurrentLevel() {
