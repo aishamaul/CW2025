@@ -7,6 +7,7 @@ import com.comp2042.game.events.InputEventListener;
 import com.comp2042.ui.components.GameOverPanel;
 import com.comp2042.ui.components.NotificationManager;
 import com.comp2042.ui.input.EventDispatcher;
+import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.input.InputHandler;
 import com.comp2042.ui.render.GameRenderer;
 import javafx.animation.FadeTransition;
@@ -121,6 +122,8 @@ public class GuiController implements Initializable, GameView {
 
     private FreezeOverlayManager freezeOverlayManager;
 
+    private InputController inputController;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -164,14 +167,7 @@ public class GuiController implements Initializable, GameView {
 
         rootPane.setFocusTraversable(true);
         rootPane.requestLayout();
-        rootPane.setOnKeyPressed(new InputHandler(
-                this,
-                dispatcher,
-                isPause,
-                isGameOver,
-                this::moveDown,
-                this:: newGame,
-                this::togglePauseMenu));
+        inputController.bindInputs(rootPane, this, dispatcher, isPause, isGameOver, this::moveDown, this::newGame, this::togglePauseMenu);
 
         gameLoopManager = new GameLoopManager(() -> {
             boolean applyGravity = dispatcher.onGameTick(currentGameMode);
