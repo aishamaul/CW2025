@@ -121,12 +121,16 @@ public class GuiController implements Initializable, GameView {
 
     private boolean wasFrozen = false;
 
+    private FreezeOverlayManager freezeOverlayManager;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<GridPane> nextBrickGrids = Arrays.asList(nextBrick1, nextBrick2, nextBrick3);
 
         this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid, groupNotification, scoreLabel);
+
+        this.freezeOverlayManager = new FreezeOverlayManager(timerLabel, overlayMessageLabel);
 
         WindowScaler.bindScaling(rootPane, contentPane);
 
@@ -177,31 +181,7 @@ public class GuiController implements Initializable, GameView {
                 moveDown(EventType.DOWN, EventSource.THREAD);
             }
 
-            if (currentGameMode != null){
-                String status = currentGameMode.getOverlayMessage();
-
-                // text display (bricks frozen, timer hidden)
-                if ("SHOW_TEXT".equals(status)) {
-                    timerLabel.setVisible(false); // ensure numbers don't overlap
-
-                    if (!wasFrozen) {
-                        showFreezeNotification(); // trigger the text animation once
-                        wasFrozen = true;
-                    }
-                }
-
-                // countdown (bricks frozen, timer visible, text gone)
-                else if (status != null){
-                    timerLabel.setText(status);
-                    timerLabel.setVisible(true);
-                    wasFrozen = true;
-                }
-
-                else{
-                    timerLabel.setVisible(false);
-                    wasFrozen = false;
-                }
-            }
+            freezeOverlayManager.updateOverlay(currentGameMode);
         });
 
         this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
