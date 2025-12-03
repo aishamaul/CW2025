@@ -17,23 +17,19 @@ public class GameLifecycleManager {
     private final Board board;
     private final ScoreEvaluator scoreEvaluator;
     private final GameViewAdapter viewAdapter;
+    private final ExplosionHandler explosionHandler;
 
     public GameLifecycleManager(Board board, ScoreEvaluator scoreEvaluator, GameViewAdapter viewAdapter) {
         this.board = board;
         this.scoreEvaluator = scoreEvaluator;
         this.viewAdapter = viewAdapter;
+        this.explosionHandler = new ExplosionHandler();
     }
 
     public DownData processTurnEnd(GameMode mode) {
         board.mergeBrickToBackground();
 
         viewAdapter.onBrickLanded();
-
-        // check for Bomb Logic
-        List<Point> explodedPoints = new ArrayList<>();
-        if (mode != null) {
-            explodedPoints = mode.onBrickMerged(board);
-        }
 
         // define logic to run AFTER explosion (Line clears & New Brick)
         Runnable afterExplosionLogic = () -> {
@@ -54,16 +50,7 @@ public class GameLifecycleManager {
             }
         };
 
-        // trigger Animation or Run Immediately
-        if (!explodedPoints.isEmpty()) {
-            viewAdapter.onExplosion(explodedPoints, () -> {
-                // refresh background to show holes made by bomb before checking lines
-                viewAdapter.refreshGameBackground(board.getBoardMatrix());
-                afterExplosionLogic.run();
-            });
-        } else {
-            afterExplosionLogic.run();
-        }
+        explosionHandler.handleExplosion(mode, board, viewAdapter, afterExplosionLogic);
 
         // return current state immediately (Animation handles visual updates asynchronously)
         return new DownData(new ClearRow(0, board.getBoardMatrix(), 0, new ArrayList<>()), board.getViewData());
