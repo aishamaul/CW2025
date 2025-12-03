@@ -18,12 +18,14 @@ public class GameLifecycleManager {
     private final ScoreEvaluator scoreEvaluator;
     private final GameViewAdapter viewAdapter;
     private final ExplosionHandler explosionHandler;
+    private final LineClearProcessor lineClearProcessor;
 
     public GameLifecycleManager(Board board, ScoreEvaluator scoreEvaluator, GameViewAdapter viewAdapter) {
         this.board = board;
         this.scoreEvaluator = scoreEvaluator;
         this.viewAdapter = viewAdapter;
         this.explosionHandler = new ExplosionHandler();
+        this.lineClearProcessor = new LineClearProcessor();
     }
 
     public DownData processTurnEnd(GameMode mode) {
@@ -31,23 +33,12 @@ public class GameLifecycleManager {
 
         viewAdapter.onBrickLanded();
 
-        // define logic to run AFTER explosion (Line clears & New Brick)
         Runnable afterExplosionLogic = () -> {
-            ClearRow clearRow = board.clearRows();
-
-            if (clearRow.getLinesRemoved() > 0) {
-                scoreEvaluator.scoreLineClear(clearRow.getScoreBonus(), board.getScore());
-                board.getScore().addLines(clearRow.getLinesRemoved());
-                viewAdapter.showScoreNotification(clearRow.getScoreBonus());
-                viewAdapter.onLineClear(clearRow.getClearedIndices(), ()->{
-                    viewAdapter.refreshGameBackground(board.getBoardMatrix());
-                });
-            } else {
-                viewAdapter.refreshGameBackground(board.getBoardMatrix());
-            }
-            if (board.createNewBrick()) {
-                viewAdapter.gameOver();
-            }
+            lineClearProcessor.processLineClears(board, scoreEvaluator, viewAdapter, () ->{
+                if (board.createNewBrick()) {
+                    viewAdapter.gameOver();
+                }
+            });
         };
 
         explosionHandler.handleExplosion(mode, board, viewAdapter, afterExplosionLogic);
