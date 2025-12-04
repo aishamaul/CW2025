@@ -126,6 +126,8 @@ public class GuiController implements Initializable, GameView {
 
     private final LevelStartManager levelStartManager = new LevelStartManager();
 
+    private GameFlowCoordinator flowCoordinator;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -137,10 +139,6 @@ public class GuiController implements Initializable, GameView {
 
         WindowScaler.bindScaling(rootPane, contentPane);
 
-        levelStartManager.registerCallbacks(levelMenusController,
-                this::startCurrentLevel,
-                this::startNextLevel,
-                this::navigateToHome);
 
         if (pauseMenu != null) pauseMenu.setVisible(false);
     }
@@ -150,6 +148,10 @@ public class GuiController implements Initializable, GameView {
 
         if (dispatcher != null) {
             dispatcher.setGameMode(mode);
+        }
+
+        if (flowCoordinator != null) {
+            flowCoordinator.setCurrentMode(mode);
         }
     }
 
@@ -161,24 +163,32 @@ public class GuiController implements Initializable, GameView {
     @Override
     public void initGameView(int[][] boardMatrix, ViewData brick) {
         uiManager.initGameView(boardMatrix, brick);
-
-        dispatcher.setGameMode(currentGameMode);
-
         rootPane.setFocusTraversable(true);
         rootPane.requestLayout();
-
-        inputController.bindInputs(rootPane, this, dispatcher, isPause, isGameOver, this::moveDown, this::newGame, this::togglePauseMenu);
 
         gameLoopManager = new GameLoopManager(() -> {
             boolean applyGravity = dispatcher.onGameTick(currentGameMode);
             if (applyGravity) {
                 moveDown(EventType.DOWN, EventSource.THREAD);
             }
-
             freezeOverlayManager.updateOverlay(currentGameMode);
         });
 
+        this.flowCoordinator = new GameFlowCoordinator(
+                gameLoopManager, levelMenusController, isPause, isGameOver,
+                this::newGame, this::setGameMode
+        );
+        this.flowCoordinator.setCurrentMode(currentGameMode);
+
         this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
+
+        inputController.bindInputs(rootPane, this, dispatcher, isPause, isGameOver,
+                this::moveDown, this::newGame, this::togglePauseMenu);
+
+        levelStartManager.registerCallbacks(levelMenusController,
+                flowCoordinator::startCurrentLevel,
+                flowCoordinator::startNextLevel,
+                () -> flowCoordinator.navigateToHome(null));
 
         if (currentGameMode != null){
             showLevelStartScreen();
@@ -204,35 +214,6 @@ public class GuiController implements Initializable, GameView {
     private void showLevelStartScreen() {
         isPause.setValue(true);
         levelStartManager.showStartScreen(levelMenusController, currentGameMode.getName());
-    }
-
-    public void startCurrentLevel() {
-        if (levelMenusController != null) {
-            levelMenusController.hideAll();
-        }
-
-        isPause.setValue(false);
-        gameLoopManager.play();
-        rootPane.requestFocus();
-    }
-
-    public void startNextLevel() {
-        if (levelMenusController != null) levelMenusController.hideAll();
-
-        if (currentGameMode != null && currentGameMode.getNextLevel() != null) {
-            setGameMode(currentGameMode.getNextLevel());
-            newGame();;
-        } else{
-            goToHome(null);
-        }
-
-    }
-
-    private void handleLevelCompleted() {
-        gameLoopManager.stop();
-        // Delegate to sub-controller
-        boolean hasNext = (currentGameMode.getNextLevel() != null);
-        levelMenusController.showLevelComplete(hasNext);
     }
 
 
@@ -283,7 +264,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void gameOver() {
-        gameLoopManager.stop();
+        flowCoordinator.handleGameOver();
 
         gameOverMenu.setVisible(true);
         gameOverMenu.toFront();
@@ -311,7 +292,7 @@ public class GuiController implements Initializable, GameView {
             onAnimationFinished.run();
             int currentLines = Integer.parseInt(linesLabel.getText());
             if (currentGameMode != null && currentGameMode.isWinConditionMet(currentLines)) {
-                handleLevelCompleted();
+                flowCoordinator.handleLevelComplete();
             } else{
                 isPause.setValue(Boolean.FALSE);
                 if (brickPanel != null) brickPanel.setVisible(true);
@@ -371,32 +352,9 @@ public class GuiController implements Initializable, GameView {
         newGame();
     }
 
-    private void navigateToHome() {
-        if (gameLoopManager != null) gameLoopManager.stop();
-        try {
-            // Use rootPane to find the window since we might not have an event
-            Stage stage = (Stage) rootPane.getScene().getWindow();
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getClassLoader().getResource("home.fxml"));
-            Parent root = loader.load();
-            stage.setScene(new Scene(root, 750, 650));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     public void goToHome(ActionEvent actionEvent){
-        //stop the game loop before leaving
-        if (gameLoopManager != null){
-            gameLoopManager.stop();
-        }
-        try{
-            //load  the  home screen
-            SceneNavigator.switchTo("home.fxml", actionEvent);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        flowCoordinator.navigateToHome(actionEvent);
     }
 
 
