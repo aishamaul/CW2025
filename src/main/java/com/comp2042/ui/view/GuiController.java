@@ -114,7 +114,6 @@ public class GuiController implements Initializable, GameView {
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
 
-    private boolean isClearingLines = false;
 
     private boolean isClassicMode = false;
 
@@ -127,6 +126,8 @@ public class GuiController implements Initializable, GameView {
     private final LevelStartManager levelStartManager = new LevelStartManager();
 
     private GameFlowCoordinator flowCoordinator;
+
+    private AnimationCoordinator animationCoordinator;
 
 
     @Override
@@ -180,6 +181,14 @@ public class GuiController implements Initializable, GameView {
         );
         this.flowCoordinator.setCurrentMode(currentGameMode);
 
+        this.animationCoordinator = new AnimationCoordinator(
+                gameLoopManager, isPause,
+                (visible) -> {
+                    if (brickPanel != null) brickPanel.setVisible(visible);
+                    if (ghostPanel != null) ghostPanel.setVisible(visible);
+                }
+        );
+
         this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
 
         inputController.bindInputs(rootPane, this, dispatcher, isPause, isGameOver,
@@ -219,7 +228,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void refreshBrick(ViewData brick) {
-        if (isPause.getValue() == Boolean.FALSE ||  isClearingLines) {
+        if (isPause.getValue() == Boolean.FALSE || animationCoordinator.isAnimating()) {
             uiManager.refresh(brick);
         }
     }
@@ -279,34 +288,23 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void onLineClear(List<Integer> lines, Runnable onAnimationFinished){
-        isClearingLines = true;
-        isPause.setValue(Boolean.TRUE);
-        gameLoopManager.pause();
-
-        if (brickPanel != null) brickPanel.setVisible(false);
-        if (ghostPanel != null) ghostPanel.setVisible(false);
-
-        uiManager.animateClear(lines, ()->{
-            isClearingLines = false;
-
-            onAnimationFinished.run();
-            int currentLines = Integer.parseInt(linesLabel.getText());
-            if (currentGameMode != null && currentGameMode.isWinConditionMet(currentLines)) {
-                flowCoordinator.handleLevelComplete();
-            } else{
-                isPause.setValue(Boolean.FALSE);
-                if (brickPanel != null) brickPanel.setVisible(true);
-                if (ghostPanel != null) ghostPanel.setVisible(true);
-                onAnimationFinished.run();
-                gameLoopManager.play();
-            }
-        });
+        Runnable finisher = animationCoordinator.createFinishes(onAnimationFinished,
+                ()->{
+                        int currentLines = Integer.parseInt(linesLabel.getText());
+                        if(currentGameMode != null && currentGameMode.isWinConditionMet(currentLines)){
+                            flowCoordinator.handleLevelComplete();
+                            return true;
+                        }
+                        return false;
+                });
+        animationCoordinator.runAnimationFlow(
+                () -> uiManager.animateClear(lines, finisher)
+        );
     }
 
     public void newGame() {
-        gameLoopManager.stop();
+        if (gameLoopManager != null) gameLoopManager.stop();
 
-        isClearingLines = false;
         if (brickPanel != null) brickPanel.setVisible(true);
         if (ghostPanel != null) ghostPanel.setVisible(true);
 
@@ -328,7 +326,7 @@ public class GuiController implements Initializable, GameView {
     }
 
     private void togglePauseMenu() {
-        if (isClearingLines) return;
+        if (animationCoordinator != null && animationCoordinator.isAnimating()) return;
         pauseStateManager.togglePause();
     }
 
@@ -365,28 +363,11 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void onExplosion(List<java.awt.Point> explodedPoints, Runnable onAnimationFinished) {
-        // pause game logic/input
-        isPause.setValue(Boolean.TRUE);
-        gameLoopManager.pause();
+        Runnable finisher = animationCoordinator.createFinishes(onAnimationFinished, ()-> false);
 
-        // hide active components temporarily
-        if (brickPanel != null) brickPanel.setVisible(false);
-        if (ghostPanel != null) ghostPanel.setVisible(false);
-
-        uiManager.animateExplosion(explodedPoints, () -> {
-            // animation done
-            isPause.setValue(Boolean.FALSE);
-
-            // restore visibility
-            if (brickPanel != null) brickPanel.setVisible(true);
-            if (ghostPanel != null) ghostPanel.setVisible(true);
-
-            // run callback (which will likely trigger line clears or new brick)
-            onAnimationFinished.run();
-
-            // resume loop
-            gameLoopManager.play();
-        });
+        animationCoordinator.runAnimationFlow(
+                () -> uiManager.animateExplosion(explodedPoints, finisher)
+        );
     }
 
     @Override
