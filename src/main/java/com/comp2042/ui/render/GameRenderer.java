@@ -230,9 +230,18 @@ public class GameRenderer {
         }
 
 
-        Point2D sceneOrigin = gamePanel.localToScene(0,0);
-        Point2D parentOrigin = brickPanel.getParent().sceneToLocal(sceneOrigin);
+        if (displayMatrix == null || displayMatrix.length <= GameConfig.HIDDEN_ROWS
+                || displayMatrix[GameConfig.HIDDEN_ROWS].length == 0) {
+            return false;
+        }
 
+        Rectangle referenceCell = displayMatrix[GameConfig.HIDDEN_ROWS][0];
+        if (referenceCell == null) {
+            return false;
+        }
+
+        Bounds cellBounds = referenceCell.localToScene(referenceCell.getBoundsInLocal());
+        Point2D parentOrigin = brickPanel.getParent().sceneToLocal(cellBounds.getMinX(), cellBounds.getMinY());
         gridOriginX = parentOrigin.getX();
         gridOriginY = parentOrigin.getY();
         return true;
