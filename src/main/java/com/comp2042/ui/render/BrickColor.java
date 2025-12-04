@@ -2,48 +2,47 @@ package com.comp2042.ui.render;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 
 public class BrickColor {
 
-    public Paint getFillColor(int i) {
+    public Color getBaseColor(int i) {
         Paint returnPaint;
 
         switch (i) {
-            case 0:
-                returnPaint = Color.TRANSPARENT;
-                break;
             case 1:
-                returnPaint = Color.ORANGE;
-                break;
+                return Color.ORANGE;
             case 2:
-                returnPaint = Color.ORANGERED;
-                break;
+                return Color.ORANGERED;
             case 3:
-                returnPaint = Color.YELLOW;
-                break;
+                return Color.YELLOW;
             case 4:
-                returnPaint = Color.GREENYELLOW;
-                break;
+                return Color.GREENYELLOW;
             case 5:
-                returnPaint = Color.AQUA;
-                break;
+                return Color.AQUA;
             case 6:
-                returnPaint = Color.BLUEVIOLET;
-                break;
+                return Color.BLUEVIOLET;
             case 7:
-                returnPaint = Color.DEEPPINK;
-                break;
+                return Color.DEEPPINK;
             case 8:
-                returnPaint = Color.GREY;
-                break;
+                return Color.GREY;
             case 9:
-                returnPaint = Color.RED;
-                break;
+                return Color.RED;
             default:
-                returnPaint = Color.WHITE;
-                break;
+                return Color.WHITE;
         }
-        return returnPaint;
+    }
+
+    public void applyBrickStyle(Rectangle rectangle, int colorCode) {
+        rectangle.getStyleClass().removeIf(name -> name.startsWith("brick-") || name.equals("brick"));
+        rectangle.getStyleClass().add("brick");
+        if (colorCode <= 0) {
+            rectangle.getStyleClass().add("brick-empty");
+        } else if (colorCode <= 9) {
+            rectangle.getStyleClass().add("brick-" + colorCode);
+        } else {
+            rectangle.getStyleClass().add("brick-unknown");
+        }
     }
 }
 

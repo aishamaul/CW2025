@@ -4,8 +4,10 @@ import javafx.animation.*;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.scene.paint.Paint;
 
 import java.awt.*;
 import java.util.List;
@@ -27,7 +29,8 @@ public class GridAnimator {
                 if (rect == null) continue;
 
                 // flash
-                FillTransition flash = new FillTransition(Duration.millis(50), rect, (Color) rect.getFill(), Color.WHITE);
+                Color startColor = rect.getFill() instanceof Color ? (Color) rect.getFill() : Color.WHITE;
+                FillTransition flash = new FillTransition(Duration.millis(50), rect, startColor, Color.WHITE);
 
                 // move: calculate randomness inline
                 TranslateTransition move = new TranslateTransition(Duration.millis(200), rect);
@@ -100,7 +103,8 @@ public class GridAnimator {
                                          int col, int row) {
 
         // instant flash
-        FillTransition flash = new FillTransition(Duration.millis(20), rect, (Color) rect.getFill(), Color.WHITE);
+        Color startColor = extractColor(rect.getFill());
+        FillTransition flash = new FillTransition(Duration.millis(20), rect, startColor, Color.WHITE);
 
         // calculate outward vector
         double dx = col - centerX;
@@ -139,14 +143,14 @@ public class GridAnimator {
 
         // increased particle count
         int particleCount = 8;
+        Paint sourceFill = sourceRect.getFill() != null ? sourceRect.getFill() : Color.WHITE;
 
         for (int i = 0; i < particleCount; i++) {
-            int colorIndex = random.nextInt(7) + 1;
-            Color pColor = (Color) brickColor.getFillColor(colorIndex);
 
             // varied sizes
             double pSize = 3 + random.nextDouble() * 8;
-            Rectangle particle = new Rectangle(pSize, pSize, pColor);
+            Rectangle particle = new Rectangle(pSize, pSize);
+            particle.setFill(sourceFill);
 
             particle.setTranslateX(originX);
             particle.setTranslateY(originY);
@@ -246,5 +250,15 @@ public class GridAnimator {
             anim.setOnFinished(e -> parentPane.getChildren().remove(p));
             anim.play();
         }
+    }
+
+    private Color extractColor (Paint paint){
+        if (paint instanceof Color color){
+            return color;
+        }
+        if (paint instanceof LinearGradient gradient && !gradient.getStops().isEmpty()){
+            return gradient.getStops().get(0).getColor();
+        }
+        return Color.WHITE;
     }
 }

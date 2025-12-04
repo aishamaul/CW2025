@@ -159,3 +159,78 @@
     -fx-alignment: center;
     -fx-font-size: 60px
 }
+
+.brick {
+    -fx-arc-height: 6;
+    -fx-arc-width: 6;
+    -fx-stroke-width: 1.5px;
+    -fx-stroke-type: inside;
+    -fx-smooth: true;
+}
+
+.brick-empty {
+    -fx-fill: transparent;
+    -fx-stroke: transparent;
+    -fx-effect: null;
+}
+
+.brick-unknown {
+    -fx-fill: linear-gradient(to bottom right, #e6f3ff 0%, #a8c7ff 45%, #4a74c4 100%);
+    -fx-stroke: #7aa0e6;
+    -fx-effect: dropshadow(gaussian, rgba(122, 160, 230, 0.75), 16, 0.4, 0, 0);
+}
+
+.brick-1 {
+    -fx-fill: linear-gradient(to bottom right, #ffc876 0%, #ff9d3f 50%, #d46a00 100%);
+    -fx-stroke: #ff9f32;
+    -fx-effect: dropshadow(gaussian, rgba(255,140,0, 0.65), 14, 0.4, 0, 0);
+}
+
+.brick-2 {
+    -fx-fill: linear-gradient(to bottom right, #fba992 0%, #ff7043 50%, #c63f17 100%);
+    -fx-stroke: #ff5c2c;
+    -fx-effect: dropshadow(gaussian, rgba(255, 90, 40, 0.65), 14, 0.4, 0, 0);
+}
+
+.brick-3 {
+    -fx-fill: linear-gradient(to bottom right, #fbf08c 0%, #ffe049 50%, #c7a400 100%);
+    -fx-stroke: #ffd740;
+    -fx-effect: dropshadow(gaussian, rgba(255,215,64, 0.6), 13, 0.4, 0, 0);
+}
+
+.brick-4 {
+    -fx-fill: linear-gradient(to bottom right, #ccfa8e 0%, #9cff57 50%, #5ba72a 100%);
+    -fx-stroke: #84d64d;
+    -fx-effect: dropshadow(gaussian, rgba(140,220,80, 0.6), 13, 0.4, 0, 0);
+}
+
+.brick-5 {
+    -fx-fill: linear-gradient(to bottom right, #a9f3ff 0%, #4dd9ff 50%, #008bb3 100%);
+    -fx-stroke: #40c3e8;
+    -fx-effect: dropshadow(gaussian, rgba(60,200,255, 0.6), 13, 0.4, 0, 0);
+}
+
+.brick-6 {
+    -fx-fill: linear-gradient(to bottom right, #cdb4fb 0%, #a270ff 50%, #5f20b8 100%);
+    -fx-stroke: #9b5dff;
+    -fx-effect: dropshadow(gaussian, rgba(150,90,255, 0.65), 14, 0.45, 0, 0);
+}
+
+.brick-7 {
+    -fx-fill: linear-gradient(to bottom right, #fda9d6 0%, #ff69b4 50%, #d21875 100%);
+    -fx-stroke: #ff57af;
+    -fx-effect: dropshadow(gaussian, rgba(255,85,175, 0.65), 14, 0.45, 0, 0);
+}
+
+.brick-8 {
+    -fx-fill: linear-gradient(to bottom right, #ebebeb 0%, #bfbfbf 50%, #5e5e5e 100%);
+    -fx-stroke: #9c9c9c;
+    -fx-effect: dropshadow(gaussian, rgba(180,180,180,0.55), 11, 0.35, 0, 0);
+}
+
+.brick-9 {
+    -fx-fill: linear-gradient(to bottom right, #ffd6d6 0%, #ff5c5c 45%, #b30000 100%);
+    -fx-stroke: #ff4343;
+    -fx-effect: dropshadow(gaussian, rgba(255, 92, 92, 0.85), 18, 0.45, 0, 0);
+}
+

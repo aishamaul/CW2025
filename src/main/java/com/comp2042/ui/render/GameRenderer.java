@@ -52,7 +52,7 @@ public class GameRenderer {
         for (int i = GameConfig.HIDDEN_ROWS; i < boardMatrix.length; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
                 Rectangle rectangle = new Rectangle(GameConfig.BRICK_SIZE, GameConfig.BRICK_SIZE);
-                rectangle.setFill(brickColor.getFillColor(0));
+                setRectangleData(0, rectangle);
                 displayMatrix[i][j] = rectangle;
                 gamePanel.add(rectangle, j, i - 2);
             }
@@ -67,13 +67,13 @@ public class GameRenderer {
 
                 //real brick
                 Rectangle rectangle = new Rectangle(GameConfig.BRICK_SIZE, GameConfig.BRICK_SIZE);
-                rectangle.setFill(brickColor.getFillColor(brick.getBrickData()[i][j]));
+                setRectangleData(brick.getBrickData()[i][j], rectangle);
                 rectangles[i][j] = rectangle;
                 brickPanel.add(rectangle, j, i);
 
                 //ghost brick
                 Rectangle ghostRectangle = new Rectangle(GameConfig.BRICK_SIZE, GameConfig.BRICK_SIZE);
-                ghostRectangle.setFill(brickColor.getFillColor(brick.getBrickData()[i][j]));
+                setRectangleData(brick.getBrickData()[i][j], ghostRectangle);
 
                 ghostRectangle.setOpacity(0.2);
 
@@ -134,7 +134,7 @@ public class GameRenderer {
                 int colorCode = matrix[row][col];
                 if (colorCode != 0){
                     Rectangle rectangle = new Rectangle(18, 18);
-                    rectangle.setFill(brickColor.getFillColor(colorCode));
+                    setRectangleData(colorCode, rectangle);
                     targetGrid.add(rectangle, col, row);
                 }
             }
@@ -166,7 +166,7 @@ public class GameRenderer {
 
     private void setRectangleData(int color, Rectangle rectangle) {
 
-        rectangle.setFill(brickColor.getFillColor(color));
+        brickColor.applyBrickStyle(rectangle, color);
     }
 
 
@@ -195,7 +195,7 @@ public class GameRenderer {
                     double screenY = (brickY + row - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + 2);
 
                     if (screenY >= 0) {
-                        Color c = (Color) brickColor.getFillColor(shape[row][col]);
+                        Color c = brickColor.getBaseColor(shape[row][col]);
                         gridAnimator.spawnSplashParticles(gamePanel, screenX, screenY, c);
                     }
                 }
