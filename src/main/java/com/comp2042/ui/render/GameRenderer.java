@@ -4,6 +4,7 @@ import com.comp2042.game.config.GameConfig;
 import com.comp2042.model.ViewData;
 import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -196,7 +197,6 @@ public class GameRenderer {
     }
 
     public void playHardDropParticleEffect(ViewData brick) {
-        updateGridOrigin();
         int[][] shape = brick.getBrickData();
         int brickX = brick.getxPosition();
         int brickY = brick.getyPosition();
@@ -204,14 +204,21 @@ public class GameRenderer {
         for (int row = 0; row < shape.length; row++) {
             for (int col = 0; col < shape[row].length; col++) {
                 if (shape[row][col] != 0) {
-                    // calculate display coordinates for this block
-                    double screenX = gridOriginX + (brickX + col) * (GameConfig.BRICK_SIZE + 2); // +2 for gap
-                    double screenY = gridOriginY + (brickY + row - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + 2);
+                    int boardRow = brickY + row;
+                    int boardCol = brickX + col;
 
-                    if (screenY >= 0) {
-                        Color c = brickColor.getBaseColor(shape[row][col]);
-                        gridAnimator.spawnSplashParticles(gamePanel, screenX, screenY, c);
+                    if (boardRow < 0 || boardRow >= displayMatrix.length ||
+                            boardCol < 0 || boardCol >= displayMatrix[0].length) {
+                        continue;
                     }
+                    Rectangle targetCell = displayMatrix[boardRow][boardCol];
+                    if (targetCell == null) {
+                        continue;
+                    }
+
+                    Bounds cellBounds = targetCell.getBoundsInParent();
+                    Color c = brickColor.getBaseColor(shape[row][col]);
+                    gridAnimator.spawnSplashParticles(gamePanel, cellBounds.getMinX(), cellBounds.getMinY(), c);
                 }
             }
         }
