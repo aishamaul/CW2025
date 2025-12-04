@@ -44,6 +44,9 @@ public class SimpleBoard implements Board {
         return activePiece.move(0, 1, grid);
     }
 
+    @Override
+    public boolean canMoveDown(){ return activePiece.move(0, 1, grid); }
+
 
     @Override
     public boolean moveBrickLeft() {

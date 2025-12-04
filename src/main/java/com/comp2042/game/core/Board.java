@@ -18,6 +18,12 @@ public interface Board {
     boolean moveBrickDown();
 
     /**
+     * Checks if the brick can move down without actually moving it
+     * @return true if there is space below the brick
+     */
+    boolean canMoveDown();
+
+    /**
      * Moves the current brick left by one unit.
      * @return true if the move was successful, false if the brick cannot move left further.
      */

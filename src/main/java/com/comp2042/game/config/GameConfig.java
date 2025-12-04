@@ -23,5 +23,8 @@ public class GameConfig {
     public static final int MANUAL_X_OFFSET = 140;
     public static final int MANUAL_Y_OFFSET = 70;
 
+    //gameplay
+    public static final double LOCK_DELAY_MS = 200.0;
+
     private GameConfig(){}
 }
