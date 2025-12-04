@@ -3,15 +3,13 @@ package com.comp2042.ui.render;
 import com.comp2042.game.config.GameConfig;
 import com.comp2042.model.ViewData;
 import javafx.animation.*;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import java.util.List;
-import java.util.Random;
 
 public class GameRenderer {
 
@@ -94,8 +92,9 @@ public class GameRenderer {
     }
 
     private void updateActiveBrickVisuals(ViewData brick) {
-        double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap())) + GameConfig.MANUAL_X_OFFSET;
-        double yPos = gridOriginY + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap()) + GameConfig.MANUAL_Y_OFFSET;
+        updateGridOrigin();
+        double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap()));
+        double yPos = gridOriginY + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap());
 
         brickPanel.setLayoutX(xPos);
         brickPanel.setLayoutY(yPos);
@@ -104,8 +103,8 @@ public class GameRenderer {
     }
 
     private void updateGhostBrickVisuals(ViewData brick) {
-        double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap())) + GameConfig.MANUAL_X_OFFSET;
-        double yPos = gridOriginY + (brick.getGhostYPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + ghostPanel.getVgap()) + GameConfig.MANUAL_Y_OFFSET;
+        double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap()));
+        double yPos = gridOriginY + (brick.getGhostYPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + ghostPanel.getVgap());
 
         ghostPanel.setLayoutX(xPos);
         ghostPanel.setLayoutY(yPos);
@@ -183,6 +182,7 @@ public class GameRenderer {
     }
 
     public void playHardDropParticleEffect(ViewData brick) {
+        updateGridOrigin();
         int[][] shape = brick.getBrickData();
         int brickX = brick.getxPosition();
         int brickY = brick.getyPosition();
@@ -191,8 +191,8 @@ public class GameRenderer {
             for (int col = 0; col < shape[row].length; col++) {
                 if (shape[row][col] != 0) {
                     // calculate display coordinates for this block
-                    double screenX = (brickX + col) * (GameConfig.BRICK_SIZE + 2); // +2 for gap
-                    double screenY = (brickY + row - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + 2);
+                    double screenX = gridOriginX + (brickX + col) * (GameConfig.BRICK_SIZE + 2); // +2 for gap
+                    double screenY = gridOriginY + (brickY + row - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + 2);
 
                     if (screenY >= 0) {
                         Color c = brickColor.getBaseColor(shape[row][col]);
@@ -201,5 +201,18 @@ public class GameRenderer {
                 }
             }
         }
+    }
+
+    private void updateGridOrigin(){
+        if (brickPanel.getParent() == null || gamePanel.getScene() == null){
+            return;
+        }
+
+
+        Point2D sceneOrigin = gamePanel.localToScene(0,0);
+        Point2D parentOrigin = brickPanel.getParent().sceneToLocal(sceneOrigin);
+
+        gridOriginX = parentOrigin.getX();
+        gridOriginY = parentOrigin.getY();
     }
 }
