@@ -33,13 +33,16 @@ public class GameLifecycleManager {
 
         viewAdapter.onBrickLanded();
 
-        Runnable afterExplosionLogic = () -> {
-            lineClearProcessor.processLineClears(board, scoreEvaluator, viewAdapter, () ->{
-                if (board.createNewBrick()) {
-                    viewAdapter.gameOver();
-                }
-            });
+        Runnable spawnNextBrick = () -> {
+            if (board.createNewBrick()) {
+                viewAdapter.gameOver();
+            } else {
+                viewAdapter.refreshBrick(board.getViewData());
+            }
         };
+
+        Runnable afterExplosionLogic = () ->
+                lineClearProcessor.processLineClears(board, scoreEvaluator, viewAdapter, spawnNextBrick);
 
         explosionHandler.handleExplosion(mode, board, viewAdapter, afterExplosionLogic);
 
