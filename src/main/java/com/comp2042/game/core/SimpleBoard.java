@@ -27,6 +27,7 @@ public class SimpleBoard implements Board {
     private final RowScoreCalculator scoreCalculator;
     private Brick heldBrick;
     private final ExplosionManager explosionManager;
+    private boolean isBrickActive = false;
 
     public SimpleBoard(int width, int height) {
         this.grid = new BoardGrid(width, height);
@@ -78,6 +79,7 @@ public class SimpleBoard implements Board {
     public boolean createNewBrick() {
         Brick currentBrick = brickGenerator.getBrick();
         activePiece.spawn(currentBrick, GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
+        isBrickActive = true;
         return grid.intersects(activePiece.getShape(), activePiece.getX(), activePiece.getY());
     }
 
@@ -107,6 +109,7 @@ public class SimpleBoard implements Board {
 
             //set the current brick to the one that was in hold
             activePiece.spawn(brickFromHold, GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
+            isBrickActive = true;
         }
     }
 
@@ -121,8 +124,17 @@ public class SimpleBoard implements Board {
         //get held brick shape
         int [][] holdShape = (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
 
+        int[][] currentShape = activePiece.getShape();
+        int ghostY = activePiece.getY();
+
+        if (isBrickActive) {
+            ghostY = activePiece.calculateGhostY(grid);
+        } else {
+            currentShape = new int[currentShape.length][currentShape[0].length];
+        }
+
         return new ViewData(
-                activePiece.getShape(),
+                currentShape,
                 activePiece.getX(),
                 activePiece.getY(),
                 activePiece.calculateGhostY(grid),
@@ -134,6 +146,7 @@ public class SimpleBoard implements Board {
     @Override
     public void mergeBrickToBackground() {
         grid.merge(activePiece.getShape(), activePiece.getX(), activePiece.getY());
+        isBrickActive = false;
     }
 
     @Override

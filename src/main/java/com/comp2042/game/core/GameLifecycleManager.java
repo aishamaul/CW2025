@@ -30,7 +30,8 @@ public class GameLifecycleManager {
 
     public DownData processTurnEnd(GameMode mode) {
         board.mergeBrickToBackground();
-
+        viewAdapter.refreshGameBackground(board.getBoardMatrix());
+        viewAdapter.refreshBrick(board.getViewData());
         viewAdapter.onBrickLanded();
 
         Runnable spawnNextBrick = () -> {
