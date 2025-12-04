@@ -3,6 +3,7 @@ package com.comp2042.ui.render;
 import com.comp2042.game.config.GameConfig;
 import com.comp2042.model.ViewData;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -27,6 +28,8 @@ public class GameRenderer {
 
     private final BrickColor brickColor;
     private final GridAnimator gridAnimator;
+
+    private ViewData latestBrickData;
 
     private double gridOriginX;
     private double gridOriginY;
@@ -83,6 +86,18 @@ public class GameRenderer {
     }
 
     public void refreshBrick(ViewData brick) {
+        latestBrickData = brick;
+
+        if (!updateGridOrigin()) {
+            setBrickPanelsVisible(false);
+            Platform.runLater(() -> {
+                if (latestBrickData != null) {
+                    refreshBrick(latestBrickData);
+                }
+            });
+            return;
+        }
+        setBrickPanelsVisible(true);
 
         updateActiveBrickVisuals(brick);
         updateGhostBrickVisuals(brick);
@@ -92,7 +107,6 @@ public class GameRenderer {
     }
 
     private void updateActiveBrickVisuals(ViewData brick) {
-        updateGridOrigin();
         double xPos = gridOriginX + (brick.getxPosition() * (GameConfig.BRICK_SIZE + brickPanel.getHgap()));
         double yPos = gridOriginY + (brick.getyPosition() - GameConfig.HIDDEN_ROWS) * (GameConfig.BRICK_SIZE + brickPanel.getVgap());
 
@@ -203,9 +217,9 @@ public class GameRenderer {
         }
     }
 
-    private void updateGridOrigin(){
+    private boolean updateGridOrigin(){
         if (brickPanel.getParent() == null || gamePanel.getScene() == null){
-            return;
+            return false;
         }
 
 
@@ -214,5 +228,15 @@ public class GameRenderer {
 
         gridOriginX = parentOrigin.getX();
         gridOriginY = parentOrigin.getY();
+        return true;
+    }
+
+    private void setBrickPanelsVisible(boolean visible) {
+        if (brickPanel.isVisible() == visible && ghostPanel.isVisible() == visible) {
+            return;
+        }
+
+        brickPanel.setVisible(visible);
+        ghostPanel.setVisible(visible);
     }
 }
