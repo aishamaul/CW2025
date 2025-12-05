@@ -2,6 +2,7 @@ package com.comp2042.ui.view.menu;
 
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.SceneNavigator;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,5 +48,11 @@ public class HomeController implements Initializable {
     @FXML
     public void onHighScoreClicked(ActionEvent event) {
         System.out.println("High Score clicked - Not implemented yet");
+    }
+
+    @FXML
+    public void onQuitClicked(ActionEvent event) {
+        Platform.exit();
+        System.exit(0);
     }
 }

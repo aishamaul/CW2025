@@ -14,6 +14,7 @@
         <Button text="PLAY" onAction="#onPlayClicked" styleClass="menuButton"/>
         <Button text="GAME CONTROLS" onAction="#onControlsClicked" styleClass="menuButton"/>
         <Button text="HIGH SCORES" onAction="#onHighScoreClicked" styleClass="menuButton"/>
+        <Button text="QUIT" onAction="#onQuitClicked" styleClass="menuButton"/>
     </VBox>
 
     <stylesheets>
