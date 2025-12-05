@@ -81,4 +81,14 @@ public class GameFlowCoordinator {
             e.printStackTrace();
         }
     }
+
+    // New Method: Handles programmatic navigation using a Node
+    public void navigateToHomeWithNode(javafx.scene.Node context) {
+        gameLoopManager.stop();
+        try {
+            SceneNavigator.switchTo("home.fxml", context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

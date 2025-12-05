@@ -209,7 +209,7 @@ public class GuiController implements Initializable, GameView {
         levelStartManager.registerCallbacks(levelMenusController,
                 flowCoordinator::startCurrentLevel,
                 flowCoordinator::startNextLevel,
-                () -> flowCoordinator.navigateToHome(null));
+                () -> flowCoordinator.navigateToHomeWithNode(rootPane)); // <--- Fixed: Passing the root pane
 
         if (currentGameMode != null){
             showLevelStartScreen();
