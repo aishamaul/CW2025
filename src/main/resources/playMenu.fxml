@@ -11,9 +11,8 @@
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.comp2042.ui.view.menu.PlayMenuController"
            prefHeight="650.0" prefWidth="750.0" styleClass="root">
-    <VBox alignment="CENTER" spacing="20">
-        <Label text="SELECT MODE" styleClass="titleStyle" style="-fx-font-size: 50px;"/>
-
+    <VBox alignment="CENTER" spacing="28">
+        <Label fx:id="titleLabel" text="SELECT MODE" styleClass="titleStyle" style="-fx-font-size: 50px;"/>
         <Button text="PRACTICE" onAction="#onPracticeClicked" styleClass="menuButton"/>
         <Button text="CLASSIC" onAction="#onClassicClicked" styleClass="menuButton"/>
         <Button text="CHALLENGE" onAction="#onChallengeClicked" styleClass="menuButton"/>

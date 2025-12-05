@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -21,9 +22,16 @@ public class HomeController implements Initializable {
     @FXML
     private StackPane rootPane;
 
+    @FXML
+    private Label titleLabel;
+
+    private final MenuButtonAnimator menuButtonAnimator = new MenuButtonAnimator();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
+        menuButtonAnimator.animateButtons(rootPane);
+
     }
 
     @FXML

@@ -6,6 +6,7 @@ import com.comp2042.game.mode.ChallengeLevel3;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.GuiController;
 import com.comp2042.ui.view.SceneNavigator;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -14,8 +15,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,10 +31,52 @@ public class PlayMenuController implements Initializable {
     @FXML
     private StackPane rootPane;
 
+    @FXML
+    private Label titleLabel;
+
+    private final MenuButtonAnimator menuButtonAnimator = new MenuButtonAnimator();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         BackgroundAnimator.attach(rootPane);
+        animateMenuElements();
     }
+
+    private void animateMenuElements() {
+        menuButtonAnimator.animateButtons(rootPane);
+        animateTitleLabel();
+    }
+
+    private void animateTitleLabel() {
+        if (titleLabel == null) {
+            return;
+        }
+
+        DropShadow glow = new DropShadow();
+        glow.setRadius(26);
+        glow.setSpread(0.45);
+        glow.setColor(Color.web("#7af3ff"));
+        titleLabel.setEffect(glow);
+
+        Timeline colorLoop = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(glow.colorProperty(), Color.web("#ff85d8"))),
+                new KeyFrame(Duration.seconds(1.4), new KeyValue(glow.colorProperty(), Color.web("#7af3ff"))),
+                new KeyFrame(Duration.seconds(2.6), new KeyValue(glow.colorProperty(), Color.web("#ffe38f"))),
+                new KeyFrame(Duration.seconds(3.8), new KeyValue(glow.colorProperty(), Color.web("#c0a9ff")))
+        );
+        colorLoop.setCycleCount(Animation.INDEFINITE);
+        colorLoop.setAutoReverse(true);
+        colorLoop.play();
+
+        FadeTransition breathe = new FadeTransition(Duration.seconds(2.2), titleLabel);
+        breathe.setFromValue(0.78);
+        breathe.setToValue(1.0);
+        breathe.setCycleCount(Animation.INDEFINITE);
+        breathe.setAutoReverse(true);
+        breathe.play();
+    }
+
 
     @FXML
     public void launchGame(ActionEvent event, boolean  isClassic, boolean isChallenge) throws IOException {
