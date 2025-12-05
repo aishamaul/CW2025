@@ -3,6 +3,7 @@ package com.comp2042.game.core;
 import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.GameView;
 import com.comp2042.ui.view.GameViewAdapter;
+import com.comp2042.util.audio.SoundManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ public class ExplosionHandler {
         List<Point> explodedPoints = (mode != null) ? mode.onBrickMerged(board) : Collections.emptyList();
 
         if (!explodedPoints.isEmpty()) {
+            SoundManager.getInstance().playExplosionSound();
             viewAdapter.onExplosion(explodedPoints, () ->{
                 // refresh background to show holes made by bomb before checking lines
                 viewAdapter.refreshGameBackground(board.getBoardMatrix());
