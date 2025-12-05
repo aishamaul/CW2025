@@ -48,7 +48,7 @@ public class SoundManager {
             URL dropRes = getClass().getResource("/audio/hard drop.mp3");
             if (dropRes != null) {
                 hardDropSound = new AudioClip(dropRes.toExternalForm());
-                hardDropSound.setVolume(0.3);
+                hardDropSound.setVolume(0.6);
             }
 
             // load Lose Sound
