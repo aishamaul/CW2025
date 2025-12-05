@@ -381,7 +381,7 @@
 .challengeCompleteTitle {
     -fx-font-family: "Let's go Digital";
     -fx-font-size: 70px;
-    -fx-text-fill: linear-gradient(to right, #ff0055, #ffcc00, #00ff00, #00e5ff, #8a00c2);
+    -fx-text-fill: linear-gradient(to right, #f6c0d2, #faf0cb, #c1fbc1, #ccf5fa, #8a00c2);
     -fx-effect: dropshadow(gaussian, white, 15, 0.6, 0, 0);
     -fx-alignment: center;
 }
