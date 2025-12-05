@@ -3,6 +3,7 @@ package com.comp2042.game.core;
 import com.comp2042.game.scoring.ScoreEvaluator;
 import com.comp2042.model.ClearRow;
 import com.comp2042.ui.view.GameViewAdapter;
+import com.comp2042.util.audio.SoundManager;
 
 public class LineClearProcessor {
 
@@ -15,6 +16,10 @@ public class LineClearProcessor {
         ClearRow clearRow = board.clearRows();
 
         if (clearRow.getLinesRemoved() > 0){
+
+            // play sound effect once, regardless of how many lines are cleared
+            SoundManager.getInstance().playLineClearSound();
+
             scoreEvaluator.scoreLineClear(clearRow.getScoreBonus(), board.getScore());
             board.getScore().addLines(clearRow.getLinesRemoved());
             viewAdapter.showScoreNotification(clearRow.getScoreBonus());
