@@ -8,7 +8,7 @@
 
 <?import java.net.URL?>
 <StackPane fx:id="rootPane" xmlns="https://javafx.com/javafx" xmlns:fx="https://javafx.com/fxml" fx:controller="com.comp2042.ui.view.menu.HomeController" prefHeight="650.0" prefWidth="750.0" styleClass="root">
-    <VBox alignment="CENTER" spacing="20">
+    <VBox alignment="CENTER" spacing="55">
         <Label text="TETRIS" styleClass="titleStyle"/>
 
         <Button text="PLAY" onAction="#onPlayClicked" styleClass="menuButton"/>
