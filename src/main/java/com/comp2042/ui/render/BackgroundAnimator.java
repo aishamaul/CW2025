@@ -62,9 +62,9 @@ public class BackgroundAnimator {
                         1.0,
                         true,
                         CycleMethod.NO_CYCLE,
-                        new Stop(0.0, Color.web("#101423")),   // darker center, faint blue
-                        new Stop(0.45, Color.web("#090d18")),  // darker mid tone
-                        new Stop(1.0, Color.web("#03040a"))    // deep, mostly black corners
+                        new Stop(0.0, Color.web("#0b0f1a")),
+                        new Stop(0.45, Color.web("#070a14")),
+                        new Stop(1.0, Color.web("#010208"))
 
 
 
@@ -158,7 +158,7 @@ public class BackgroundAnimator {
         for (int i = 0; i < count; i++) {
             Circle particle = new Circle();
             particle.setRadius(random.nextDouble(1.0, 2.8));
-            particle.setFill(Color.color(0.90, 0.97, 1.0, 0.25));
+            particle.setFill(Color.color(1.0, 1.0, 1.0, 0.42));
             particle.setCenterX(0);
             particle.setCenterY(0);
 
@@ -183,7 +183,7 @@ public class BackgroundAnimator {
                     new KeyFrame(Duration.seconds(random.nextDouble(12, 22)),
                             new KeyValue(particle.translateXProperty(), driftX),
                             new KeyValue(particle.translateYProperty(), driftY),
-                            new KeyValue(particle.opacityProperty(), random.nextDouble(0.12, 0.28))
+                            new KeyValue(particle.opacityProperty(), random.nextDouble(0.3, 0.55))
                     )
             );
             drift.setAutoReverse(true);
