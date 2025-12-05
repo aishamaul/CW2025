@@ -57,6 +57,7 @@ public class GameController implements InputEventListener {
         }else{
 
             if (lockTimer.getStatus() != Animation.Status.RUNNING) {
+                SoundManager.getInstance().playLandSound();
                 lockTimer.playFromStart();
             }
             return new DownData(null, lifecycleManager.getViewData());

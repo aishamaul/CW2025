@@ -20,6 +20,8 @@ public class SoundManager {
     private AudioClip holdSound;
     private AudioClip garbageRowSound;
     private AudioClip explosionSound;
+    private AudioClip landSound;
+
 
 
 
@@ -94,6 +96,12 @@ public class SoundManager {
             if (explosionRes != null) {
                 explosionSound = new AudioClip(explosionRes.toExternalForm());
                 explosionSound.setVolume(1.0);
+            }
+
+            URL landRes = getClass().getResource("/audio/land.mp3");
+            if (landRes != null) {
+                landSound = new AudioClip(landRes.toExternalForm());
+                landSound.setVolume(0.2);
             }
 
         } catch (Exception e) {
@@ -171,6 +179,10 @@ public class SoundManager {
 
     public void playExplosionSound() {
         if (explosionSound != null) explosionSound.play();
+    }
+
+    public void playLandSound() {
+        if (landSound != null) landSound.play();
     }
 
 }
