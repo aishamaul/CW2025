@@ -12,20 +12,22 @@
 <?import javafx.geometry.Insets?>
 <StackPane fx:id="rootPane" fx:controller="com.comp2042.ui.view.GuiController" xmlns:fx="http://javafx.com/fxml">
 
-    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: transparent;">
+    <Pane fx:id="contentPane" maxHeight="700.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: transparent;">
 
-        <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="180">
+        <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="1">
             <center>
                 <StackPane>
                     <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="40"/>
+
                     <Label fx:id="timerLabel" text="10" visible="false" styleClass="timerStyle" mouseTransparent="true"/>
                 </StackPane>
             </center>
         </BorderPane>
 
-        <VBox layoutX="1" layoutY="70" minWidth="175" prefHeight="100" spacing="5" alignment="CENTER" styleClass="sidePanel">
+        <VBox layoutX="10" layoutY="70" minWidth="155" prefHeight="100" spacing="5" alignment="CENTER" styleClass="sidePanel">
             <Label text="HOLD" styleClass = "nextBrickLabel" style="-fx-font-size: 30px"/>
-            <GridPane fx:id="holdBrickGrid" hgap="2" vgap="2" alignment="CENTER" minWidth="65" minHeight="65" styleClass="panelWall">
+            <GridPane
+                    fx:id="holdBrickGrid" hgap="2" vgap="2" alignment="CENTER" minWidth="65" minHeight="65" styleClass="panelWall">
                 <VBox.margin>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </VBox.margin>
@@ -33,22 +35,25 @@
         </VBox>
 
         <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
+
         <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-        <VBox alignment="CENTER" layoutX="470" layoutY="485" prefWidth="130" spacing="6" styleClass="statPanel">
+        <VBox alignment="CENTER" layoutX="440" layoutY="485" prefWidth="130" spacing="6" styleClass="statPanel">
             <children>
                 <Label text="SCORE" styleClass="statTitle" alignment="CENTER" prefWidth="130"/>
                 <Label fx:id="scoreLabel" styleClass="statValue"  text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
 
-                <Label text="LINES CLEARED" styleClass="statTitle" style="-fx-padding: 7;" alignment="CENTER" prefWidth="130"/>
+                <Label text="LINES CLEARED" styleClass="statTitle" style="-fx-padding: 7;"
+                       alignment="CENTER" prefWidth="130"/>
                 <Label fx:id="linesLabel" styleClass="statValue" text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
             </children>
         </VBox>
 
-        <ToggleButton fx:id="pauseButton" layoutX="470" layoutY="70" onAction="#pauseGame" styleClass="pauseButton" text="⏸"/>
+        <ToggleButton fx:id="pauseButton" layoutX="440" layoutY="70" onAction="#pauseGame" styleClass="pauseButton" text="⏸"/>
 
-        <VBox layoutX="460" layoutY="130" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" styleClass="sidePanel">
+        <VBox layoutX="440" layoutY="130" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" styleClass="sidePanel">
             <Label text="NEXT" styleClass="nextBrickLabel" style="-fx-font-size: 30px"/>
+
 
             <GridPane fx:id="nextBrick1" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"
                       styleClass="panelWall">
@@ -57,24 +62,27 @@
                 </VBox.margin>
             </GridPane>
 
+
             <GridPane fx:id="nextBrick2" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"
                       styleClass="panelWall">
                 <VBox.margin>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </VBox.margin>
+
             </GridPane>
 
             <GridPane fx:id="nextBrick3" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="60"
                       styleClass="panelWall">
                 <VBox.margin>
                     <Insets top="10" right="10" bottom="20" left="10"/>
+
                 </VBox.margin>
             </GridPane>
         </VBox>
 
 
     </Pane>
-<Group fx:id="groupNotification" layoutX="15" layoutY="203"/>
+    <Group fx:id="groupNotification" layoutX="15" layoutY="203"/>
 
 
     <VBox fx:id="pauseMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
@@ -85,7 +93,9 @@
     </VBox>
 
     <VBox fx:id="gameOverMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
-        <Label text="GAME OVER" styleClass="gameOverStyle" style="-fx-text-fill: red; -fx-background-color: transparent; -fx-font-size: 100px; "/>
+
+        <Label text="GAME OVER" styleClass="gameOverStyle" style="-fx-text-fill: red; -fx-background-color: transparent; -fx-font-size: 100px;
+"/>
         <Button text="REPLAY" onAction="#restartGame" styleClass="menuButton"/>
         <Button text="HOMEPAGE" onAction="#goToHome" styleClass="menuButton"/>
     </VBox>
@@ -101,4 +111,3 @@
            mouseTransparent="true" visible="false"/>
 
 </StackPane>
-

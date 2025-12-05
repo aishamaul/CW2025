@@ -40,6 +40,7 @@ public class InputHandler implements EventHandler<KeyEvent> {
 
         //handle global game state (pause/new game)
         if (handleGameStateInput(keyEvent)){
+            keyEvent.consume();
             return;
         }
 
@@ -54,8 +55,10 @@ public class InputHandler implements EventHandler<KeyEvent> {
     //extracted method: returns true if a state key was pressed
     private boolean handleGameStateInput(KeyEvent keyEvent) {
         return switch (keyEvent.getCode()) {
-            case P -> {
-                onTogglePause.run();
+            case ESCAPE -> {
+                if (!isPause.get()) {
+                    onTogglePause.run();
+                }
                 yield true;
             }
             case N -> {

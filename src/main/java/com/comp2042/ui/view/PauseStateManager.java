@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class PauseStateManager {
 
@@ -40,6 +41,8 @@ public class PauseStateManager {
         if (!pauseButton.isSelected()) {
             pauseButton.setSelected(true);
         }
+
+        setFullScreen(false);
     }
 
     public void hidePauseMenu(){
@@ -52,6 +55,7 @@ public class PauseStateManager {
             pauseButton.setSelected(false);
         }
 
+        setFullScreen(true);
         }
 
     public void reset(){
@@ -59,5 +63,19 @@ public class PauseStateManager {
         pauseButton.setDisable(false);
         pauseButton.setSelected(false);
         pauseMenu.setVisible(false);
+
+        setFullScreen(true);
+    }
+
+    private void setFullScreen(boolean fullScreen) {
+        if (pauseButton.getScene() != null && pauseButton.getScene().getWindow() instanceof Stage) {
+            Stage stage = (Stage) pauseButton.getScene().getWindow();
+            stage.setFullScreen(fullScreen);
+
+            if (fullScreen) {
+                stage.show(); // Helps refresh layout on some OS
+                pauseButton.getScene().getRoot().requestFocus();
+            }
+        }
     }
 }

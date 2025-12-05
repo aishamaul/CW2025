@@ -19,6 +19,7 @@ public class SceneNavigator {
         Parent root = FXMLLoader.load(SceneNavigator.class.getClassLoader().getResource(fxmlPath));
         Stage stage = (Stage) ((Node) triggerEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
+        stage.setFullScreen(true);
         stage.show();
     }
 

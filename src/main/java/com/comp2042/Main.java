@@ -28,6 +28,8 @@ public class Main extends Application {
         primaryStage.setResizable(true);
         primaryStage.setMinWidth(750);
         primaryStage.setMinHeight(650);
+        primaryStage.setFullScreenExitHint("");
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 

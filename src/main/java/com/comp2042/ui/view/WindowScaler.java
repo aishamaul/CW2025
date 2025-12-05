@@ -5,7 +5,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
 
 public class WindowScaler {
-    private static final double DESIGN_WIDTH = 400.0;
+    private static final double DESIGN_WIDTH = 600.0;
     private static final double DESIGN_HEIGHT = 700.0;
 
     public static void bindScaling(StackPane rootPane, Pane contentPane){
@@ -26,6 +26,16 @@ public class WindowScaler {
             //apply the scale
             scale.setX(scaleFactor);
             scale.setY(scaleFactor);
+
+            // center the contentPane
+            double scaledWidth = DESIGN_WIDTH * scaleFactor;
+            double scaledHeight = DESIGN_HEIGHT * scaleFactor;
+
+            double offsetX = (windowWidth - scaledWidth) / 2;
+            double offsetY = (windowHeight - scaledHeight) / 2;
+
+            contentPane.setTranslateX(offsetX);
+            contentPane.setTranslateY(offsetY);
         };
 
         // bind the listener to the root pane's dimensions

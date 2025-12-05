@@ -57,6 +57,7 @@ public class PlayMenuController implements Initializable {
         gameRoot.requestFocus();
 
         stage.setScene(gameScene);
+        stage.setFullScreen(true);
         stage.show();
 
     }
