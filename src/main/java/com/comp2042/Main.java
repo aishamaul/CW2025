@@ -3,6 +3,7 @@ package com.comp2042;
 import com.comp2042.game.core.GameController;
 import com.comp2042.game.core.GameInitializer;
 import com.comp2042.ui.view.GuiController;
+import com.comp2042.util.audio.BackgroundMusicManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        BackgroundMusicManager.getInstance().play();
 
         URL location = getClass().getClassLoader().getResource("home.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location);
