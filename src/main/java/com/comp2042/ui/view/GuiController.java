@@ -13,6 +13,7 @@ import com.comp2042.ui.input.InputHandler;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.render.GameRenderer;
 import com.comp2042.ui.view.menu.GameControlsController;
+import com.comp2042.util.audio.SoundManager;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -148,6 +149,8 @@ public class GuiController implements Initializable, GameView {
         setupPauseButtonPulse();
 
         if (pauseMenu != null) pauseMenu.setVisible(false);
+
+        SoundManager.getInstance().attachButtonSounds(rootPane);
     }
 
     private void setupPauseButtonPulse() {

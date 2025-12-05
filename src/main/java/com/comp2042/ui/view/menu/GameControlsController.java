@@ -2,6 +2,7 @@ package com.comp2042.ui.view.menu;
 
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.SceneNavigator;
+import com.comp2042.util.audio.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +46,8 @@ public class GameControlsController implements Initializable {
         addControlRow("H", "HOLD BRICK", 6);
         addControlRow("ESC", "PAUSE / RESUME", 7);
         addControlRow("N", "NEW GAME", 9);
+
+        SoundManager.getInstance().attachButtonSounds(rootPane);
     }
 
     public void setOnBackAction(Runnable onBackAction) {

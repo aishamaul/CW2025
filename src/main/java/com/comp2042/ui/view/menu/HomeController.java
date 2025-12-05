@@ -2,6 +2,7 @@ package com.comp2042.ui.view.menu;
 
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.SceneNavigator;
+import com.comp2042.util.audio.SoundManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ public class HomeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
         menuButtonAnimator.animateButtons(rootPane);
+        SoundManager.getInstance().attachButtonSounds(rootPane);
 
     }
 

@@ -6,6 +6,7 @@ import com.comp2042.game.mode.ChallengeLevel3;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.GuiController;
 import com.comp2042.ui.view.SceneNavigator;
+import com.comp2042.util.audio.SoundManager;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,9 +39,9 @@ public class PlayMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         BackgroundAnimator.attach(rootPane);
         animateMenuElements();
+        SoundManager.getInstance().attachButtonSounds(rootPane);
     }
 
     private void animateMenuElements() {
