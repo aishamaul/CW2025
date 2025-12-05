@@ -12,6 +12,7 @@ import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.input.InputHandler;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.render.GameRenderer;
+import com.comp2042.ui.view.menu.GameControlsController;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -369,7 +370,31 @@ public class GuiController implements Initializable, GameView {
 
     @FXML
     public void showGameControls(ActionEvent actionEvent) {
-        //go to show game controls screen (not implemented yet)
+
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gameControls.fxml"));
+            Parent controlsRoot = loader.load();
+
+            GameControlsController controller = loader.getController();
+
+            controller.setOnBackAction(() -> {
+                rootPane.getChildren().remove(controlsRoot);
+
+                pauseMenu.setVisible(true);
+                pauseMenu.toFront();
+
+                if (pauseButton != null) {
+                    rootPane.requestFocus();
+                }
+            });
+
+            pauseMenu.setVisible(false);
+
+            rootPane.getChildren().add(controlsRoot);
+            } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

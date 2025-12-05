@@ -352,3 +352,17 @@
             dropshadow(gaussian, rgba(0, 0, 0, 0.75), 14, 0.6, 0, 0);
     -fx-alignment: center;
 }
+
+.controlPanel {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 2px;
+}
+
+.controlText {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}

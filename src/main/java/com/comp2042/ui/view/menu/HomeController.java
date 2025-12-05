@@ -41,8 +41,8 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    public void onControlsClicked(ActionEvent event) {
-        System.out.println("game controls not implemented yet");
+    public void onControlsClicked(ActionEvent event) throws IOException {
+        SceneNavigator.switchTo("gameControls.fxml", event);
     }
 
     @FXML

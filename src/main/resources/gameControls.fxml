@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.comp2042.ui.view.menu.GameControlsController"
+           prefHeight="650.0" prefWidth="750.0" styleClass="root">
+    <VBox alignment="CENTER" spacing="30">
+        <Label text="GAME CONTROLS" styleClass="titleStyle" style="-fx-font-size: 60px;"/>
+        <VBox fx:id="controlsContainer" alignment="CENTER" spacing="12" maxWidth="600"/>
+        <Button text="BACK" onAction="#onBackClicked" styleClass="menuButton" style="-fx-font-size: 24px; -fx-min-width: 200px;"/>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@window_style.css"/>
+    </stylesheets>
+
+</StackPane>
