@@ -45,11 +45,11 @@ public class MenuButtonAnimator {
         button.setEffect(glow);
 
         Timeline rainbow = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(glow.colorProperty(), Color.web("#ff8bd1"))),
-                new KeyFrame(Duration.seconds(0.9), new KeyValue(glow.colorProperty(), Color.web("#7df2ff"))),
-                new KeyFrame(Duration.seconds(1.8), new KeyValue(glow.colorProperty(), Color.web("#ffd96a"))),
-                new KeyFrame(Duration.seconds(2.7), new KeyValue(glow.colorProperty(), Color.web("#9cfaa5"))),
-                new KeyFrame(Duration.seconds(3.6), new KeyValue(glow.colorProperty(), Color.web("#c5a0ff")))
+                new KeyFrame(Duration.ZERO, new KeyValue(glow.colorProperty(), Color.web("#8a00c2"))),       // Deep Purple
+                new KeyFrame(Duration.seconds(0.9), new KeyValue(glow.colorProperty(), Color.web("#ff0055"))), // Neon Red/Pink
+                new KeyFrame(Duration.seconds(1.8), new KeyValue(glow.colorProperty(), Color.web("#00e5ff"))), // Cyan
+                new KeyFrame(Duration.seconds(2.7), new KeyValue(glow.colorProperty(), Color.web("#00ff00"))), // Neon Green
+                new KeyFrame(Duration.seconds(3.6), new KeyValue(glow.colorProperty(), Color.web("#ffcc00")))  // Deep Gold
         );
         rainbow.setCycleCount(Animation.INDEFINITE);
         rainbow.setAutoReverse(true);
