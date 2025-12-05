@@ -38,7 +38,7 @@
 
         <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-        <VBox alignment="CENTER" layoutX="500" layoutY="485" prefWidth="130" spacing="6" styleClass="statPanel">
+        <VBox alignment="CENTER" layoutX="485" layoutY="485" minWidth="150" spacing="6" styleClass="statPanel">
             <children>
                 <Label text="SCORE" styleClass="statTitle" alignment="CENTER" prefWidth="130"/>
                 <Label fx:id="scoreLabel" styleClass="statValue"  text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
