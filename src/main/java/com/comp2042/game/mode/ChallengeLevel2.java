@@ -2,6 +2,7 @@ package com.comp2042.game.mode;
 
 import com.comp2042.game.core.Board;
 import com.comp2042.game.core.GameLoopManager;
+import com.comp2042.util.audio.SoundManager;
 
 public class ChallengeLevel2 implements GameMode {
 
@@ -64,6 +65,7 @@ public class ChallengeLevel2 implements GameMode {
         tickCounter++;
         if(tickCounter >= GARBAGE_INTERVAL){
             tickCounter = 0;
+            SoundManager.getInstance().playGarbageRowSound();
             board.addGarbageLine();
         }
 

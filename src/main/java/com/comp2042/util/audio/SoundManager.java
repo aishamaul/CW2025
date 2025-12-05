@@ -18,7 +18,7 @@ public class SoundManager {
     private AudioClip moveSound;
     private AudioClip winSound;
     private AudioClip holdSound;
-    private AudioClip playSound;
+    private AudioClip garbageRowSound;
 
 
 
@@ -79,6 +79,13 @@ public class SoundManager {
             if (holdRes != null) {
                 holdSound = new AudioClip(holdRes.toExternalForm());
                 holdSound.setVolume(1.0);
+            }
+
+            // load Garbage Row Sound
+            URL garbageRes = getClass().getResource("/audio/garbage row.mp3");
+            if (garbageRes != null) {
+                garbageRowSound = new AudioClip(garbageRes.toExternalForm());
+                garbageRowSound.setVolume(1.0);
             }
 
         } catch (Exception e) {
@@ -148,6 +155,10 @@ public class SoundManager {
 
     public void playHoldSound() {
         if (holdSound != null) holdSound.play();
+    }
+
+    public void playGarbageRowSound() {
+        if (garbageRowSound != null) garbageRowSound.play();
     }
 
 }
