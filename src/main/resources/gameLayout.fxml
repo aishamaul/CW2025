@@ -24,6 +24,12 @@
             </center>
         </BorderPane>
 
+        <StackPane layoutX="180" layoutY="100" mouseTransparent="true" prefHeight="${gameBoard.height}"
+                   prefWidth="${gameBoard.width}">
+            <Label fx:id="overlayMessageLabel" text="TIME FREEZE !" styleClass="freezeTextStyle"
+                   mouseTransparent="true" visible="false" StackPane.alignment="CENTER"/>
+        </StackPane>
+
         <VBox layoutX="-75" layoutY="100" minWidth="175" prefHeight="100" spacing="5" alignment="CENTER" styleClass="sidePanel">
             <Label text="HOLD" styleClass = "nextBrickLabel" style="-fx-font-size: 30px"/>
             <GridPane
@@ -106,8 +112,5 @@
 
     <fx:include fx:id="levelMenus" source="challenge_menus.fxml"/>
 
-    <Label fx:id="overlayMessageLabel" text="TIME FREEZE !"
-           styleClass="freezeTextStyle"
-           mouseTransparent="true" visible="false"/>
 
 </StackPane>
