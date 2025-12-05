@@ -6,6 +6,7 @@ import com.comp2042.game.events.EventType;
 import com.comp2042.game.events.InputEventListener;
 import com.comp2042.ui.components.GameOverPanel;
 import com.comp2042.ui.components.NotificationManager;
+import com.comp2042.ui.components.PauseButtonAnimator;
 import com.comp2042.ui.input.EventDispatcher;
 import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.input.InputHandler;
@@ -130,6 +131,7 @@ public class GuiController implements Initializable, GameView {
 
     private AnimationCoordinator animationCoordinator;
 
+    private PauseButtonAnimator pauseButtonAnimator;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -142,9 +144,16 @@ public class GuiController implements Initializable, GameView {
 
         WindowScaler.bindScaling(rootPane, contentPane);
 
+        setupPauseButtonPulse();
 
         if (pauseMenu != null) pauseMenu.setVisible(false);
     }
+
+    private void setupPauseButtonPulse() {
+        pauseButtonAnimator = new PauseButtonAnimator(pauseButton);
+        pauseButtonAnimator.start();
+    }
+
 
     public void setGameMode(GameMode mode) {
         this.currentGameMode = mode;

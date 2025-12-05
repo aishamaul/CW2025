@@ -89,18 +89,37 @@
     -fx-font-size: 30;
     -fx-fill: yellow;
     -fx-text-fill: yellow;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-effect:
+            dropshadow(gaussian, rgba(255, 240, 140, 0.85), 18, 0.45, 0, 0),
+            dropshadow(gaussian, rgba(0, 0, 0, 0.65), 10, 0.6, 0, 0);
 }
 
 
 .pauseButton{
-    -fx-background-image: url("pause.png");
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: 40px 40px;
-    -fx-background-position: center;
+    -fx-font-size: 28px;
+    -fx-font-family: "Let's go Digital";
+    -fx-text-fill: #e6f5ff;
     -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-pref-height: 40px;
-    -fx-pref-width: 40px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 6px 8px;
+    -fx-pref-height: 44px;
+    -fx-pref-width: 44px;
+    -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.pauseButton:hover{
+    -fx-text-fill: white;
+}
+
+.pauseButton:pressed, .pauseButton:selected{
+    -fx-tezt-fill: #dff9ff;
 }
 
 .playButton{

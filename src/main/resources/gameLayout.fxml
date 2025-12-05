@@ -36,17 +36,17 @@
         <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
         <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-        <VBox alignment="CENTER" layoutX="475" layoutY="485">
+        <VBox alignment="CENTER" layoutX="470" layoutY="485" prefWidth="130" spacing="6">
             <children>
-                <Label text="SCORE" styleClass="nextBrickLabel"/>
-                <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0"/>
+                <Label text="SCORE" styleClass="nextBrickLabel" alignment="CENTER" prefWidth="130"/>
+                <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
 
-                <Label text="LINES CLEARED" styleClass="nextBrickLabel" style="-fx-padding: 7;"/>
-                <Label fx:id="linesLabel" styleClass="scoreClass" text="0"/>
+                <Label text="LINES CLEARED" styleClass="nextBrickLabel" style="-fx-padding: 7;" alignment="CENTER" prefWidth="130"/>
+                <Label fx:id="linesLabel" styleClass="scoreClass" text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
             </children>
         </VBox>
 
-        <ToggleButton fx:id="pauseButton" layoutX="470" layoutY="70" onAction="#pauseGame" styleClass="pauseButton"/>
+        <ToggleButton fx:id="pauseButton" layoutX="470" layoutY="70" onAction="#pauseGame" styleClass="pauseButton" text="⏸"/>
 
         <VBox layoutX="460" layoutY="130" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" styleClass="sidePanel">
             <Label text="NEXT" styleClass="nextBrickLabel" style="-fx-font-size: 30px"/>
