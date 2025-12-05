@@ -3,6 +3,7 @@ package com.comp2042.ui.view;
 import com.comp2042.game.core.GameLoopManager;
 import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.menu.LevelMenuController;
+import com.comp2042.util.audio.SoundManager;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 
@@ -56,6 +57,7 @@ public class GameFlowCoordinator {
     }
 
     public void handleLevelComplete(){
+        SoundManager.getInstance().playWinSound();
         gameLoopManager.stop();
         boolean hasNext = (currentMode != null && currentMode.getNextLevel() != null);
         if (levelMenuController != null) {
