@@ -16,8 +16,9 @@
 
         <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="100" layoutX="180">
             <center>
-                <StackPane>
+                <StackPane alignment="CENTER">
                     <GridPane fx:id="gamePanel" styleClass="gamePanel" hgap="2" vgap="2" layoutY="30" layoutX="30"/>
+                    <Group fx:id="groupNotification" mouseTransparent="true"/>
 
                     <Label fx:id="timerLabel" text="10" visible="false" styleClass="timerStyle" mouseTransparent="true"/>
                 </StackPane>
@@ -88,8 +89,6 @@
 
 
     </Pane>
-    <Group fx:id="groupNotification" layoutX="15" layoutY="203"/>
-
 
     <VBox fx:id="pauseMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
         <Button text="RETURN TO GAME" onAction="#resumeGame" styleClass="menuButton"/>

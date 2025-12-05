@@ -12,10 +12,9 @@ public class NotificationPanel extends BorderPane {
         setMinHeight(200);
         setMinWidth(220);
         final Label score = new Label(text);
-        score.getStyleClass().add("bonusStyle");
+        score.getStyleClass().addAll("bonusStyle", "scoreClass");
         final Effect glow = new Glow(0.6);
         score.setEffect(glow);
-        score.setTextFill(Color.WHITE);
         setCenter(score);
     }
 }
