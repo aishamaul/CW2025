@@ -218,11 +218,12 @@ public class GridAnimator {
 
     }
 
-    public void spawnSplashParticles(Pane parentPane, double x, double y, Color color) {
+    public void spawnSplashParticles(Pane parentPane, double x, double y, int colorCode) {
         int particleCount = 2;
         for (int i=0; i < particleCount; i++){
             double size = 2+ random.nextDouble() * 4;
-            Rectangle p = new Rectangle(size, size, color);
+            Rectangle p = new Rectangle(size, size);
+            brickColor.applyBrickStyle(p, colorCode);
 
             p.setTranslateX(x + 10);
             p.setTranslateY(y + 20);

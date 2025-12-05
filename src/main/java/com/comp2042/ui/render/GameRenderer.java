@@ -217,9 +217,7 @@ public class GameRenderer {
                     }
 
                     Bounds cellBounds = targetCell.getBoundsInParent();
-                    Color c = brickColor.getBaseColor(shape[row][col]);
-                    gridAnimator.spawnSplashParticles(gamePanel, cellBounds.getMinX(), cellBounds.getMinY(), c);
-                }
+                    gridAnimator.spawnSplashParticles(gamePanel, cellBounds.getMinX(), cellBounds.getMinY(), shape[row][col]);                }
             }
         }
     }
