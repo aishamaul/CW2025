@@ -13,6 +13,9 @@ public class SoundManager {
     private AudioClip bonusSound;
     private AudioClip hoverSound;
     private AudioClip clickSound;
+    private AudioClip hardDropSound;
+
+
 
     private SoundManager() {
         try {
@@ -37,6 +40,14 @@ public class SoundManager {
                 clickSound = new AudioClip(clickRes.toExternalForm());
                 clickSound.setVolume(0.8);
             }
+
+            // load Hard Drop Sound
+            URL dropRes = getClass().getResource("/audio/hard drop.mp3");
+            if (dropRes != null) {
+                hardDropSound = new AudioClip(dropRes.toExternalForm());
+                hardDropSound.setVolume(0.3);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,6 +95,10 @@ public class SoundManager {
                 btn.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> playClickSound());
             }
         });
+    }
+
+    public void playHardDropSound() {
+        if (hardDropSound != null) hardDropSound.play();
     }
 
 }

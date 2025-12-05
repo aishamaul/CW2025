@@ -6,6 +6,7 @@ import com.comp2042.game.events.InputEventListener;
 import com.comp2042.game.events.MoveEvent;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
+import com.comp2042.util.audio.SoundManager;
 import javafx.animation.Animation;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -67,6 +68,7 @@ public class GameController implements InputEventListener {
         if(lockTimer.getStatus() == Animation.Status.RUNNING){
             lockTimer.stop();
         }
+        SoundManager.getInstance().playHardDropSound();
         int rowsDropped = board.dropBrick();
         lifecycleManager.getScoreEvaluator().scoreDrop(rowsDropped, board.getScore());
         lifecycleManager.getViewAdapter().onHardDrop(board.getViewData());
