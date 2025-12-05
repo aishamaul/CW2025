@@ -122,6 +122,7 @@ public class GameController implements InputEventListener {
 
     @Override
     public ViewData onHoldEvent(MoveEvent event){
+        SoundManager.getInstance().playHoldSound();
         board.holdBrick();
 
         if (lockTimer.getStatus() == Animation.Status.RUNNING) {

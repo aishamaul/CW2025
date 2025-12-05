@@ -17,6 +17,8 @@ public class SoundManager {
     private AudioClip loseSound;
     private AudioClip moveSound;
     private AudioClip winSound;
+    private AudioClip holdSound;
+    private AudioClip playSound;
 
 
 
@@ -70,6 +72,13 @@ public class SoundManager {
             if (winRes != null) {
                 winSound = new AudioClip(winRes.toExternalForm());
                 winSound.setVolume(1.0); // Loud volume for victory
+            }
+
+            // load Hold Sound
+            URL holdRes = getClass().getResource("/audio/hold.mp3");
+            if (holdRes != null) {
+                holdSound = new AudioClip(holdRes.toExternalForm());
+                holdSound.setVolume(1.0);
             }
 
         } catch (Exception e) {
@@ -135,6 +144,10 @@ public class SoundManager {
 
     public void playWinSound() {
         if (winSound != null) winSound.play();
+    }
+
+    public void playHoldSound() {
+        if (holdSound != null) holdSound.play();
     }
 
 }
