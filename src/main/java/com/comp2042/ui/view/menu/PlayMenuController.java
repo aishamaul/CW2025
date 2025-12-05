@@ -134,6 +134,6 @@ public class PlayMenuController implements Initializable {
 
     @FXML
     public void onBackClicked(ActionEvent event) throws IOException {
-        SceneNavigator.switchTo("playMenu.fxml", event);
+        SceneNavigator.switchTo("home.fxml", event);
     }
 }
