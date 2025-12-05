@@ -235,11 +235,11 @@
 
 .freezeTextStyle{
     -fx-font-family: "Let's go Digital";
-    -fx-text-fill: white;
-    -fx-stroke: #fad3ff;
+    -fx-text-fill: #00E5FF;
+    -fx-stroke: white;
     -fx-effect: dropshadow(three-pass-box, white, 10, 0.5, 0, 0);
     -fx-alignment: center;
-    -fx-font-size: 40px
+    -fx-font-size: 30px
 }
 
 .brick {
