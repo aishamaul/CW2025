@@ -289,6 +289,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void gameOver() {
+        SoundManager.getInstance().playLoseSound();
         flowCoordinator.handleGameOver();
 
         gameOverMenu.setVisible(true);

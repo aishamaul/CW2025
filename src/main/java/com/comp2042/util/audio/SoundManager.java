@@ -14,6 +14,7 @@ public class SoundManager {
     private AudioClip hoverSound;
     private AudioClip clickSound;
     private AudioClip hardDropSound;
+    private AudioClip loseSound;
 
 
 
@@ -46,6 +47,13 @@ public class SoundManager {
             if (dropRes != null) {
                 hardDropSound = new AudioClip(dropRes.toExternalForm());
                 hardDropSound.setVolume(0.3);
+            }
+
+            // Load Lose Sound
+            URL loseRes = getClass().getResource("/audio/lose.mp3");
+            if (loseRes != null) {
+                loseSound = new AudioClip(loseRes.toExternalForm());
+                loseSound.setVolume(0.8);
             }
 
         } catch (Exception e) {
@@ -99,6 +107,10 @@ public class SoundManager {
 
     public void playHardDropSound() {
         if (hardDropSound != null) hardDropSound.play();
+    }
+
+    public void playLoseSound() {
+        if (loseSound != null) loseSound.play();
     }
 
 }
