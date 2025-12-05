@@ -42,7 +42,7 @@ public class PauseStateManager {
             pauseButton.setSelected(true);
         }
 
-        setFullScreen(false);
+        setFullScreen(true);
     }
 
     public void hidePauseMenu(){

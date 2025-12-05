@@ -50,13 +50,19 @@ public class PlayMenuController implements Initializable {
         new GameInitializer(controller);
 
         //switch to the game scene
-        Scene gameScene = new Scene(gameRoot);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene gameScene = stage.getScene();
+        if (gameScene != null) {
+            gameScene.setRoot(gameRoot);
+        } else {
+            gameScene = new Scene(gameRoot);
+            stage.setScene(gameScene);
+        }
 
         // ensure the game window focuses so key inputs work immediately
         gameRoot.requestFocus();
 
-        stage.setScene(gameScene);
         stage.setFullScreen(true);
         stage.show();
 

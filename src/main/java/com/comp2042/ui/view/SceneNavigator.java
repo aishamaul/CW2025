@@ -18,7 +18,12 @@ public class SceneNavigator {
     public static void switchTo(String fxmlPath, ActionEvent triggerEvent) throws IOException {
         Parent root = FXMLLoader.load(SceneNavigator.class.getClassLoader().getResource(fxmlPath));
         Stage stage = (Stage) ((Node) triggerEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Scene scene = stage.getScene();
+        if (scene != null) {
+            scene.setRoot(root);
+        } else {
+            stage.setScene(new Scene(root));
+        }
         stage.setFullScreen(true);
         stage.show();
     }
