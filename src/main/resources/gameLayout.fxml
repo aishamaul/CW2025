@@ -36,13 +36,13 @@
         <GridPane fx:id="ghostPanel" vgap="2" hgap="2"/>
         <GridPane fx:id="brickPanel" vgap="2" hgap="2"/>
 
-        <VBox alignment="CENTER" layoutX="470" layoutY="485" prefWidth="130" spacing="6">
+        <VBox alignment="CENTER" layoutX="470" layoutY="485" prefWidth="130" spacing="6" styleClass="statPanel">
             <children>
-                <Label text="SCORE" styleClass="nextBrickLabel" alignment="CENTER" prefWidth="130"/>
-                <Label fx:id="scoreLabel" styleClass="scoreClass"  text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
+                <Label text="SCORE" styleClass="statTitle" alignment="CENTER" prefWidth="130"/>
+                <Label fx:id="scoreLabel" styleClass="statValue"  text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
 
-                <Label text="LINES CLEARED" styleClass="nextBrickLabel" style="-fx-padding: 7;" alignment="CENTER" prefWidth="130"/>
-                <Label fx:id="linesLabel" styleClass="scoreClass" text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
+                <Label text="LINES CLEARED" styleClass="statTitle" style="-fx-padding: 7;" alignment="CENTER" prefWidth="130"/>
+                <Label fx:id="linesLabel" styleClass="statValue" text="0" alignment="CENTER" prefWidth="130" maxWidth="130"/>
             </children>
         </VBox>
 

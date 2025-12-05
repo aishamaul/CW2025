@@ -21,30 +21,44 @@
 
 
 .sidePanel {
-    -fx-background-color: linear-gradient(to bottom, rgba(18, 10, 35, 0.95), rgba(5, 2, 12, 0.98));
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-border-color: rgba(190, 160, 255, 0.7);
-    -fx-border-width: 1.5;
+    -fx-background-color:
+            linear-gradient(to bottom, rgba(30, 20, 52, 0.95), rgba(10, 8, 24, 0.96)),
+            radial-gradient(center 50% 25%, radius 70%, rgba(100, 140, 255, 0.22), transparent 65%);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 22, 20;
+    -fx-border-radius: 22;
+    -fx-border-width: 1.6;
+    -fx-border-color: rgba(160, 190, 255, 0.65);
     -fx-effect:
-            dropshadow(gaussian, rgba(170, 120, 255, 0.8), 32, 0.5, 0, 0),
-            dropshadow(gaussian, rgba(0, 0, 0, 0.9), 20, 0.6, 0, 0);
-    -fx-padding: 16;
+            dropshadow(gaussian, rgba(110, 160, 255, 0.4), 26, 0.55, 0, 0),
+            dropshadow(gaussian, rgba(0, 0, 0, 0.85), 20, 0.55, 0, 0);
+    -fx-padding: 18;
 }
 
 .panelWall {
-    -fx-background-color: rgba(40, 20, 60, 0.55);
-    -fx-background-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(180, 130, 255, 0.45), 20, 0.25, 0, 0);
-    -fx-padding: 14;
+    -fx-background-color:
+            linear-gradient(to bottom, rgba(30, 20, 52, 0.95), rgba(10, 8, 24, 0.96)),
+            radial-gradient(center 50% 25%, radius 70%, rgba(100, 140, 255, 0.22), transparent 65%);
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 18, 16;
+    -fx-border-color: rgba(160, 190, 255, 0.65);
+    -fx-border-width: 1.0;
+    -fx-border-radius: 18;
+    -fx-effect:
+            dropshadow(gaussian, rgba(110, 160, 255, 0.4), 26, 0.55, 0, 0),
+            dropshadow(gaussian, rgba(0, 0, 0, 0.85), 20, 0.55, 0, 0);
+    -fx-padding: 16;
 }
 
 .nextBrickLabel {
     -fx-font-family: "Let's go Digital";
-    -fx-padding: 20px 0 0 0;
+    -fx-padding: 14px 0 4px 0;
     -fx-font-size: 16px;
-    -fx-text-fill: yellow;
-}
+    -fx-text-fill: linear-gradient(to bottom, #eaf1ff, #cfd8ff);
+    -fx-effect:
+            dropshadow(gaussian, rgba(255, 255, 255, 0.35), 12, 0.25, 0, 1),
+            dropshadow(gaussian, rgba(90, 140, 255, 0.35), 18, 0.35, 0, 0);
+    -fx-opacity: 0.95;}
 
 .ipad-dark-grey {
     -fx-background-color: black;
@@ -87,13 +101,13 @@
 .scoreClass{
     -fx-font-family: "Let's go Digital";
     -fx-font-size: 30;
-    -fx-fill: yellow;
-    -fx-text-fill: yellow;
+    -fx-fill: linear-gradient(to bottom, #f7e7a3, #f1c657);
+    -fx-text-fill: linear-gradient(to bottom, #f7e7a3, #f1c657);
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-effect:
-            dropshadow(gaussian, rgba(255, 240, 140, 0.85), 18, 0.45, 0, 0),
-            dropshadow(gaussian, rgba(0, 0, 0, 0.65), 10, 0.6, 0, 0);
+            dropshadow(gaussian, rgba(255, 200, 120, 0.8), 20, 0.5, 0, 0),
+            dropshadow(gaussian, rgba(0, 0, 0, 0.7), 12, 0.6, 0, 0);
 }
 
 
@@ -278,3 +292,39 @@
     -fx-effect: dropshadow(gaussian, rgba(255, 92, 92, 0.85), 18, 0.45, 0, 0);
 }
 
+.statPanel {
+    -fx-background-color:
+            linear-gradient(to bottom, rgba(30, 20, 52, 0.95), rgba(10, 8, 24, 0.96)),
+            radial-gradient(center 50% 25%, radius 70%, rgba(100, 140, 255, 0.22), transparent 65%);
+    -fx-background-radius: 18, 16;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 12 16 16 16;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(160, 190, 255, 0.65);
+    -fx-border-width: 1.2;
+    -fx-effect:
+            dropshadow(gaussian, rgba(110, 160, 255, 0.4), 26, 0.55, 0, 0),
+            dropshadow(gaussian, rgba(0, 0, 0, 0.85), 20, 0.55, 0, 0);
+}
+
+
+.statTitle {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 15px;
+    -fx-text-fill: linear-gradient(to bottom, #dbe7ff, #9fc4ff);
+    -fx-padding: 6 0 2 0;
+    -fx-effect:
+            dropshadow(gaussian, rgba(255, 255, 255, 0.2), 10, 0.3, 0, 1),
+            dropshadow(gaussian, rgba(90, 150, 255, 0.35), 16, 0.35, 0, 0);
+}
+
+.statValue {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 32px;
+    -fx-text-fill: linear-gradient(to bottom, #8bf3ff, #43c5ff);
+    -fx-padding: 4 0 8 0;
+    -fx-effect:
+            dropshadow(gaussian, rgba(80, 200, 255, 0.8), 24, 0.5, 0, 0),
+            dropshadow(gaussian, rgba(0, 0, 0, 0.75), 14, 0.6, 0, 0);
+    -fx-alignment: center;
+}
