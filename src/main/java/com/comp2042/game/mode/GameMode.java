@@ -14,6 +14,13 @@ public interface GameMode {
     String getName();
 
     /**
+     * @return A short description of the level's objectives and mechanics
+     */
+    default String getDescription() {
+        return "";
+    }
+
+    /**
      * Called whenever lines are cleared to apply level specific rules
      */
     void onLinesUpdated(int totalLise, GameLoopManager loopManager);

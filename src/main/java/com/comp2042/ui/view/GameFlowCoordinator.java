@@ -49,7 +49,7 @@ public class GameFlowCoordinator {
     public void startNextLevel() {
         if (currentMode != null && currentMode.getNextLevel() != null) {
             gameModeSetter.accept(currentMode.getNextLevel());
-            newGameCallback.run(); // Triggers the reset in main controller
+            newGameCallback.run(); // triggers the reset in main controller
         } else {
             navigateToHome(null);
         }
@@ -59,8 +59,13 @@ public class GameFlowCoordinator {
         gameLoopManager.stop();
         boolean hasNext = (currentMode != null && currentMode.getNextLevel() != null);
         if (levelMenuController != null) {
-            levelMenuController.showLevelComplete(hasNext);
-        }
+            if (hasNext) {
+                // show standard level complete screen
+                levelMenuController.showLevelComplete(true);
+            } else {
+                // last level finished, challenge complete
+                levelMenuController.showChallengeComplete();
+            }        }
     }
 
     public void handleGameOver() {

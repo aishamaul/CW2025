@@ -234,7 +234,8 @@ public class GuiController implements Initializable, GameView {
 
     private void showLevelStartScreen() {
         isPause.setValue(true);
-        levelStartManager.showStartScreen(levelMenusController, currentGameMode.getName());
+        String desc = (currentGameMode != null) ? currentGameMode.getDescription() : "";
+        levelStartManager.showStartScreen(levelMenusController, currentGameMode.getName(), desc);
     }
 
 

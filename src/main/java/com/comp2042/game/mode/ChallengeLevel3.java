@@ -22,6 +22,13 @@ public class ChallengeLevel3  implements GameMode{
     }
 
     @Override
+    public String getDescription() {
+        return "Chaos mode! Garbage blocks everywhere.\n" +
+                "Plus a RED BOMB that clears a 3x3 area!\n" +
+                "Survive and clear 25 lines to finish the challenge!";
+    }
+
+    @Override
     public void onStart(Board board) {
         // set the custom generator
         board.setBrickGenerator(new Level3BrickGenerator());

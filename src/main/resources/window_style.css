@@ -366,3 +366,30 @@
     -fx-font-weight: bold;
     -fx-alignment: center;
 }
+
+.descriptionStyle {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 26px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, cyan, 5, 0.5, 0, 0);
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-padding: 0 0 30 0;
+    -fx-line-spacing: 5px;
+}
+
+.challengeCompleteTitle {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 70px;
+    -fx-text-fill: linear-gradient(to right, #ff0055, #ffcc00, #00ff00, #00e5ff, #8a00c2);
+    -fx-effect: dropshadow(gaussian, white, 15, 0.6, 0, 0);
+    -fx-alignment: center;
+}
+
+.challengeCompleteText {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 30px;
+    -fx-text-fill: #e0e0ff;
+    -fx-effect: dropshadow(gaussian, #8a00c2, 10, 0.4, 0, 0);
+    -fx-alignment: center;
+}

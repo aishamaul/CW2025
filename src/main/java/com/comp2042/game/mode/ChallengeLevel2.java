@@ -29,6 +29,12 @@ public class ChallengeLevel2 implements GameMode {
     }
 
     @Override
+    public String getDescription() {
+        return "Garbage rises from below! Clear 15 lines to escape!\n" +
+                "At 10 lines cleared, time FREEZES for a moment — use it wisely!";
+    }
+
+    @Override
     public void onLinesUpdated(int totalLines, GameLoopManager loopManager){
 
         loopManager.setRate(1.1);

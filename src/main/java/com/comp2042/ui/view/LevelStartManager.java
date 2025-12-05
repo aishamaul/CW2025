@@ -17,9 +17,9 @@ public class LevelStartManager {
             levelMenusController.hideAll();
         }
     }
-    public void showStartScreen(LevelMenuController controller, String modeName) {
+    public void showStartScreen(LevelMenuController controller, String modeName, String description) {
         if (controller != null) {
-            controller.showStartScreen(modeName);
+            controller.showStartScreen(modeName, description);
         }
     }
 }

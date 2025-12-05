@@ -8,10 +8,13 @@
 
 <StackPane fx:controller="com.comp2042.ui.view.menu.LevelMenuController"
            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-           pickOnBounds="false">
+           pickOnBounds="false" fx:id="rootStack">
+
+    <Pane fx:id="effectsPane" mouseTransparent="true" pickOnBounds="false"/>
 
     <VBox fx:id="levelStartMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
         <Label fx:id="levelTitleLabel" text="LEVEL 1" styleClass="titleStyle"/>
+        <Label fx:id="levelDescriptionLabel" text="Description" styleClass="descriptionStyle" wrapText="true" textAlignment="CENTER"/>
         <Button text="CLICK TO START" onAction="#onStartClicked" styleClass="menuButton"/>
         <Button text="BACK TO MENU" onAction="#onExitClicked" styleClass="menuButton"/>
     </VBox>
@@ -20,6 +23,12 @@
         <Label text="LEVEL COMPLETED" styleClass="titleStyle" style="-fx-text-fill: limegreen;"/>
         <Button text="NEXT LEVEL" fx:id="nextLevelButton" onAction="#onNextLevelClicked" styleClass="menuButton"/>
         <Button text="EXIT" onAction="#onExitClicked" styleClass="menuButton"/>
+    </VBox>
+
+    <VBox fx:id="challengeCompleteMenu" alignment="CENTER" spacing="25" styleClass="pauseMenu" visible="false">
+        <Label text="CHALLENGE COMPLETED!" styleClass="challengeCompleteTitle" wrapText="true" textAlignment="CENTER"/>
+        <Label text="You have conquered the chaos!" styleClass="challengeCompleteText"/>
+        <Button text="RETURN HOME" onAction="#onExitClicked" styleClass="menuButton"/>
     </VBox>
 
 </StackPane>

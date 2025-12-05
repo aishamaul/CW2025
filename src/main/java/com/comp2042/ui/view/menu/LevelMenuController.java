@@ -3,6 +3,8 @@ package com.comp2042.ui.view.menu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class LevelMenuController {
@@ -15,9 +17,19 @@ public class LevelMenuController {
 
     @FXML private Button nextLevelButton;
 
+    @FXML private StackPane rootStack;
+
+    @FXML private Pane effectsPane;
+
+    @FXML private Label levelDescriptionLabel;
+
+    @FXML private VBox challengeCompleteMenu;
+
     private Runnable onStartAction;
     private Runnable onNextLevelAction;
     private Runnable onExitAction;
+
+    private final ChallengeMenuAnimator animator = new ChallengeMenuAnimator();
 
     public void  setCallbacks(Runnable onStart, Runnable onNextLevel, Runnable onExit){
         this.onStartAction = onStart;
@@ -25,9 +37,10 @@ public class LevelMenuController {
         this.onExitAction = onExit;
     }
 
-    public void showStartScreen(String levelName){
+    public void showStartScreen(String levelName, String description){
         hideAll();
         levelTitleLabel.setText(levelName);
+        levelDescriptionLabel.setText(description);
         levelStartMenu.setVisible(true);
         levelStartMenu.toFront();
     }
@@ -37,13 +50,26 @@ public class LevelMenuController {
         levelCompleteMenu.setVisible(true);
         levelCompleteMenu.toFront();
 
+        if (effectsPane != null) {
+            animator.playFallingBricks(effectsPane);
+        }
+
         if (!hasNextLevel) {
             nextLevelButton.setVisible(false);
             nextLevelButton.setManaged(false);
         } else {
             nextLevelButton.setVisible(true);
             nextLevelButton.setManaged(true);
-            nextLevelButton.setText("NEXT LEVEL");
+        }
+    }
+
+    public void showChallengeComplete() {
+        hideAll();
+        challengeCompleteMenu.setVisible(true);
+        challengeCompleteMenu.toFront();
+
+        if (effectsPane != null) {
+            animator.playConfetti(effectsPane);
         }
     }
 

@@ -12,6 +12,11 @@ public class ChallengeLevel1 implements GameMode{
     }
 
     @Override
+    public String getDescription() {
+        return "Clear 20 lines! Speed steadily increases.\nGet ready to warm up!";
+    }
+
+    @Override
     public void onLinesUpdated (int totalLines, GameLoopManager loopManager){
 
         // speed increases every 3 lines cleared
