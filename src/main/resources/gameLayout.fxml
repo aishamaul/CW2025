@@ -10,9 +10,9 @@
 
 <?import javafx.scene.control.skin.VirtualFlow?>
 <?import javafx.geometry.Insets?>
-<StackPane fx:id="rootPane" fx:controller="com.comp2042.ui.view.GuiController" xmlns:fx="http://javafx.com/fxml" style="'fx'background-color: black;">
+<StackPane fx:id="rootPane" fx:controller="com.comp2042.ui.view.GuiController" xmlns:fx="http://javafx.com/fxml">
 
-    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: black;">
+    <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: transparent;">
 
         <BorderPane styleClass="gameBoard" fx:id="gameBoard" layoutY="70" layoutX="180">
             <center>

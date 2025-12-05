@@ -9,6 +9,7 @@ import com.comp2042.ui.components.NotificationManager;
 import com.comp2042.ui.input.EventDispatcher;
 import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.input.InputHandler;
+import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.render.GameRenderer;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.BooleanProperty;
@@ -132,6 +133,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        BackgroundAnimator.attach(rootPane);
         List<GridPane> nextBrickGrids = Arrays.asList(nextBrick1, nextBrick2, nextBrick3);
 
         this.uiManager = new GameUIManager(gameBoard, gamePanel, brickPanel, ghostPanel, nextBrickGrids, holdBrickGrid, groupNotification, scoreLabel);

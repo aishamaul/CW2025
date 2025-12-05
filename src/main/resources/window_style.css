@@ -4,7 +4,13 @@
 }
 
 .root {
-    -fx-background-color: black;
+    -fx-background-color: radial-gradient(
+            center 50% 45%,
+            radius 80%,
+            rgb(17, 20, 39) 0%,
+            rgba(13, 16, 28, 0.97) 20%,
+            rgba(2, 2, 6, 1.0) 100%
+    );
 }
 
 .nextBrick {
