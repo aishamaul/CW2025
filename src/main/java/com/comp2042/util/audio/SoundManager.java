@@ -15,6 +15,7 @@ public class SoundManager {
     private AudioClip clickSound;
     private AudioClip hardDropSound;
     private AudioClip loseSound;
+    private AudioClip moveSound;
 
 
 
@@ -54,6 +55,13 @@ public class SoundManager {
             if (loseRes != null) {
                 loseSound = new AudioClip(loseRes.toExternalForm());
                 loseSound.setVolume(0.8);
+            }
+
+            //load move sound
+            URL moveRes = getClass().getResource("/audio/move brick.mp3");
+            if (moveRes != null) {
+                moveSound = new AudioClip(moveRes.toExternalForm());
+                moveSound.setVolume(0.2);
             }
 
         } catch (Exception e) {
@@ -111,6 +119,10 @@ public class SoundManager {
 
     public void playLoseSound() {
         if (loseSound != null) loseSound.play();
+    }
+
+    public void playMoveSound() {
+        if (moveSound != null) moveSound.play();
     }
 
 }

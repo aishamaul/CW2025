@@ -77,15 +77,17 @@ public class GameController implements InputEventListener {
 
     @Override
     public ViewData onLeftEvent(MoveEvent event) {
-        board.moveBrickLeft();
-        lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
+        if (board.moveBrickLeft()) {
+            SoundManager.getInstance().playMoveSound();
+        }        lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
         return lifecycleManager.getViewData();
     }
 
     @Override
     public ViewData onRightEvent(MoveEvent event) {
-        board.moveBrickRight();
-        lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
+        if (board.moveBrickRight()) {
+            SoundManager.getInstance().playMoveSound();
+        }        lifecycleManager.getViewAdapter().refreshBrick(lifecycleManager.getViewData());
         return lifecycleManager.getViewData();
     }
 
