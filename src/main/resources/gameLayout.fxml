@@ -23,10 +23,9 @@
             </center>
         </BorderPane>
 
-        <VBox layoutX="1" layoutY="70" prefWidth="120" prefHeight="100" spacing="5" alignment="CENTER" styleClass="sidePanel">
+        <VBox layoutX="1" layoutY="70" minWidth="175" prefHeight="100" spacing="5" alignment="CENTER" styleClass="sidePanel">
             <Label text="HOLD" styleClass = "nextBrickLabel" style="-fx-font-size: 30px"/>
-            <GridPane fx:id="holdBrickGrid" hgap="2" vgap="2" alignment="CENTER" prefWidth="20" minHeight="65"
-                      styleClass="panelWall">
+            <GridPane fx:id="holdBrickGrid" hgap="2" vgap="2" alignment="CENTER" minWidth="65" minHeight="65" styleClass="panelWall">
                 <VBox.margin>
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </VBox.margin>
