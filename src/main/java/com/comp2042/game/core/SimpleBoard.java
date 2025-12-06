@@ -9,9 +9,7 @@ import com.comp2042.game.bricks.RandomBrickGenerator;
 import com.comp2042.model.ClearRow;
 import com.comp2042.model.ViewData;
 import com.comp2042.util.ExplosionManager;
-
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,11 +23,13 @@ public class SimpleBoard implements Board {
     private final ActivePiece activePiece;
     private final Score score;
     private final RowScoreCalculator scoreCalculator;
-    private Brick heldBrick;
     private final ExplosionManager explosionManager;
     private boolean isBrickActive = false;
+    private final HoldManager holdManager;
+    private final BoardViewDataFactory viewDataFactory;
 
-    private final HoldManager holdManager; // New Dependency
+
+
     public SimpleBoard(int width, int height) {
         this.grid = new BoardGrid(width, height);
         this.brickGenerator = new RandomBrickGenerator();
@@ -38,7 +38,7 @@ public class SimpleBoard implements Board {
         this.scoreCalculator = new RowScoreCalculator();
         this.explosionManager = new ExplosionManager();
         this.holdManager = new HoldManager();
-
+        this.viewDataFactory = new BoardViewDataFactory();
     }
 
 
@@ -99,32 +99,12 @@ public class SimpleBoard implements Board {
 
     @Override
     public ViewData getViewData() {
-        List<Brick> nextBricks = brickGenerator.getPeekNextBricks(3);
-        List<int[][]> nextShapes = new ArrayList<>();
-        for (Brick b:nextBricks){
-            nextShapes.add(b.getShapeMatrix().get(0));
-        }
-
-        //get held brick shape
-        Brick heldBrick = holdManager.getHeldBrick();
-        int [][] holdShape = (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
-
-        int[][] currentShape = activePiece.getShape();
-        int ghostY = activePiece.getY();
-
-        if (isBrickActive) {
-            ghostY = activePiece.calculateGhostY(grid);
-        } else {
-            currentShape = new int[currentShape.length][currentShape[0].length];
-        }
-
-        return new ViewData(
-                currentShape,
-                activePiece.getX(),
-                activePiece.getY(),
-                activePiece.calculateGhostY(grid),
-                nextShapes,
-                holdShape
+        return viewDataFactory.createViewData(
+                activePiece,
+                grid,
+                brickGenerator,
+                holdManager,
+                isBrickActive
         );
     }
 
