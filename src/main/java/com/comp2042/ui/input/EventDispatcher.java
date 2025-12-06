@@ -49,7 +49,7 @@ public class EventDispatcher {
         return eventListener.onHoldEvent(new MoveEvent(EventType.HOLD, EventSource.USER));
     }
 
-    public boolean onGameTick(com.comp2042.game.mode.GameMode mode) {
+    public boolean onGameTick(GameMode mode) {
         return eventListener.onGameTick(mode);
     }
 }
