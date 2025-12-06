@@ -2,7 +2,6 @@ package com.comp2042.ui.view.menu;
 
 import com.comp2042.game.core.GameInitializer;
 import com.comp2042.game.mode.ChallengeLevel1;
-import com.comp2042.game.mode.ChallengeLevel3;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.GuiController;
 import com.comp2042.ui.view.SceneNavigator;
