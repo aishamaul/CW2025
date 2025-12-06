@@ -10,9 +10,7 @@ import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.menu.GameControlsController;
 import com.comp2042.util.audio.SoundManager;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -94,16 +92,11 @@ public class GuiController implements Initializable, GameView {
 
     private EventDispatcher dispatcher;
 
-    private GameLoopManager gameLoopManager;
-
     private GameUIManager uiManager;
 
     private PauseStateManager pauseStateManager;
 
-    private final BooleanProperty isPause = new SimpleBooleanProperty();
-
-    private final BooleanProperty isGameOver = new SimpleBooleanProperty();
-
+    private GameRuntimeManager runtimeManager;
 
     private boolean isClassicMode = false;
 
@@ -168,47 +161,48 @@ public class GuiController implements Initializable, GameView {
         rootPane.setFocusTraversable(true);
         rootPane.requestLayout();
 
-        gameLoopManager = new GameLoopManager(() -> {
-            boolean applyGravity = dispatcher.onGameTick(currentGameMode);
-            if (applyGravity) {
-                moveDown(EventType.DOWN, EventSource.THREAD);
-            }
-            freezeOverlayManager.updateOverlay(currentGameMode);
-        });
+        this.runtimeManager = new GameRuntimeManager(
+                dispatcher,
+                freezeOverlayManager,
+                this::moveDown,
+                () -> currentGameMode
+        );
 
         this.flowCoordinator = new GameFlowCoordinator(
-                gameLoopManager, levelMenusController, isPause, isGameOver,
+                runtimeManager.getGameLoopManager(), levelMenusController,
+                runtimeManager.isPauseProperty(), runtimeManager.isGameOverProperty(),
                 this::newGame, this::setGameMode
         );
         this.flowCoordinator.setCurrentMode(currentGameMode);
 
         this.animationCoordinator = new AnimationCoordinator(
-                gameLoopManager, isPause,
+                runtimeManager.getGameLoopManager(), runtimeManager.isPauseProperty(),
                 (visible) -> {
                     if (brickPanel != null) brickPanel.setVisible(visible);
                     if (ghostPanel != null) ghostPanel.setVisible(visible);
                 }
         );
 
-        this.pauseStateManager = new PauseStateManager(gameLoopManager, pauseButton, isPause, pauseMenu);
+        this.pauseStateManager = new PauseStateManager(runtimeManager.getGameLoopManager(), pauseButton, runtimeManager.isPauseProperty(), pauseMenu);
 
-        inputController.bindInputs(rootPane, this, dispatcher, isPause, isGameOver,
+        inputController.bindInputs(rootPane, this, dispatcher,
+                runtimeManager.isPauseProperty(), runtimeManager.isGameOverProperty(),
                 this::moveDown, this::newGame, this::togglePauseMenu);
 
         levelStartManager.registerCallbacks(levelMenusController,
                 flowCoordinator::startCurrentLevel,
                 flowCoordinator::startNextLevel,
-                () -> flowCoordinator.navigateToHomeWithNode(rootPane)); // <--- Fixed: Passing the root pane
+                () -> flowCoordinator.navigateToHomeWithNode(rootPane));
 
         if (currentGameMode != null){
             showLevelStartScreen();
         } else{
-            gameLoopManager.play();
+            runtimeManager.startLoop();
         }
     }
 
     private void showLevelStartScreen() {
-        isPause.setValue(true);
+        runtimeManager.setPause(true);
         String desc = (currentGameMode != null) ? currentGameMode.getDescription() : "";
         levelStartManager.showStartScreen(levelMenusController, currentGameMode.getName(), desc);
     }
@@ -216,8 +210,7 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void refreshBrick(ViewData brick) {
-        if (isPause.getValue() == Boolean.FALSE || animationCoordinator.isAnimating()) {
-            uiManager.refresh(brick);
+        if (runtimeManager.isPauseProperty().getValue() == Boolean.FALSE || animationCoordinator.isAnimating()) {            uiManager.refresh(brick);
         }
     }
 
@@ -249,12 +242,12 @@ public class GuiController implements Initializable, GameView {
         integerProperty.addListener((observable, oldValue, newValue) -> {
             int lines = newValue.intValue();
 
-            if (currentGameMode != null && gameLoopManager != null) {
-                currentGameMode.onLinesUpdated(lines, gameLoopManager);
+            if (currentGameMode != null && runtimeManager.getGameLoopManager() != null) {
+                currentGameMode.onLinesUpdated(lines, runtimeManager.getGameLoopManager());
             }
-            else if (isClassicMode && gameLoopManager != null) {
+            else if (isClassicMode && runtimeManager.getGameLoopManager() != null) {
                 double newRate = 1.0 + (lines/5) * 0.5;
-                gameLoopManager.setRate(newRate);
+                runtimeManager.setRate(newRate);
             }
         });
     }
@@ -267,7 +260,7 @@ public class GuiController implements Initializable, GameView {
         gameOverMenu.setVisible(true);
         gameOverMenu.toFront();
 
-        isGameOver.setValue(Boolean.TRUE);
+        runtimeManager.setGameOver(true);
     }
 
     @Override
@@ -292,7 +285,7 @@ public class GuiController implements Initializable, GameView {
     }
 
     public void newGame() {
-        if (gameLoopManager != null) gameLoopManager.stop();
+        if (runtimeManager != null) runtimeManager.stopLoop();
 
         if (brickPanel != null) brickPanel.setVisible(true);
         if (ghostPanel != null) ghostPanel.setVisible(true);
@@ -303,14 +296,13 @@ public class GuiController implements Initializable, GameView {
         dispatcher.newGame();
         rootPane.requestFocus();
 
-        gameLoopManager.setRate(1.0);
+        runtimeManager.resetState();
         pauseStateManager.reset();
-        isGameOver.setValue(Boolean.FALSE);
 
         if (currentGameMode != null) {
-            showLevelStartScreen(); // This sets isPause to true
+            showLevelStartScreen();
         } else {
-            gameLoopManager.play();
+            runtimeManager.startLoop();
         }
     }
 
