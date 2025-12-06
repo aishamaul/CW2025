@@ -29,6 +29,7 @@ public class SimpleBoard implements Board {
     private final ExplosionManager explosionManager;
     private boolean isBrickActive = false;
 
+    private final HoldManager holdManager; // New Dependency
     public SimpleBoard(int width, int height) {
         this.grid = new BoardGrid(width, height);
         this.brickGenerator = new RandomBrickGenerator();
@@ -36,6 +37,7 @@ public class SimpleBoard implements Board {
         this.score = new Score();
         this.scoreCalculator = new RowScoreCalculator();
         this.explosionManager = new ExplosionManager();
+        this.holdManager = new HoldManager();
 
     }
 
@@ -90,27 +92,9 @@ public class SimpleBoard implements Board {
 
     @Override
     public void holdBrick(){
-        Brick currentBrick = activePiece.getBrick();
+        holdManager.processHold(activePiece, brickGenerator, this::createNewBrick);
 
-        if(heldBrick == null){
-            // case 1: held is empty
-            // put current in hold
-            heldBrick = currentBrick;
-            // spawn next brick
-            createNewBrick();
-        } else{
-            //case 2: hold has a brick
-            // current changes to brick in hold, hold becomes empty
-            Brick brickFromHold = heldBrick;
-            heldBrick = null;
-
-            //push the current falling brick to the generator
-            brickGenerator.returnBrick(currentBrick);
-
-            //set the current brick to the one that was in hold
-            activePiece.spawn(brickFromHold, GameConfig.SPAWN_X, GameConfig.SPAWN_Y);
-            isBrickActive = true;
-        }
+        isBrickActive = true;
     }
 
     @Override
@@ -122,6 +106,7 @@ public class SimpleBoard implements Board {
         }
 
         //get held brick shape
+        Brick heldBrick = holdManager.getHeldBrick();
         int [][] holdShape = (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
 
         int[][] currentShape = activePiece.getShape();
@@ -168,7 +153,7 @@ public class SimpleBoard implements Board {
     public void newGame() {
         grid.clear();
         score.reset();
-        heldBrick = null; //reset hold
+        holdManager.reset(); //reset hold
         createNewBrick();
     }
 
