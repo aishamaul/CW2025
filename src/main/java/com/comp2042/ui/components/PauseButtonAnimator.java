@@ -1,13 +1,8 @@
 package com.comp2042.ui.components;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 public class PauseButtonAnimator {
     private final ToggleButton pauseButton;
