@@ -8,7 +8,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.List;
