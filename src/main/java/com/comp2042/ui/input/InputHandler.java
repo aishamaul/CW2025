@@ -5,7 +5,6 @@ import com.comp2042.game.events.EventType;
 import com.comp2042.ui.view.GameView;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.function.BiConsumer;
