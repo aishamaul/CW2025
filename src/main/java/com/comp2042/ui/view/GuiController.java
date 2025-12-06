@@ -8,15 +8,12 @@ import com.comp2042.ui.components.PauseButtonAnimator;
 import com.comp2042.ui.input.EventDispatcher;
 import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.render.BackgroundAnimator;
-import com.comp2042.ui.view.menu.GameControlsController;
 import com.comp2042.util.audio.SoundManager;
 import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
@@ -24,6 +21,7 @@ import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.menu.LevelMenuController;
+
 
 
 import java.io.IOException;
@@ -118,6 +116,8 @@ public class GuiController implements Initializable, GameView {
 
     private final ControlsMenuLoader controlsMenuLoader = new ControlsMenuLoader();
 
+    private GameViewEventDelegate eventDelegate;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
@@ -144,6 +144,7 @@ public class GuiController implements Initializable, GameView {
 
     public void setGameMode(GameMode mode) {
         this.currentGameMode = mode;
+        if (eventDelegate != null)eventDelegate.setCurrentGameMode(mode);
         if (dispatcher != null) dispatcher.setGameMode(mode);
         if (flowCoordinator != null) flowCoordinator.setCurrentMode(mode);
     }
@@ -184,6 +185,12 @@ public class GuiController implements Initializable, GameView {
                     if (ghostPanel != null) ghostPanel.setVisible(visible);
                 }
         );
+
+        this.eventDelegate = new GameViewEventDelegate(
+                uiManager, animationCoordinator, flowCoordinator,
+                gameOverMenu, runtimeManager.isGameOverProperty(), linesLabel
+        );
+        this.eventDelegate.setCurrentGameMode(currentGameMode);
 
         this.pauseStateManager = new PauseStateManager(runtimeManager.getGameLoopManager(), pauseButton, runtimeManager.isPauseProperty(), pauseMenu);
 
@@ -250,34 +257,17 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void gameOver() {
-        SoundManager.getInstance().playLoseSound();
-        flowCoordinator.handleGameOver();
-
-        gameOverMenu.setVisible(true);
-        gameOverMenu.toFront();
-
-        runtimeManager.setGameOver(true);
+        eventDelegate.gameOver();
     }
 
     @Override
     public void showScoreNotification(String text) {
-        uiManager.showNotification(text);
+        eventDelegate.showScoreNotification(text);
     }
 
     @Override
     public void onLineClear(List<Integer> lines, Runnable onAnimationFinished){
-        Runnable finisher = animationCoordinator.createFinishes(onAnimationFinished,
-                ()->{
-                        int currentLines = Integer.parseInt(linesLabel.getText());
-                        if(currentGameMode != null && currentGameMode.isWinConditionMet(currentLines)){
-                            flowCoordinator.handleLevelComplete();
-                            return true;
-                        }
-                        return false;
-                });
-        animationCoordinator.runAnimationFlow(
-                () -> uiManager.animateClear(lines, finisher)
-        );
+        eventDelegate.onLineClear(lines, onAnimationFinished);
     }
 
     public void newGame() {
@@ -340,21 +330,17 @@ public class GuiController implements Initializable, GameView {
 
     @Override
     public void onExplosion(List<java.awt.Point> explodedPoints, Runnable onAnimationFinished) {
-        Runnable finisher = animationCoordinator.createFinishes(onAnimationFinished, ()-> false);
-
-        animationCoordinator.runAnimationFlow(
-                () -> uiManager.animateExplosion(explodedPoints, finisher)
-        );
+        eventDelegate.onExplosion(explodedPoints, onAnimationFinished);
     }
 
     @Override
     public void onBrickLanded(){
-        uiManager.animateLanding();
+        eventDelegate.onBrickLanded();
     }
 
     @Override
     public void  onHardDrop(ViewData brick){
-        uiManager.animateHardDrop(brick);
+        eventDelegate.onHardDrop(brick);
     }
 
 
