@@ -1,6 +1,5 @@
 package com.comp2042.ui.view;
 
-import com.comp2042.game.core.GameLoopManager;
 import com.comp2042.game.core.GameProgressionManager;
 import com.comp2042.game.events.EventSource;
 import com.comp2042.game.events.EventType;
