@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class GridAnimator {
 
-    private final BrickColor brickColor = new BrickColor();
+    private final BrickStyler brickStyler = new BrickStyler();
     private final Random random = new Random();
 
     public void animateClear(Rectangle[][] displayMatrix, List<Integer> clearIndices, Runnable onFinished) {
@@ -223,7 +223,7 @@ public class GridAnimator {
         for (int i=0; i < particleCount; i++){
             double size = 2+ random.nextDouble() * 4;
             Rectangle p = new Rectangle(size, size);
-            brickColor.applyBrickStyle(p, colorCode);
+            brickStyler.applyBrickStyle(p, colorCode);
 
             p.setTranslateX(x + 10);
             p.setTranslateY(y + 20);

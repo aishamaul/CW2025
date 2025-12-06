@@ -1,6 +1,6 @@
 package com.comp2042.ui.view.menu;
 
-import com.comp2042.ui.render.BrickColor;
+import com.comp2042.ui.render.BrickStyler;
 import javafx.animation.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -11,7 +11,7 @@ import java.util.Random;
 public class ChallengeMenuAnimator {
 
     private final Random random = new Random();
-    private final BrickColor brickColor = new BrickColor();
+    private final BrickStyler brickStyler = new BrickStyler();
 
     public void playFallingBricks(Pane targetPane) {
         int count = 25;
@@ -30,7 +30,7 @@ public class ChallengeMenuAnimator {
     private void spawnFallingBrick(Pane parent, double delayMillis) {
         Rectangle rect = new Rectangle(20, 20);
         int colorCode = random.nextInt(7) + 1;
-        brickColor.applyBrickStyle(rect, colorCode);
+        brickStyler.applyBrickStyle(rect, colorCode);
 
         // random start position at top
         double startX = random.nextDouble() * parent.getWidth();
@@ -61,7 +61,7 @@ public class ChallengeMenuAnimator {
     private void spawnConfetti(Pane parent) {
         Rectangle particle = new Rectangle(8, 8);
         int colorCode = random.nextInt(9) + 1;
-        brickColor.applyBrickStyle(particle, colorCode);
+        brickStyler.applyBrickStyle(particle, colorCode);
 
         double centerX = parent.getWidth() / 2;
         double centerY = parent.getHeight() / 2;

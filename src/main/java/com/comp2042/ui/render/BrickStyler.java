@@ -1,10 +1,8 @@
 package com.comp2042.ui.render;
 
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
-public class BrickColor {
+public class BrickStyler {
 
 
     public void applyBrickStyle(Rectangle rectangle, int colorCode) {

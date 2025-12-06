@@ -2,7 +2,6 @@ package com.comp2042.ui.render;
 
 import com.comp2042.game.config.GameConfig;
 import com.comp2042.model.ViewData;
-import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -26,7 +25,7 @@ public class GameRenderer {
     private Rectangle[][] rectangles;
     private Rectangle[][] ghostRectangles;
 
-    private final BrickColor brickColor;
+    private final BrickStyler brickStyler;
     private final GridAnimator gridAnimator;
 
     private ViewData latestBrickData;
@@ -43,7 +42,7 @@ public class GameRenderer {
         this.ghostPanel = ghostPanel;
         this.nextBrickGrids = nextBrickGrids;
         this.holdBrickGrid = holdBrickGrid;
-        this.brickColor = new BrickColor();
+        this.brickStyler = new BrickStyler();
         this.gridAnimator = new GridAnimator();
     }
 
@@ -179,7 +178,7 @@ public class GameRenderer {
 
     private void setRectangleData(int color, Rectangle rectangle) {
 
-        brickColor.applyBrickStyle(rectangle, color);
+        brickStyler.applyBrickStyle(rectangle, color);
     }
 
 
