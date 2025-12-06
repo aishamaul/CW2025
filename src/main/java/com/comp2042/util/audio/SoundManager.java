@@ -23,90 +23,35 @@ public class SoundManager {
     private AudioClip landSound;
 
 
-
-
-
     private SoundManager() {
         try {
-            // load the bonus sound file
-            URL resource = getClass().getResource("/audio/bonus.mp3");
-            if (resource != null) {
-                // audioClip is better for short sound effects than MediaPlayer
-                bonusSound = new AudioClip(resource.toExternalForm());
-                bonusSound.setVolume(0.8);
-            }
-
-            // load Hover Sound
-            URL hoverRes = getClass().getResource("/audio/button hover.mp3");
-            if (hoverRes != null) {
-                hoverSound = new AudioClip(hoverRes.toExternalForm());
-                hoverSound.setVolume(1.5);
-            }
-
-            // load Click Sound
-            URL clickRes = getClass().getResource("/audio/press button.mp3");
-            if (clickRes != null) {
-                clickSound = new AudioClip(clickRes.toExternalForm());
-                clickSound.setVolume(0.8);
-            }
-
-            // load Hard Drop Sound
-            URL dropRes = getClass().getResource("/audio/hard drop.mp3");
-            if (dropRes != null) {
-                hardDropSound = new AudioClip(dropRes.toExternalForm());
-                hardDropSound.setVolume(0.6);
-            }
-
-            // load Lose Sound
-            URL loseRes = getClass().getResource("/audio/lose.mp3");
-            if (loseRes != null) {
-                loseSound = new AudioClip(loseRes.toExternalForm());
-                loseSound.setVolume(0.8);
-            }
-
-            //load move sound
-            URL moveRes = getClass().getResource("/audio/move brick.mp3");
-            if (moveRes != null) {
-                moveSound = new AudioClip(moveRes.toExternalForm());
-                moveSound.setVolume(0.2);
-            }
-
-            // load Win Sound
-            URL winRes = getClass().getResource("/audio/win.mp3");
-            if (winRes != null) {
-                winSound = new AudioClip(winRes.toExternalForm());
-                winSound.setVolume(1.0); // Loud volume for victory
-            }
-
-            // load Hold Sound
-            URL holdRes = getClass().getResource("/audio/hold.mp3");
-            if (holdRes != null) {
-                holdSound = new AudioClip(holdRes.toExternalForm());
-                holdSound.setVolume(1.0);
-            }
-
-            // load Garbage Row Sound
-            URL garbageRes = getClass().getResource("/audio/garbage row.mp3");
-            if (garbageRes != null) {
-                garbageRowSound = new AudioClip(garbageRes.toExternalForm());
-                garbageRowSound.setVolume(1.0);
-            }
-
-            URL explosionRes = getClass().getResource("/audio/explosion.mp3");
-            if (explosionRes != null) {
-                explosionSound = new AudioClip(explosionRes.toExternalForm());
-                explosionSound.setVolume(1.0);
-            }
-
-            URL landRes = getClass().getResource("/audio/land.mp3");
-            if (landRes != null) {
-                landSound = new AudioClip(landRes.toExternalForm());
-                landSound.setVolume(0.2);
-            }
-
+            bonusSound = loadClip("/audio/bonus.mp3", 0.8);
+            hoverSound = loadClip("/audio/button hover.mp3", 1.5);
+            clickSound = loadClip("/audio/press button.mp3", 0.8);
+            hardDropSound = loadClip("/audio/hard drop.mp3", 0.6);
+            loseSound = loadClip("/audio/lose.mp3", 0.8);
+            moveSound = loadClip("/audio/move brick.mp3", 0.2);
+            winSound = loadClip("/audio/win.mp3", 1.0);
+            holdSound = loadClip("/audio/hold.mp3", 0.8);
+            garbageRowSound = loadClip("/audio/garbage row.mp3", 1.0);
+            explosionSound = loadClip("/audio/explosion.mp3", 1.0);
+            landSound = loadClip("/audio/land.mp3", 0.2);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Helper to load audio clips safely
+     */
+    private AudioClip loadClip(String path, double volume) {
+        URL resource = getClass().getResource(path);
+        if (resource != null) {
+            AudioClip clip = new AudioClip(resource.toExternalForm());
+            clip.setVolume(volume);
+            return clip;
+        }
+        return null;
     }
 
     public static SoundManager getInstance() {
