@@ -15,28 +15,10 @@ public class BoardViewDataFactory {
                                    HoldManager holdManager,
                                    boolean isBrickActive) {
 
-        // next bricks shapes
-        List<Brick> nextBricks = brickGenerator.getPeekNextBricks(3);
-        List<int[][]> nextShapes = new ArrayList<>();
-        for (Brick b : nextBricks) {
-            nextShapes.add(b.getShapeMatrix().get(0));
-        }
+        List<int[][]> nextShapes = extractNextShapes(brickGenerator);
+        int[][] holdShape = extractHoldShape(holdManager);
+        int[][] currentShape = extractActiveShape(activePiece, isBrickActive);
 
-        // hold brick shape
-        Brick heldBrick = holdManager.getHeldBrick();
-        int[][] holdShape = (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
-
-        // prepare active brick shape and ghost position
-        int[][] currentShape = activePiece.getShape();
-
-        // if brick is inactive (merged/not spawned), send empty shape to avoid rendering ghost
-        if (isBrickActive) {
-            // keep currentShape as is
-        } else {
-            currentShape = new int[currentShape.length][currentShape[0].length];
-        }
-
-        // calculate ghost position
         int ghostY = activePiece.calculateGhostY(grid);
 
         return new ViewData(
@@ -48,6 +30,31 @@ public class BoardViewDataFactory {
                 holdShape
         );
     }
+
+    private List<int[][]> extractNextShapes(BrickGenerator brickGenerator) {
+        List<Brick> nextBricks = brickGenerator.getPeekNextBricks(3);
+        List<int[][]> nextShapes = new ArrayList<>();
+        for (Brick b : nextBricks) {
+            nextShapes.add(b.getShapeMatrix().get(0));
+        }
+        return nextShapes;
+    }
+
+    private int[][] extractHoldShape(HoldManager holdManager) {
+        Brick heldBrick = holdManager.getHeldBrick();
+        return (heldBrick != null) ? heldBrick.getShapeMatrix().get(0) : null;
+    }
+
+    private int[][] extractActiveShape(ActivePiece activePiece, boolean isBrickActive) {
+        int[][] currentShape = activePiece.getShape();
+        if (!isBrickActive) {
+            // Return empty shape if inactive to avoid rendering ghost
+            return new int[currentShape.length][currentShape[0].length];
+        }
+        return currentShape;
+    }
+
+
 }
 
 
