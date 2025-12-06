@@ -4,7 +4,6 @@ import com.comp2042.util.MatrixOperations;
 import com.comp2042.util.RowClearer;
 import com.comp2042.util.RowClearingOutput;
 
-import java.util.concurrent.ThreadLocalRandom;
 
 public class BoardGrid {
     private final int width;

@@ -1,7 +1,6 @@
 package com.comp2042.game.core;
 
 import com.comp2042.game.mode.GameMode;
-import com.comp2042.ui.view.GameView;
 import com.comp2042.ui.view.GameViewAdapter;
 import com.comp2042.util.audio.SoundManager;
 
