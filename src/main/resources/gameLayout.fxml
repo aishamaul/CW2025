@@ -93,8 +93,8 @@
     <VBox fx:id="pauseMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
         <Button text="RETURN TO GAME" onAction="#resumeGame" styleClass="menuButton"/>
         <Button text="RESTART" onAction="#restartGame" styleClass="menuButton"/>
-        <Button text="HOMESCREEN" onAction="#goToHome" styleClass="menuButton"/>
         <Button text="GAME CONTROLS" onAction="#showGameControls" styleClass="menuButton"/>
+        <Button text="HOMESCREEN" onAction="#goToHome" styleClass="menuButton"/>
     </VBox>
 
     <VBox fx:id="gameOverMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">

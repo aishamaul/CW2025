@@ -16,7 +16,7 @@
         <Label fx:id="levelTitleLabel" text="LEVEL 1" styleClass="titleStyle"/>
         <Label fx:id="levelDescriptionLabel" text="Description" styleClass="descriptionStyle" wrapText="true" textAlignment="CENTER"/>
         <Button text="CLICK TO START" onAction="#onStartClicked" styleClass="menuButton"/>
-        <Button text="BACK TO MENU" onAction="#onExitClicked" styleClass="menuButton"/>
+        <Button text="HOMESCREEN" onAction="#onExitClicked" styleClass="menuButton"/>
     </VBox>
 
     <VBox fx:id="levelCompleteMenu" alignment="CENTER" spacing="20" styleClass="pauseMenu" visible="false">
