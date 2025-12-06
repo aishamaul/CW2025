@@ -116,6 +116,8 @@ public class GuiController implements Initializable, GameView {
 
     private PauseButtonAnimator pauseButtonAnimator;
 
+    private final ControlsMenuLoader controlsMenuLoader = new ControlsMenuLoader();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
@@ -333,31 +335,7 @@ public class GuiController implements Initializable, GameView {
 
     @FXML
     public void showGameControls(ActionEvent actionEvent) {
-
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gameControls.fxml"));
-            Parent controlsRoot = loader.load();
-
-            GameControlsController controller = loader.getController();
-
-            controller.setOnBackAction(() -> {
-                rootPane.getChildren().remove(controlsRoot);
-
-                pauseMenu.setVisible(true);
-                pauseMenu.toFront();
-
-                if (pauseButton != null) {
-                    rootPane.requestFocus();
-                }
-            });
-
-            pauseMenu.setVisible(false);
-
-            rootPane.getChildren().add(controlsRoot);
-            } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        controlsMenuLoader.showGameControls(rootPane, pauseMenu, pauseButton);
     }
 
     @Override
