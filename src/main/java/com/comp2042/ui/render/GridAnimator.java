@@ -163,24 +163,17 @@ public class GridAnimator {
 
             double distance = 100 + random.nextDouble() * 150;
 
-            double duration = 150 + random.nextDouble() * 200;
+            double durationMillis = 150 + random.nextDouble() * 200;
 
-            TranslateTransition fly = new TranslateTransition(Duration.millis(duration), particle);
-            fly.setByX(randX * distance);
-            fly.setByY(randY * distance);
-
-            fly.setInterpolator(Interpolator.EASE_OUT);
-
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(duration), particle);
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            fadeOut.setDelay(Duration.millis(50));
-
-            ParallelTransition particleAnim = new ParallelTransition(fly, fadeOut);
-
-            particleAnim.setOnFinished(ev -> parentPane.getChildren().remove(particle));
-
-            particleAnim.play();
+            ParticleAnimatorHelper.animateDriftAndFade(
+                    particle,
+                    parentPane,
+                    Duration.millis(durationMillis),
+                    randX * distance,
+                    randY * distance,
+                    Duration.millis(50),
+                    Interpolator.EASE_OUT
+            );
         }
     }
 
@@ -238,18 +231,17 @@ public class GridAnimator {
             double moveY = Math.sin(rad) * velocity;
 
             // animation
-            TranslateTransition move = new TranslateTransition(Duration.millis(300 + random.nextDouble() * 200), p);
-            move.setByX(moveX);
-            move.setByY(moveY);
-            move.setInterpolator(Interpolator.EASE_OUT);
+            double moveDuration = 300 + random.nextDouble() * 200;
 
-            FadeTransition fade = new FadeTransition(Duration.millis(400), p);
-            fade.setFromValue(1.0);
-            fade.setToValue(0.0);
-
-            ParallelTransition anim = new ParallelTransition(move, fade);
-            anim.setOnFinished(e -> parentPane.getChildren().remove(p));
-            anim.play();
+            ParticleAnimatorHelper.animateDriftAndFade(
+                    p,
+                    parentPane,
+                    Duration.millis(moveDuration),
+                    moveX,
+                    moveY,
+                    Duration.ZERO,
+                    Interpolator.EASE_OUT
+            );
         }
     }
 
