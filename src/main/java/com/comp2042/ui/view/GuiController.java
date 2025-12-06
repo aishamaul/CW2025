@@ -1,6 +1,7 @@
 package com.comp2042.ui.view;
 
 import com.comp2042.game.core.GameLoopManager;
+import com.comp2042.game.core.GameProgressionManager;
 import com.comp2042.game.events.EventSource;
 import com.comp2042.game.events.EventType;
 import com.comp2042.game.events.InputEventListener;
@@ -98,6 +99,8 @@ public class GuiController implements Initializable, GameView {
 
     private GameRuntimeManager runtimeManager;
 
+    private GameProgressionManager progressionManager; // New Dependency
+
     private boolean isClassicMode = false;
 
     private GameMode currentGameMode;
@@ -140,14 +143,8 @@ public class GuiController implements Initializable, GameView {
 
     public void setGameMode(GameMode mode) {
         this.currentGameMode = mode;
-
-        if (dispatcher != null) {
-            dispatcher.setGameMode(mode);
-        }
-
-        if (flowCoordinator != null) {
-            flowCoordinator.setCurrentMode(mode);
-        }
+        if (dispatcher != null) dispatcher.setGameMode(mode);
+        if (flowCoordinator != null) flowCoordinator.setCurrentMode(mode);
     }
 
 
@@ -166,6 +163,10 @@ public class GuiController implements Initializable, GameView {
                 freezeOverlayManager,
                 this::moveDown,
                 () -> currentGameMode
+        );
+
+        this.progressionManager = new GameProgressionManager(
+                runtimeManager, () -> currentGameMode, isClassicMode
         );
 
         this.flowCoordinator = new GameFlowCoordinator(
@@ -240,14 +241,8 @@ public class GuiController implements Initializable, GameView {
         linesLabel.textProperty().bind(integerProperty.asString());
 
         integerProperty.addListener((observable, oldValue, newValue) -> {
-            int lines = newValue.intValue();
-
-            if (currentGameMode != null && runtimeManager.getGameLoopManager() != null) {
-                currentGameMode.onLinesUpdated(lines, runtimeManager.getGameLoopManager());
-            }
-            else if (isClassicMode && runtimeManager.getGameLoopManager() != null) {
-                double newRate = 1.0 + (lines/5) * 0.5;
-                runtimeManager.setRate(newRate);
+            if (progressionManager != null) {
+                progressionManager.onLinesUpdated(newValue.intValue());
             }
         });
     }
