@@ -37,12 +37,6 @@ public class PauseButtonAnimator {
         applyGlow(false, false);
     }
 
-    public void stop() {
-        if (pauseButton != null) {
-            pauseButton.setEffect(null);
-        }
-    }
-
     private void applyGlow(boolean isHovering, boolean isPressed) {
         if (neonGlow == null) {
             return;
