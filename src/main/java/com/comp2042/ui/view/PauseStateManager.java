@@ -2,7 +2,6 @@ package com.comp2042.ui.view;
 
 import com.comp2042.game.core.GameLoopManager;
 import javafx.beans.property.BooleanProperty;
-import javafx.event.ActionEvent;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
