@@ -99,19 +99,6 @@ public class GameController implements InputEventListener {
         return lifecycleManager.getViewData();
     }
 
-    /**
-     * Helper to reset the lock timer if the player moves the piece while it's at the bottom.
-     * This allows for infinity behavior where keeping the piece active prevents locking.
-     */
-    private void handleLockTimerReset(){
-        if (lockTimer.getStatus() == Animation.Status.RUNNING) {
-            if (board.canMoveDown()){
-                lockTimer.stop();
-            } else{
-                lockTimer.playFromStart();
-            }
-        }
-    }
 
     @Override
     public void createNewGame() {
