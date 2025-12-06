@@ -6,8 +6,6 @@ public interface BrickGenerator {
 
     Brick getBrick();
 
-    Brick getNextBrick();
-
     List<Brick> getPeekNextBricks(int count);
 
     void returnBrick(Brick brick);

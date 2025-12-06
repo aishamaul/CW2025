@@ -44,14 +44,6 @@ public class RandomBrickGenerator implements BrickGenerator {
     }
 
     @Override
-    public Brick getNextBrick() {
-            if(nextBricks.isEmpty()){
-                fillQueue();
-            }
-            return nextBricks.peek();
-    }
-
-    @Override
     public List<Brick> getPeekNextBricks(int count) {
         while (nextBricks.size()<count){
             nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
