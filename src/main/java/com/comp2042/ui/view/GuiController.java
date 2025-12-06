@@ -10,7 +10,6 @@ import com.comp2042.ui.input.InputController;
 import com.comp2042.ui.render.BackgroundAnimator;
 import com.comp2042.ui.view.menu.GameControlsController;
 import com.comp2042.util.audio.SoundManager;
-import javafx.animation.FadeTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -27,7 +26,6 @@ import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 import com.comp2042.game.mode.GameMode;
 import com.comp2042.ui.view.menu.LevelMenuController;
-import javafx.util.Duration;
 
 
 import java.io.IOException;
@@ -65,8 +63,6 @@ public class GuiController implements Initializable, GameView {
     @FXML
     private GridPane ghostPanel;
 
-    @FXML
-    private VBox nextBrickContainer;
 
     @FXML
     private GridPane nextBrick1;
@@ -210,20 +206,6 @@ public class GuiController implements Initializable, GameView {
             gameLoopManager.play();
         }
     }
-
-    private void showFreezeNotification() {
-        overlayMessageLabel.setOpacity(1.0);
-        overlayMessageLabel.setVisible(true);
-        overlayMessageLabel.toFront();
-
-        FadeTransition fade = new FadeTransition(Duration.seconds(3), overlayMessageLabel);
-        fade.setFromValue(1.0);
-        fade.setToValue(0.0);
-        fade.setDelay(Duration.seconds(0.5));
-        fade.setOnFinished(e -> overlayMessageLabel.setVisible(false));
-        fade.play();
-    }
-
 
     private void showLevelStartScreen() {
         isPause.setValue(true);
