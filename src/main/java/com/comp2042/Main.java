@@ -1,8 +1,5 @@
 package com.comp2042;
 
-import com.comp2042.game.core.GameController;
-import com.comp2042.game.core.GameInitializer;
-import com.comp2042.ui.view.GuiController;
 import com.comp2042.util.audio.BackgroundMusicManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Main extends Application {
 
