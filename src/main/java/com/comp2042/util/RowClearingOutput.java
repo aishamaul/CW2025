@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RowClearingOutput {
 
-    public final int linesRemoved;
+    private final int linesRemoved;
     private final int[][] newMatrix;
     private final List<Integer> clearedIndices;
 
