@@ -1,16 +1,13 @@
 package com.comp2042.ui.view;
 
 import com.comp2042.model.ViewData;
-import com.comp2042.ui.components.GameOverPanel;
 import com.comp2042.ui.components.NotificationManager;
 import com.comp2042.ui.render.GameRenderer;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Group;
 import javafx.scene.effect.Reflection;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import java.util.List;
