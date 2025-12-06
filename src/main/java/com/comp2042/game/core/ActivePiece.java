@@ -41,15 +41,6 @@ public class ActivePiece {
     }
 
     /**
-     * Checks if the piece can move to the target offset without actually moving it.
-     */
-    public boolean canMove(int dx, int dy, BoardGrid grid){
-        int targetX = (int) position.getX() + dx;
-        int targetY = (int) position.getY() + dy;
-        return !grid.intersects(rotator.getCurrentShape(), targetX, targetY);
-    }
-
-    /**
      * Attempts to rotate the piece
      * @return true if rotation was successful
      */
