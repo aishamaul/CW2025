@@ -19,9 +19,6 @@ public class HomeController implements Initializable {
     @FXML
     private StackPane rootPane;
 
-    @FXML
-    private Label titleLabel;
-
     private final MenuButtonAnimator menuButtonAnimator = new MenuButtonAnimator();
 
     @Override
