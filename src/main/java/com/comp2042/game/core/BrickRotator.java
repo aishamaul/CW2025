@@ -15,12 +15,12 @@ public class BrickRotator {
     private int currentShape = 0;
 
     /**
-     * Attempts to rotate the current brick
-     * Tries the standard rotation first, then applies wall kicks if needed
+     * Attempts to rotate the current brick.
+     * Tries the standard rotation first, then applies wall kicks if needed.
      *
-     * @param grid The current state of the board grid
-     * @param currentOffset The x, y coordinates of the brick on the board
-     * @return true if rotation succeeded (possibly with a kick), false if rotation is not possible
+     * @param grid The current state of the board grid.
+     * @param currentOffset The x, y coordinates of the brick on the board.
+     * @return true if rotation succeeded (possibly with a kick), false if rotation is not possible.
      */
     public boolean tryRotate(BoardGrid grid, Point currentOffset) {
         NextShapeInfo nextShapeInfo = getNextShape();

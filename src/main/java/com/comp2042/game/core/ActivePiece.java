@@ -15,7 +15,7 @@ public class ActivePiece {
     }
 
     /**
-     * Spawns a new brick at the specified coordinates
+     * Spawns a new brick at the specified coordinates.
      */
 
     public void spawn (Brick brick, int x, int y){
@@ -26,8 +26,8 @@ public class ActivePiece {
     }
 
     /**
-     *  Attempts to move the piece
-     * @return true if the move was successful (no collision)
+     *  Attempts to move the piece.
+     * @return true if the move was successful (no collision).
      */
     public boolean move(int dx, int dy, BoardGrid grid){
         int targetX = (int) position.getX() + dx;
@@ -41,8 +41,8 @@ public class ActivePiece {
     }
 
     /**
-     * Attempts to rotate the piece
-     * @return true if rotation was successful
+     * Attempts to rotate the piece.
+     * @return true if rotation was successful.
      */
     public boolean rotate(BoardGrid grid){
         return rotator.tryRotate(grid, position);

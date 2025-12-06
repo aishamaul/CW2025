@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Transfer Object (DTO) used to pass game state to the UI renderer
- * Immutable class that holds a snapshot of the current brick and its position
+ * Data Transfer Object (DTO) used to pass game state to the UI renderer.
+ * Immutable class that holds a snapshot of the current brick and its position.
  */
 public final class ViewData {
 

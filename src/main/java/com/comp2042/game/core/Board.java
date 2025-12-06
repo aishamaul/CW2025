@@ -18,8 +18,8 @@ public interface Board {
     boolean moveBrickDown();
 
     /**
-     * Checks if the brick can move down without actually moving it
-     * @return true if there is space below the brick
+     * Checks if the brick can move down without actually moving it.
+     * @return true if there is space below the brick.
      */
     boolean canMoveDown();
 
@@ -43,7 +43,7 @@ public interface Board {
 
     /**
      * Rotates the current brick to the left  by 90 degrees (counter-clockwise).
-     * @return true if rotation was successful
+     * @return true if rotation was successful.
      */
     boolean rotateLeftBrick();
 
@@ -54,45 +54,45 @@ public interface Board {
     boolean createNewBrick();
 
     /**
-     * Retrieves the current state of the static board grid
-     * @return a 2D integer array representing the locked blocks on the board
+     * Retrieves the current state of the static board grid.
+     * @return a 2D integer array representing the locked blocks on the board.
      */
     int[][] getBoardMatrix();
 
     /**
-     * Returns a snapshot of data needed for rendering the view
-     * @return A ViewData object containing the brick positions and shapes
+     * Returns a snapshot of data needed for rendering the view.
+     * @return A ViewData object containing the brick positions and shapes.
      */
     ViewData getViewData();
 
     /**
-     * Locks the current active brick into the background grid
-     * Should be called when the brick can no longer move down
+     * Locks the current active brick into the background grid.
+     * Should be called when the brick can no longer move down.
      */
     void mergeBrickToBackground();
 
     /**
-     * Checks for and clears any completed rows on the board
-     * @return A ClearRow object containing information about cleared rows
+     * Checks for and clears any completed rows on the board.
+     * @return A ClearRow object containing information about cleared rows.
      */
     ClearRow clearRows();
 
     /**
-     * Gets the current score of object
-     * @return the Score object
+     * Gets the current score of object.
+     * @return the Score object.
      */
     Score getScore();
 
     /**
-     * Resets the board to start a new game
+     * Resets the board to start a new game.
      */
     void newGame();
 
     void holdBrick();
 
     /**
-     * Shifts all blocks up and adds a random garbage line t the bottom
-     * @return true if the blocks hit the ceiling (Game Over)
+     * Shifts all blocks up and adds a random garbage line t the bottom.
+     * @return true if the blocks hit the ceiling (Game Over).
      */
     boolean addGarbageLine();
 

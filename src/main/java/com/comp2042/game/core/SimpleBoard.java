@@ -13,8 +13,9 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Standard implementation of the Board interface
- * Manages the 10x25 grid, handles the lifecycle of the active brick (spawning, moving, locking) and delegates scoring and rotation logic to helper classes
+ * Standard implementation of the Board interface.
+ * Manages the 10x25 grid, handles the lifecycle of the active brick (spawning, moving, locking)
+ * and delegates scoring and rotation logic to helper classes.
  */
 public class SimpleBoard implements Board {
 

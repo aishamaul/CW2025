@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Utility class for 2D array manipulations
- * Provides static methods for intersection detection, merging arrays and deep copying
+ * Utility class for 2D array manipulations.
+ * Provides static methods for intersection detection, merging arrays and deep copying.
  */
 public class MatrixOperations {
 
@@ -14,13 +14,13 @@ public class MatrixOperations {
     private MatrixOperations(){}
 
     /**
-     * Checks if a brick shape collides with the background grid or boundaries
+     * Checks if a brick shape collides with the background grid or boundaries.
      *
-     * @param matrix The background board grid
-     * @param brick The shape matrix of the falling brick
-     * @param x The x-position of the brick
-     * @param y The y-position of the brick
-     * @return  true if a collision is detected, false otherwise
+     * @param matrix The background board grid.
+     * @param brick The shape matrix of the falling brick.
+     * @param x The x-position of the brick.
+     * @param y The y-position of the brick.
+     * @return  true if a collision is detected, false otherwise.
      */
     public static boolean intersect(final int[][] matrix, final int[][] brick, int x, int y) {
         for (int i = 0; i < brick.length; i++) {

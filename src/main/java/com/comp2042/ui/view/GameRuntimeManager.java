@@ -22,7 +22,7 @@ public class GameRuntimeManager {
     }
 
     /**
-     * Initializes a standard loop with game tick logic
+     * Initializes a standard loop with game tick logic.
      */
     public GameRuntimeManager(EventDispatcher dispatcher,
                               FreezeOverlayManager freezeOverlayManager,

@@ -13,13 +13,13 @@ public class ParticleAnimatorHelper {
     /**
      * Animates a node moving and fading out, then removes it from the parent pane.
      *
-     * @param node        The node to animate
-     * @param parent      The parent pane to remove the node from after animation
-     * @param duration    The duration of the movement and fade
-     * @param moveX       The X distance to translate
-     * @param moveY       The Y distance to translate
-     * @param fadeDelay   Delay before fading starts
-     * @param interpolator The interpolator for the movement
+     * @param node        The node to animate.
+     * @param parent      The parent pane to remove the node from after animation.
+     * @param duration    The duration of the movement and fade.
+     * @param moveX       The X distance to translate.
+     * @param moveY       The Y distance to translate.
+     * @param fadeDelay   Delay before fading starts.
+     * @param interpolator The interpolator for the movement.
      */
 
     public static void animateDriftAndFade(Node node, Pane parent, Duration duration,

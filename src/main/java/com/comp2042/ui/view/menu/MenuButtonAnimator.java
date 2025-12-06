@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 
 /**
- * Encapsulate the pulsing and rainbow glow animation for menu buttons
+ * Encapsulate the pulsing and rainbow glow animation for menu buttons.
  */
 
 public class MenuButtonAnimator {

@@ -30,6 +30,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * The primary JavaFX Controller class for the game view.
+ * <p>
+ *     This class implements the {@link GameView} interface and serves as the bridge between
+ *     the FXML UI definition and the game logic core. It initializes the game components,
+ *     sets up event listeners for user input, and manages high level UI states like
+ *     menus, game-over screens, and level transitions.
+ * </p>
+ */
+
 public class GuiController implements Initializable, GameView {
 
     @FXML
@@ -118,6 +128,10 @@ public class GuiController implements Initializable, GameView {
 
     private GameViewEventDelegate eventDelegate;
 
+    /**
+     * Called by JavaFX when the FXML file is loaded.
+     * Sets up the initial UI state, attaches animators, and initializes sound.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
@@ -142,6 +156,10 @@ public class GuiController implements Initializable, GameView {
     }
 
 
+    /**
+     * Sets the game more before the game starts.
+     * @param mode The GameMode strategy to use.
+     */
     public void setGameMode(GameMode mode) {
         this.currentGameMode = mode;
         if (eventDelegate != null)eventDelegate.setCurrentGameMode(mode);
@@ -149,11 +167,21 @@ public class GuiController implements Initializable, GameView {
         if (flowCoordinator != null) flowCoordinator.setCurrentMode(mode);
     }
 
-
+    /**
+     * Enables or disables Classic Mode (standard rules).
+     * @param isClassic true for Classic Mode, false for other modes.
+     */
     public void setClassicMode(boolean isClassic) {
         this.isClassicMode = isClassic;
     }
 
+    /**
+     * Initializes the game view with data from the core logic
+     * This setup includes creating the runtime manager, flow coordinator and input bindings.
+     *
+     * @param boardMatrix The initial 2D array of the board.
+     * @param brick The initial view data for the active brick.
+     */
     @Override
     public void initGameView(int[][] boardMatrix, ViewData brick) {
         uiManager.initGameView(boardMatrix, brick);
@@ -217,6 +245,10 @@ public class GuiController implements Initializable, GameView {
     }
 
 
+    /**
+     * Updates the visual representation of the active brick.
+     * Skipped if the game is paused or currently animating a line clear.
+     */
     @Override
     public void refreshBrick(ViewData brick) {
         if (runtimeManager.isPauseProperty().getValue() == Boolean.FALSE || animationCoordinator.isAnimating()) {            uiManager.refresh(brick);
@@ -228,17 +260,27 @@ public class GuiController implements Initializable, GameView {
         uiManager.refreshBackground(board);
     }
 
+    /**
+     * Callback method triggered by the game loop or user input to move the brick down.
+     */
     public void moveDown(EventType eventType, EventSource source) {
         DownData downData = dispatcher.moveDown(eventType, source);
         refreshBrick(downData.getViewData());
         rootPane.requestFocus();
     }
 
+    /**
+     * Sets the event listener that will handle game logic events triggered by the UI.
+     * @param eventListener The listener
+     */
     @Override
     public void setEventListener(InputEventListener eventListener) {
         this.dispatcher = new EventDispatcher(eventListener);
     }
 
+    /**
+     * Binds the UI score label to the core logic's score property.
+     */
     @Override
     public void bindScore(IntegerProperty integerProperty) {
         scoreLabel.textProperty().bind(integerProperty.asString());

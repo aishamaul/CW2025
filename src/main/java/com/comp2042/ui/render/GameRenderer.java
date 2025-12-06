@@ -11,6 +11,16 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 
+/**
+ * Handles the rendering of the game state onto the JavaFX UI.
+ * <p>
+ *     This class manages the creation, updates and styling of {@link Rectangle} objects
+ *     that represent the game board, the active falling brick, the ghost brick,
+ *     and the next/hold brick previews. It bridges the gap between the internal
+ *     data model and the visual components
+ * </p>
+ */
+
 public class GameRenderer {
 
     private final BorderPane gameBoard;
@@ -34,6 +44,16 @@ public class GameRenderer {
     private double gridOriginY;
 
 
+    /**
+     * Constructs a new GameRenderer
+     *
+     * @param gameBoard The main container for the game area.
+     * @param gamePanel The grid representing the static background board.
+     * @param brickPanel The grid overlay for the active falling brick.
+     * @param ghostPanel The grid overlay for the ghost brick.
+     * @param nextBrickGrids A list of grids to display upcoming bricks.
+     * @param holdBrickGrid The grid to display the held brick.
+     */
     public GameRenderer(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel,
                         List<GridPane> nextBrickGrids, GridPane holdBrickGrid) {
         this.gameBoard = gameBoard;
@@ -46,6 +66,13 @@ public class GameRenderer {
         this.gridAnimator = new GridAnimator();
     }
 
+    /**
+     * Initializes the visual grid of Rectangles based on the initial board state.
+     * Populates the JavaFX GridPanes with Rectangle objects that will be reused for rendering.
+     *
+     * @param boardMatrix The initial state of the board.
+     * @param brick The initial view data for the active brick.
+     */
     public void initGameView(int[][] boardMatrix, ViewData brick) {
 
         displayMatrix = new Rectangle[boardMatrix.length][boardMatrix[0].length];
@@ -84,6 +111,12 @@ public class GameRenderer {
         refreshBrick(brick);
     }
 
+    /**
+     * Updates the visual position and shape of the active brick, ghost brick,
+     * next bricks and held brick.
+     *
+     * @param brick The {@link ViewData} containing the current state of the moving pieces.
+     */
     public void refreshBrick(ViewData brick) {
         latestBrickData = brick;
 
@@ -167,6 +200,11 @@ public class GameRenderer {
     }
 
 
+    /**
+     * Updates the static background grid to reflect the locked bricks.
+     *
+     * @param board The 2D array representing the locked bricks.
+     */
     public void refreshGameBackground(int[][] board) {
         for (int i = 2; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -176,6 +214,9 @@ public class GameRenderer {
     }
 
 
+    /**
+     * Applies the appropriate CSS style class to a rectangle based on the color code.
+     */
     private void setRectangleData(int color, Rectangle rectangle) {
 
         brickStyler.applyBrickStyle(rectangle, color);
