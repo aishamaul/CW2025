@@ -369,9 +369,9 @@
 
 .descriptionStyle {
     -fx-font-family: "Let's go Digital";
-    -fx-font-size: 26px;
+    -fx-font-size: 32px;
     -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, cyan, 5, 0.5, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 255, 255, 0.75), 5, 0.5, 0, 0);
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-padding: 0 0 30 0;
@@ -392,4 +392,17 @@
     -fx-text-fill: #e0e0ff;
     -fx-effect: dropshadow(gaussian, #8a00c2, 10, 0.4, 0, 0);
     -fx-alignment: center;
+}
+
+.menuTitleStyle{
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 100px;
+    -fx-font-weight: bold;
+    -fx-text-fill: transparent;
+    -fx-effect:
+            dropshadow(gaussian, rgba(255, 255, 255, 0.48), 24, 0.65, 0, 0),
+            dropshadow(gaussian, rgba(120, 210, 255, 0.45), 42, 0.52, 0, 0),
+            dropshadow(gaussian, rgba(255, 120, 225, 0.32), 58, 0.45, 0, 0);
+    -fx-alignment: center;
+    -fx-padding: 0 0 36 0;
 }

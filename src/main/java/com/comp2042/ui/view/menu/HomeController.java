@@ -1,6 +1,7 @@
 package com.comp2042.ui.view.menu;
 
 import com.comp2042.ui.render.BackgroundAnimator;
+import com.comp2042.ui.render.TitleAnimator;
 import com.comp2042.ui.view.SceneNavigator;
 import com.comp2042.util.audio.SoundManager;
 import javafx.application.Platform;
@@ -19,11 +20,16 @@ public class HomeController implements Initializable {
     @FXML
     private StackPane rootPane;
 
+    @FXML
+    private Label titleLabel;
+
+
     private final MenuButtonAnimator menuButtonAnimator = new MenuButtonAnimator();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
+        TitleAnimator.attach(titleLabel);
         menuButtonAnimator.animateButtons(rootPane);
         SoundManager.getInstance().attachButtonSounds(rootPane);
 
