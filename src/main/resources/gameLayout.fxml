@@ -58,7 +58,7 @@
 
         <ToggleButton fx:id="pauseButton" layoutX="690" layoutY="95" onAction="#pauseGame" styleClass="pauseButton" text="⏸"/>
 
-        <VBox layoutX="490" layoutY="100" prefWidth="120" prefHeight="250" spacing="5"  alignment="CENTER" styleClass="sidePanel">
+        <VBox layoutX="485" layoutY="100" minWidth="175" prefHeight="250" spacing="5"  alignment="CENTER" styleClass="sidePanel">
             <Label text="NEXT" styleClass="nextBrickLabel" style="-fx-font-size: 30px"/>
 
 
