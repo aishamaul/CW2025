@@ -39,10 +39,6 @@ public class HomeController implements Initializable {
         SceneNavigator.switchTo("gameControls.fxml", event);
     }
 
-    @FXML
-    public void onHighScoreClicked(ActionEvent event) {
-        System.out.println("High Score clicked - Not implemented yet");
-    }
 
     @FXML
     public void onQuitClicked(ActionEvent event) {
