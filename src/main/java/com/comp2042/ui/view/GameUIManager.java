@@ -3,7 +3,6 @@ package com.comp2042.ui.view;
 import com.comp2042.model.ViewData;
 import com.comp2042.ui.components.NotificationManager;
 import com.comp2042.ui.render.GameRenderer;
-import javafx.beans.property.IntegerProperty;
 import javafx.scene.Group;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.BorderPane;
@@ -61,16 +60,8 @@ public class GameUIManager {
         gameRenderer.refreshGameBackground(board);
     }
 
-    public void bindScore(IntegerProperty scoreProperty){
-        scoreLabel.textProperty().bind(scoreProperty.asString());
-    }
-
     public void showNotification(String text){
         notificationManager.showScore(text);
-    }
-
-    public void requestFocus(){
-        gamePanel.requestFocus();
     }
 
     public void animateClear(List<Integer> lines, Runnable onFinished){
