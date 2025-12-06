@@ -9,10 +9,6 @@ public final class DownData {
         this.viewData = viewData;
     }
 
-    public ClearRow getClearRow() {
-        return clearRow;
-    }
-
     public ViewData getViewData() {
         return viewData;
     }
