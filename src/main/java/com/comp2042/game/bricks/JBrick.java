@@ -1,10 +1,5 @@
 package com.comp2042.game.bricks;
 
-import com.comp2042.util.MatrixOperations;
-
-import java.util.ArrayList;
-import java.util.List;
-
 final class JBrick extends AbstractBrick {
 
     public JBrick() {
