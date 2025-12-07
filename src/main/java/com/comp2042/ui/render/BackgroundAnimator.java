@@ -21,6 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Manages the dynamic background visual effects for the game menus and gameplay.
+ * <p>
+ * This class layers several visual elements: a radial gradient, a noise texture overlay,
+ * floating particles, and a vignette effect. It handles the animation loops for these
+ * elements to create an immersive atmosphere.
+ * </p>
+ */
 public class BackgroundAnimator {
 
     private static final String BACKGROUND_KEY = "Background";

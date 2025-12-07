@@ -3,6 +3,13 @@ package com.comp2042.game.scoring;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * A data model representing the player's current score and progress.
+ * <p>
+ * This class uses JavaFX Properties to allow the UI to observe and automatically
+ * update when the score or line count changes.
+ * </p>
+ */
 public final class Score {
 
     private final IntegerProperty score = new SimpleIntegerProperty(0);

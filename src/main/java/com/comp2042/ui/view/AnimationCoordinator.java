@@ -6,6 +6,13 @@ import javafx.beans.property.BooleanProperty;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * Coordinates the execution of game animations while ensuring game state consistency.
+ * <p>
+ * This class handles pausing the game loop during animations
+ * and restoring the game state once the visual effects are finished.
+ * </p>
+ */
 public class AnimationCoordinator {
 
     private final GameLoopManager gameLoopManager;

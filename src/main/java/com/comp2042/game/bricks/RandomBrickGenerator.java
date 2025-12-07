@@ -6,12 +6,26 @@ import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * A standard implementation of {@link BrickGenerator} that provides bricks in a random order.
+ * <p>
+ *     This generator maintains a queue of upcoming bricks to allow the player to see
+ *     what pieces are coming next. It refills the same queue from a predefined list of standard bricks.
+ * </p>
+ */
 public class RandomBrickGenerator implements BrickGenerator {
 
     protected final List<Brick> brickList;
 
     protected final Deque<Brick> nextBricks = new ArrayDeque<>();
 
+    /**
+     * Constructs a new RandomBrickGenerator.
+     * <p>
+     * Initializes the list of standard Tetrominoes (I, J, L, O, S, T, Z) and
+     * pre-fills the queue.
+     * </p>
+     */
     public RandomBrickGenerator() {
         brickList = new ArrayList<>();
         brickList.add(new IBrick());
@@ -26,6 +40,12 @@ public class RandomBrickGenerator implements BrickGenerator {
 
     }
 
+    /**
+     * Refills the internal queue of bricks until it contains at least 4 items.
+     * <p>
+     *     Randomly selects bricks from the {@code brickList} to add to the queue.
+     * </p>
+     */
     protected void fillQueue(){
         while (nextBricks.size()<4){
             nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
@@ -33,6 +53,10 @@ public class RandomBrickGenerator implements BrickGenerator {
         }
     }
 
+    /**
+     * Retrieves the next brick from the queue and generates a new one to refill the queue.
+     * @return A {@link Brick} instance to be used as the active piece.
+     */
     @Override
     public Brick getBrick() {
         if (nextBricks.size() <= 1) {
@@ -43,6 +67,11 @@ public class RandomBrickGenerator implements BrickGenerator {
         return brick;
     }
 
+    /**
+     * Peeks at the upcoming bricks without removing them from the queue.
+     * @param count The number of future bricks to retrieve.
+     * @return A list of the next {@link Brick objects}.
+     */
     @Override
     public List<Brick> getPeekNextBricks(int count) {
         while (nextBricks.size()<count){
@@ -52,6 +81,11 @@ public class RandomBrickGenerator implements BrickGenerator {
         return new ArrayList<>(nextBricks).subList(0, count);
     }
 
+    /**
+     * Returns a brick to the front of the generator's queue.
+     * Used when swapping the active bricks with the held brick.
+     * @param brick The brick being returned to the queue or storage.
+     */
     @Override
     public void returnBrick(Brick brick) {
         nextBricks.addFirst(brick);

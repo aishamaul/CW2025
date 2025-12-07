@@ -26,6 +26,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the play mode selection menu.
+ * <p>
+ *     Handles the selection of practice, classic or challenge modes and launches
+ *     the game scene with the appropriate configuration.
+ * </p>
+ */
 public class PlayMenuController implements Initializable {
 
     @FXML
@@ -36,6 +43,11 @@ public class PlayMenuController implements Initializable {
 
     private final MenuButtonAnimator menuButtonAnimator = new MenuButtonAnimator();
 
+    /**
+     * Initializes the play menu.
+     * @param location  Relative path location.
+     * @param resources Resources bundle.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         BackgroundAnimator.attach(rootPane);
@@ -78,6 +90,13 @@ public class PlayMenuController implements Initializable {
     }
 
 
+    /**
+     * Common logic to load and launch the game scene.
+     * @param event The triggering event.
+     * @param isClassic True if Classic rules should apply.
+     * @param isChallenge True if Challenge mode is selected (overrides classic).
+     * @throws IOException If FXML loading fails.
+     */
     @FXML
     public void launchGame(ActionEvent event, boolean  isClassic, boolean isChallenge) throws IOException {
         // load the game layout
@@ -115,16 +134,31 @@ public class PlayMenuController implements Initializable {
 
     }
 
+    /**
+     * Handler for "Practice" button. Launches game with no special rules.
+     * @param event Click event.
+     * @throws IOException If FXML fails.
+     */
     @FXML
     public void onPracticeClicked(ActionEvent event) throws IOException {
         launchGame(event, false, false);
     }
 
+    /**
+     * Handler for "Classic" button. Launches game with speed progression.
+     * @param event Click event.
+     * @throws IOException If FXML fails.
+     */
     @FXML
     public void onClassicClicked(ActionEvent event) throws IOException {
         launchGame(event, true, false);
     }
 
+    /**
+     * Handler for "Challenge" button. Launches game in Challenge Mode (Level 1).
+     * @param event Click event.
+     * @throws IOException If FXML fails.
+     */
     @FXML
     public void onChallengeClicked(ActionEvent event) throws IOException {
         // Launch in Challenge Mode
@@ -132,6 +166,11 @@ public class PlayMenuController implements Initializable {
     }
 
 
+    /**
+     * Navigates back to the Home screen.
+     * @param event Click event.
+     * @throws IOException If FXML fails.
+     */
     @FXML
     public void onBackClicked(ActionEvent event) throws IOException {
         SceneNavigator.switchTo("home.fxml", event);

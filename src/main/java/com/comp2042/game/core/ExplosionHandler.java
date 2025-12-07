@@ -9,8 +9,22 @@ import java.util.List;
 
 import java.awt.*;
 
+/**
+ * Handles the execution of explosion events on the board.
+ * <p>
+ *     This class coordinates checking for explosion conditions via the {@link GameMode},
+ *     triggering sound effects, notifying the view to play animations, and executing post-explosion logic.
+ * </p>
+ */
 public class ExplosionHandler {
 
+    /**
+     * Checks for and processes any explosion triggered by the latest brick placement.
+     * @param mode The current {@link GameMode}, which defines  explosion rules.
+     * @param board The game board model.
+     * @param viewAdapter The adapter to trigger UI updates and animations.
+     * @param afterExplosionLogic A {@link}to execute after the explosion animation finishes.
+     */
     public void handleExplosion (GameMode mode, Board board, GameViewAdapter viewAdapter,  Runnable afterExplosionLogic){
 
         List<Point> explodedPoints = (mode != null) ? mode.onBrickMerged(board) : Collections.emptyList();

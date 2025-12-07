@@ -7,6 +7,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controller for the level start and level complete overlay used in challenge mode
+ * <p>
+ *     Manages the visibility of the start/success/fail screen and delegates button clicks
+ *     to registered callbacks provided by the GameFlowCoordinator
+ * </p>
+ */
 public class LevelMenuController {
 
     @FXML private VBox levelStartMenu;
@@ -31,12 +38,23 @@ public class LevelMenuController {
 
     private final ChallengeMenuAnimator animator = new ChallengeMenuAnimator();
 
-    public void  setCallbacks(Runnable onStart, Runnable onNextLevel, Runnable onExit){
+    /**
+     * Registers the action callbacks for the menu buttons.
+     * @param onStart Action for "Start Level".
+     * @param onNextLevel Action for "Next Level".
+     * @param onExit Action for "Exit" / "Home".
+     */
+    public void setCallbacks(Runnable onStart, Runnable onNextLevel, Runnable onExit){
         this.onStartAction = onStart;
         this.onNextLevelAction = onNextLevel;
         this.onExitAction = onExit;
     }
 
+    /**
+     * Displays the Level Start screen with specific details.
+     * @param levelName The title of the level.
+     * @param description The description text.
+     */
     public void showStartScreen(String levelName, String description){
         hideAll();
         levelTitleLabel.setText(levelName);
@@ -45,6 +63,10 @@ public class LevelMenuController {
         levelStartMenu.toFront();
     }
 
+    /**
+     * Displays the Level Complete screen.
+     * @param hasNextLevel true if there is a next level, false otherwise.
+     */
     public void showLevelComplete(boolean hasNextLevel) {
         hideAll();
         levelCompleteMenu.setVisible(true);
@@ -63,6 +85,9 @@ public class LevelMenuController {
         }
     }
 
+    /**
+     * Displays the final Challenge Complete victory screen.
+     */
     public void showChallengeComplete() {
         hideAll();
         challengeCompleteMenu.setVisible(true);
@@ -73,6 +98,10 @@ public class LevelMenuController {
         }
     }
 
+
+    /**
+     * Hides all menu overlays.
+     */
     public void hideAll() {
         levelStartMenu.setVisible(false);
         levelCompleteMenu.setVisible(false);

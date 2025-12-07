@@ -6,6 +6,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Manages the logic for toggling the pause state and showing/hiding the pause menu.
+ * <p>
+ * This class ensures that the game loop, UI visibility, and fullscreen state
+ * remain synchronized when the user pauses or resumes the game.
+ * </p>
+ */
 public class PauseStateManager {
 
     private final GameLoopManager gameLoopManager;
@@ -21,7 +28,10 @@ public class PauseStateManager {
 
     }
 
-    public void  togglePause() {
+    /**
+     * Toggles the current pause state.
+     */
+    public void togglePause() {
         if (isPause.get()) {
             hidePauseMenu();
         } else{
@@ -30,7 +40,10 @@ public class PauseStateManager {
         }
 
 
-    public void showPauseMenu() {
+    /**
+     * Pauses the game and shows the menu.
+     */
+        public void showPauseMenu() {
         isPause.setValue(Boolean.TRUE);
         gameLoopManager.pause();
 
@@ -44,6 +57,9 @@ public class PauseStateManager {
         setFullScreen(true);
     }
 
+    /**
+     * Resumes the game and hides the menu.
+     */
     public void hidePauseMenu(){
         isPause.setValue(Boolean.FALSE);
         gameLoopManager.play();
@@ -57,7 +73,10 @@ public class PauseStateManager {
         setFullScreen(true);
         }
 
-    public void reset(){
+    /**
+     * Resets the pause state to unpaused (used for new games).
+     */
+        public void reset(){
         isPause.setValue(Boolean.FALSE);
         pauseButton.setDisable(false);
         pauseButton.setSelected(false);

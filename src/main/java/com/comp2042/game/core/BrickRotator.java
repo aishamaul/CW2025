@@ -41,28 +41,52 @@ public class BrickRotator {
         return false;
     }
 
+    /**
+     * Calculates the next rotation state without modifying the current state.
+     *
+     * @return A {@link NextShapeInfo} object containing the next matrix and its index.
+     */
     public NextShapeInfo getNextShape() {
         int nextShape = currentShape;
         nextShape = (++nextShape) % brick.getShapeMatrix().size();
         return new NextShapeInfo(brick.getShapeMatrix().get(nextShape), nextShape);
     }
 
+    /**
+     * Gets the matrix for the current rotation state.
+     *
+     * @return The 2D integer array representing the current shape.
+     */
     public int[][] getCurrentShape() {
         return brick.getShapeMatrix().get(currentShape);
     }
 
+    /**
+     * Sets the current rotation index explicitly.
+     *
+     * @param currentShape The index of the rotation state to set.
+     */
     public void setCurrentShape(int currentShape) {
         this.currentShape = currentShape;
     }
 
+    /**
+     * Sets the brick to be rotated and resets the rotation index to 0.
+     *
+     * @param brick The {@link Brick} instance to manage.
+     */
     public void setBrick(Brick brick) {
         this.brick = brick;
         currentShape = 0;
     }
 
+    /**
+     * Retrieves the brick currently being managed.
+     *
+     * @return The {@link Brick} instance.
+     */
     public Brick getBrick(){
         return brick;
     }
-
 
 }

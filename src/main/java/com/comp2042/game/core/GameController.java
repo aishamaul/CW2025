@@ -64,6 +64,12 @@ public class GameController implements InputEventListener {
         }
     }
 
+    /**
+     * Handles the 'Drop' event (Hard Drop).
+     * Instantly drops the brick to the bottom and locks it.
+     * @param event The move event context.
+     * @return {@link DownData} containing the results of the turn end (e.g., cleared lines).
+     */
     @Override
     public DownData onDropEvent(MoveEvent event){
         if(lockTimer.getStatus() == Animation.Status.RUNNING){
@@ -76,6 +82,12 @@ public class GameController implements InputEventListener {
         return lifecycleManager.processTurnEnd(currentMode);
     }
 
+    /**
+     * Handles the 'Left' movement event.
+     *
+     * @param event The move event context.
+     * @return The updated {@link ViewData}.
+     */
     @Override
     public ViewData onLeftEvent(MoveEvent event) {
         if (board.moveBrickLeft()) {
@@ -84,6 +96,12 @@ public class GameController implements InputEventListener {
         return lifecycleManager.getViewData();
     }
 
+    /**
+     * Handles the 'Right' movement event.
+     *
+     * @param event The move event context.
+     * @return The updated {@link ViewData}.
+     */
     @Override
     public ViewData onRightEvent(MoveEvent event) {
         if (board.moveBrickRight()) {
@@ -92,6 +110,12 @@ public class GameController implements InputEventListener {
         return lifecycleManager.getViewData();
     }
 
+    /**
+     * Handles the 'Rotate' event.
+     *
+     * @param event The move event context.
+     * @return The updated {@link ViewData} reflecting the new rotation.
+     */
     @Override
     public ViewData onRotateEvent(MoveEvent event) {
         board.rotateLeftBrick();
@@ -99,7 +123,9 @@ public class GameController implements InputEventListener {
         return lifecycleManager.getViewData();
     }
 
-
+    /**
+     * Resets the game state to start a new session.
+     */
     @Override
     public void createNewGame() {
         if (lockTimer.getStatus() == Animation.Status.RUNNING) {
@@ -108,6 +134,12 @@ public class GameController implements InputEventListener {
         lifecycleManager.handleNewGame(currentMode);
     }
 
+    /**
+     * Handles the 'Hold' event to swap the active brick with the held brick.
+     *
+     * @param event The move event context.
+     * @return The updated {@link ViewData} with the new active brick.
+     */
     @Override
     public ViewData onHoldEvent(MoveEvent event){
         SoundManager.getInstance().playHoldSound();
@@ -121,6 +153,13 @@ public class GameController implements InputEventListener {
         return lifecycleManager.getViewData();
     }
 
+    /**
+     * Process a game tick (frame update).
+     * Delegates to the {@link GameMode} to determine if gravity should be applied.
+     *
+     * @param mode The current game mode.
+     * @return true if gravity was applied, false otherwise.
+     */
     @Override
     public boolean onGameTick(GameMode mode) {
         // default behavior (practice/classic), always apply gravity
@@ -137,6 +176,11 @@ public class GameController implements InputEventListener {
         return applyGravity;
     }
 
+    /**
+     * Sets the current game mode strategy.
+     *
+     * @param mode The {@link GameMode} to use.
+     */
     @Override
     public void setGameMode(GameMode mode) {
         this.currentMode = mode;

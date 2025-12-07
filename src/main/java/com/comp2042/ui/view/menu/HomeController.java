@@ -15,6 +15,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the main home screen.
+ * <p>
+ *     Handles navigation to play menu, controls, and quitting the application.
+ *     Also initiates the main background and title animations.
+ * </p>
+ */
 public class HomeController implements Initializable {
 
     @FXML

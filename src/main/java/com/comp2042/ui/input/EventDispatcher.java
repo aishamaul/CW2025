@@ -8,6 +8,13 @@ import com.comp2042.game.mode.GameMode;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 
+/**
+ * Acts as an intermediary between the raw input events and the game logic listener.
+ * <p>
+ *     This class simplifies the creation of {@link MoveEvent} objects and delgates.
+ *     the actual processing to the registered {@link InputEventListener}.
+ * </p>
+ */
 public class EventDispatcher {
 
     private final InputEventListener eventListener;
@@ -36,6 +43,12 @@ public class EventDispatcher {
         eventListener.createNewGame();
     }
 
+    /**
+     * Dispatches a downward movement event (either soft drop or hard drop).
+     * @param eventType   The specific type of downward movement (DOWN or DROP).
+     * @param eventSource The source of the event (USER or THREAD).
+     * @return The result of the movement, which may include line clears.
+     */
     public DownData moveDown(EventType eventType, EventSource eventSource) {
         MoveEvent event = new MoveEvent(eventType, eventSource);
         if(eventType == EventType.DROP) {

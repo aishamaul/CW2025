@@ -9,6 +9,13 @@ import javafx.beans.property.SimpleBooleanProperty;
 import com.comp2042.ui.input.EventDispatcher;
 import java.util.function.BiConsumer;
 
+/**
+ * Manages the runtime state of the game session.
+ * <p>
+ * This class encapsulates the {@link GameLoopManager} and the observable properties
+ * for pause and game-over states. It acts as the engine room for the game loop execution.
+ * </p>
+ */
 public class GameRuntimeManager {
 
     private final GameLoopManager gameLoopManager;
@@ -59,25 +66,25 @@ public class GameRuntimeManager {
         gameLoopManager.setRate(rate);
     }
 
+    /**
+     * Resets the runtime flags (pause, game over) and speed to default.
+     */
     public void resetState() {
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
         setRate(1.0);
     }
 
+    /**
+     * Explicitly sets the pause state.
+     * @param paused true to pause, false to resume.
+     */
     public void setPause(boolean paused) {
         isPause.setValue(paused);
         if (paused) {
             gameLoopManager.pause();
         } else {
             gameLoopManager.play();
-        }
-    }
-
-    public void setGameOver(boolean over) {
-        isGameOver.setValue(over);
-        if (over) {
-            gameLoopManager.stop();
         }
     }
 

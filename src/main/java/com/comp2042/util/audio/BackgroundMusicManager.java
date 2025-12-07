@@ -5,6 +5,12 @@ import javafx.scene.media.MediaPlayer;
 
 import java.net.URL;
 
+/**
+ * Singleton manager for controlling the background music.
+ * <p>
+ *     Handles loading the music resource and playing it in an indefinite loop using JavaFX MediaPlayer.
+ * </p>
+ */
 public class BackgroundMusicManager {
 
     private static BackgroundMusicManager instance;
@@ -29,6 +35,10 @@ public class BackgroundMusicManager {
         }
     }
 
+    /**
+     * Retrieves the singleton instance of the music manager.
+     * @return The single {@link BackgroundMusicManager} instance.
+     */
     public static BackgroundMusicManager getInstance() {
         if (instance == null) {
             instance = new BackgroundMusicManager();
@@ -36,6 +46,12 @@ public class BackgroundMusicManager {
         return instance;
     }
 
+    /**
+     * starts playing the background music loop.
+     * <p>
+     *     Safe to call multiple times, if already playing it continues.
+     * </p>
+     */
     public void play() {
         if (mediaPlayer != null) {
             mediaPlayer.play();

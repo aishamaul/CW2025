@@ -4,10 +4,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
 
+/**
+ * Handles automatic scaling of the game content to fit the window.
+ * <p>
+ * This class attaches listeners to the root pane dimensions and calculates a scale
+ * transform for the content pane to ensure it fills the window while maintaining
+ * aspect ratio.
+ * </p>
+ */
 public class WindowScaler {
     private static final double DESIGN_WIDTH = 600.0;
     private static final double DESIGN_HEIGHT = 700.0;
 
+    /**
+     * Binds the content pane's scale to the root pane's size.
+     * @param rootPane    The parent container that changes size.
+     * @param contentPane The game content to be scaled.
+     */
     public static void bindScaling(StackPane rootPane, Pane contentPane){
         //create a scale transform
         Scale scale = new Scale(1, 1);

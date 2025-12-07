@@ -10,6 +10,17 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the third (and final) challenge level.
+ * <p>
+ * Objective: Clear 25 lines.
+ * Mechanics:
+ * <ul>
+ * <li>Starts with the board partially filled with garbage rows.</li>
+ * <li>Introduces the {@link BombBrick} which clears a 3x3 area upon landing.</li>
+ * </ul>
+ * </p>
+ */
 public class ChallengeLevel3  implements GameMode{
 
     private static final int GOAL_LINES = 25;
@@ -28,6 +39,10 @@ public class ChallengeLevel3  implements GameMode{
                 "Survive and clear 25 lines to finish the challenge!";
     }
 
+    /**
+     * Initializes the level by setting a custom brick generator and filling the board with garbage.
+     * @param board The game board to initialize.
+     */
     @Override
     public void onStart(Board board) {
         // set the custom generator
@@ -40,6 +55,11 @@ public class ChallengeLevel3  implements GameMode{
         }
     }
 
+    /**
+     * Updates the game speed.
+     * @param totalLines  Total lines cleared.
+     * @param loopManager Loop manager.
+     */
     @Override
     public void onLinesUpdated(int totalLines, GameLoopManager loopManager) {
         // slowly increase speed every 5 lines
@@ -57,6 +77,11 @@ public class ChallengeLevel3  implements GameMode{
         return null; // final level
     }
 
+    /**
+     * Checks if the merged brick was a BombBrick and triggers an explosion if so.
+     * @param board The current game board.
+     * @return A list of points affected by the explosion.
+     */
     @Override
     public List<Point> onBrickMerged(Board board) {
         if (board.getCurrentBrick() instanceof BombBrick) {

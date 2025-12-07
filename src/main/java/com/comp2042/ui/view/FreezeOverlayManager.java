@@ -5,6 +5,13 @@ import javafx.animation.FadeTransition;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+/**
+ * Manages the visual overlays for the time freeze mechanic in level 2.
+ * <p>
+ * Controls the visibility and text of the countdown timer and the "TIME FREEZE!"
+ * notification message.
+ * </p>
+ */
 public class FreezeOverlayManager {
     private final Label timerLabel;
     private final Label overlayMessageLabel;
@@ -15,6 +22,10 @@ public class FreezeOverlayManager {
         this.overlayMessageLabel = overlayMessageLabel;
     }
 
+    /**
+     * Updates the overlay state based on the current game mode status.
+     * @param currentGameMode The active {@link GameMode} to query for status messages.
+     */
     public void updateOverlay(GameMode currentGameMode) {
         if (currentGameMode != null) {
             String status = currentGameMode.getOverlayMessage();

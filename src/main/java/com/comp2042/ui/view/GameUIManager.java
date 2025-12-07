@@ -13,6 +13,14 @@ import java.util.List;
 
 import java.awt.*;
 
+/**
+ * Manages the high-level UI components of the game view.
+ * <p>
+ * This class aggregates the {@link GameRenderer} (for the grid) and the
+ * {@link NotificationManager} (for popups), providing a unified interface for
+ * updating the visual state of the game.
+ * </p>
+ */
 public class GameUIManager {
 
     private final GameRenderer gameRenderer;
@@ -20,6 +28,17 @@ public class GameUIManager {
     private final Label scoreLabel;
     private final GridPane gamePanel;
 
+    /**
+     * Constructs a new GameUIManager.
+     * @param gameBoard         The root layout pane.
+     * @param gamePanel         The grid for the board.
+     * @param brickPanel        The grid for the active brick.
+     * @param ghostPanel        The grid for the ghost piece.
+     * @param nextBrickGrids    The grids for next piece previews.
+     * @param holdBrickGrid     The grid for the held piece.
+     * @param groupNotification The container for notifications.
+     * @param scoreLabel        The label displaying the score.
+     */
     public GameUIManager(BorderPane gameBoard, GridPane gamePanel, GridPane brickPanel, GridPane ghostPanel,
                          List<GridPane> nextBrickGrids, GridPane holdBrickGrid,
                          Group groupNotification, Label scoreLabel) {

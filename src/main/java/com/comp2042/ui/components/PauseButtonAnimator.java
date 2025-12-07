@@ -4,6 +4,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 
+/**
+ * Adds interactive visual effects to the pause button.
+ * <p>
+ * This class attaches listeners to the button to create a neon glow effect
+ * that reacts to mouse hover and click states.
+ * </p>
+ */
 public class PauseButtonAnimator {
     private final ToggleButton pauseButton;
     private DropShadow neonGlow;
@@ -12,6 +19,12 @@ public class PauseButtonAnimator {
         this.pauseButton = pauseButton;
     }
 
+    /**
+     * Initializes and starts the animation logic.
+     * <p>
+     * Sets up the initial effect and binds listeners to the button's hover and pressed properties.
+     * </p>
+     */
     public void start() {
         if (pauseButton == null) {
             return;

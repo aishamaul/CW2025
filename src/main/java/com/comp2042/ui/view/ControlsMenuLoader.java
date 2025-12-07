@@ -9,6 +9,13 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * Helper class responsible for loading and displaying the game controls overlay menu.
+ * <p>
+ * It handles loading the FXML, injecting dependencies, and managing the
+ * back-navigation logic to return to the pause menu.
+ * </p>
+ */
 public class ControlsMenuLoader {
 
     public void showGameControls(StackPane rootPane, VBox pauseMenu, ToggleButton pauseButton) {

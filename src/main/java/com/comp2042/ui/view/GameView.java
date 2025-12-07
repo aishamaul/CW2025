@@ -6,6 +6,14 @@ import javafx.beans.property.IntegerProperty;
 
 import java.util.List;
 
+/**
+ * Interface defining the contract for the Game View component.
+ * <p>
+ * This interface abstracts the UI implementation from the core game logic,
+ * allowing the logic to send updates without
+ * knowing the specific JavaFX details.
+ * </p>
+ */
 public interface GameView {
 
     void initGameView(int [][] boardMatrix, ViewData brick);

@@ -8,11 +8,22 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
+/**
+ * Provides background animations for the Challenge Mode menu screens.
+ * <p>
+ *      Includes falling bricks effects
+ *      to celebrate level and challenge completion.
+ * </p>
+ */
 public class ChallengeMenuAnimator {
 
     private final Random random = new Random();
     private final BrickStyler brickStyler = new BrickStyler();
 
+    /**
+     * Plays a "falling bricks" animation in the target pane.
+     * @param targetPane The pane to spawn animations in.
+     */
     public void playFallingBricks(Pane targetPane) {
         int count = 25;
         for (int i = 0; i < count; i++) {
@@ -20,6 +31,10 @@ public class ChallengeMenuAnimator {
         }
     }
 
+    /**
+     * Plays a "confetti explosion" animation in the target pane.
+     * @param targetPane The pane to spawn animations in.
+     */
     public void playConfetti(Pane targetPane) {
         int count = 60;
         for (int i = 0; i < count; i++) {

@@ -4,6 +4,17 @@ import com.comp2042.game.core.Board;
 import com.comp2042.game.core.GameLoopManager;
 import com.comp2042.util.audio.SoundManager;
 
+/**
+ * Implementation of the second challenge level.
+ * <p>
+ * Objective: Clear 15 lines.
+ * Mechanics:
+ * <ul>
+ * <li>Garbage rows rise from the bottom periodically.</li>
+ * <li>A "Time Freeze" event occurs at 10 lines, pausing gravity for 10 seconds.</li>
+ * </ul>
+ * </p>
+ */
 public class ChallengeLevel2 implements GameMode {
 
     private static final int GOAL_LINES = 15;
@@ -35,6 +46,10 @@ public class ChallengeLevel2 implements GameMode {
                 "At 10 lines cleared, time FREEZES for a moment — use it wisely!";
     }
 
+    /**
+     * Resets the level counters when the level starts.
+     * @param board The game board.
+     */
     @Override
     public void onStart(Board board) {
         tickCounter = 0;
@@ -43,6 +58,11 @@ public class ChallengeLevel2 implements GameMode {
         bonusTriggered = false;
     }
 
+    /**
+     * Triggers the Time Freeze event when the threshold is reached.
+     * @param totalLines  The total lines cleared.
+     * @param loopManager The loop manager (used to set base speed).
+     */
     @Override
     public void onLinesUpdated(int totalLines, GameLoopManager loopManager){
 
@@ -56,6 +76,11 @@ public class ChallengeLevel2 implements GameMode {
         }
     }
 
+    /**
+     * Manages the rising garbage mechanic and the time freeze countdown.
+     * @param board The game board.
+     * @return false if the game is frozen (gravity disabled), true otherwise.
+     */
     @Override
     public boolean onGameTick(Board board){
         // if freeze is active, count down and stop gravity
@@ -80,6 +105,10 @@ public class ChallengeLevel2 implements GameMode {
         return true; // apply gravity normally
     }
 
+    /**
+     * Provides the text for the freeze notification or the countdown timer.
+     * @return The overlay message string or null.
+     */
     @Override
     public String getOverlayMessage() {
         if (notificationTimer > 0) {

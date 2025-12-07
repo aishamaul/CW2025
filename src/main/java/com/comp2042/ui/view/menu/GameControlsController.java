@@ -18,6 +18,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the game controls help screen.
+ * <p>
+ *     Displays a list of key bindings and actions to the user. It supports being shown
+ *     either as a standalone screen or as an overlay within the game scene.
+ * </p>
+ * </p>
+ */
 public class GameControlsController implements Initializable {
 
     @FXML
@@ -28,6 +36,12 @@ public class GameControlsController implements Initializable {
 
     private Runnable onBackAction;
 
+    /**
+     * Initializes the controller class.
+     * Generates the control rows dynamically
+     * @param location The location used to resolve relative paths.
+     * @param resources The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // attach the existing animated background
@@ -50,6 +64,14 @@ public class GameControlsController implements Initializable {
         SoundManager.getInstance().attachButtonSounds(rootPane);
     }
 
+    /**
+     * Sets a custom action to be executed when "Back" is clicked.
+     * <p>
+     *     Used when the controls are shown as an overlay (to remove the overlay)
+     *     rather than navigating to a new scene.
+     *</p>
+     * @param onBackAction The runnable to execute.
+     */
     public void setOnBackAction(Runnable onBackAction) {
         this.onBackAction = onBackAction;
     }
@@ -106,6 +128,11 @@ public class GameControlsController implements Initializable {
         return panel;
     }
 
+    /**
+     * Handles the back button click.
+     * @param event The action event.
+     * @throws IOException If navigation fails (when using SceneNavigator fallback).
+     */
     @FXML
     public void onBackClicked(ActionEvent event) throws IOException {
         if (onBackAction != null) {

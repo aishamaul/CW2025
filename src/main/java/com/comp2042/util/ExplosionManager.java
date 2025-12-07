@@ -6,6 +6,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the logic for processing explosions on the game board.
+ * <p>
+ *     This utility calculates which cells on the grid are affected by an explosion
+ *     originating from a specific point and clears them.
+ * </p>
+ */
 public class ExplosionManager {
     public List<Point> processExplosion(BoardGrid grid, int centerX, int centerY, int radius){
         List<Point> explodedPoints = new ArrayList<>();

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * Utility responsible for detecting and removing full rows from the board matrix.
+ */
 public class RowClearer {
 
     public RowClearingOutput checkRemoving(final int[][] matrix) {

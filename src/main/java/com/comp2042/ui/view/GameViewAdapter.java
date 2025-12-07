@@ -3,6 +3,13 @@ package com.comp2042.ui.view;
 import com.comp2042.model.ViewData;
 import javafx.beans.property.IntegerProperty;
 
+/**
+ * Adapter class that implements {@link GameView} and delegates calls to a wrapped instance.
+ * <p>
+ * This class allows for simpler interaction from the game core by providing
+ * helper methods before passing data to the raw view.
+ * </p>
+ */
 public class GameViewAdapter {
 
     public final GameView view;

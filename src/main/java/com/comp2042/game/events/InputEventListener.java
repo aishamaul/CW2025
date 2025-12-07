@@ -4,6 +4,14 @@ import com.comp2042.game.mode.GameMode;
 import com.comp2042.model.DownData;
 import com.comp2042.model.ViewData;
 
+/**
+ * Interface for listening to and processing input events from the UI.
+ * <p>
+ * Implementations of this interface (typically the GameController) act as the bridge
+ * between the user interface and the game model, handling requests to move, rotate,
+ * or modify the game state.
+ * </p>
+ */
 public interface InputEventListener {
 
     DownData onDownEvent(MoveEvent event);

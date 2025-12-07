@@ -13,11 +13,27 @@ import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Manages complex animations for the game grid.
+ * <p>
+ * This class handles the logic for row clearing flashes, explosion particle effects,
+ * and board shake animations.
+ * </p>
+ */
 public class GridAnimator {
 
     private final BrickStyler brickStyler = new BrickStyler();
     private final Random random = new Random();
 
+    /**
+     * Animates the removal of full rows.
+     * <p>
+     * Applies flash, move, shrink, and fade transitions to the blocks in the cleared rows.
+     * </p>
+     * @param displayMatrix The matrix of Rectangles representing the board.
+     * @param clearIndices  The row indices to animate.
+     * @param onFinished    Callback to run after the animation sequence.
+     */
     public void animateClear(Rectangle[][] displayMatrix, List<Integer> clearIndices, Runnable onFinished) {
         ParallelTransition parallelTransition = new ParallelTransition();
 
@@ -58,6 +74,16 @@ public class GridAnimator {
         parallelTransition.play();
     }
 
+    /**
+     * Animates an explosion effect for specific blocks when the bomb lands.
+     * <p>
+     * Causes blocks to flash and collapse, while spawning particle debris radiating
+     * from the explosion center.
+     * </p>
+     * @param displayMatrix  The matrix of rectangles representing the board.
+     * @param explodedPoints The coordinates of the blocks to explode.
+     * @param onFinished     Callback to run after the animation sequence.
+     */
     public void animateExplosion(Rectangle[][] displayMatrix, List<Point> explodedPoints, Runnable onFinished) {
         ParallelTransition parallel = new ParallelTransition();
 

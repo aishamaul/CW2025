@@ -4,6 +4,14 @@ import com.comp2042.game.bricks.Brick;
 
 import java.awt.*;
 
+/**
+ * Represents the currently active brick on the game board.
+ * <p>
+ * This class maintains the state of the active piece, including its current position,
+ * its underlying {@link Brick} type, and its rotation handler. It facilitates movement
+ * and rotation operations relative to the board grid.
+ * </p>
+ */
 public class ActivePiece {
 
     private final BrickRotator rotator;

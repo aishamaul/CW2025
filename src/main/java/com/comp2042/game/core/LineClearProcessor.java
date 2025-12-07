@@ -5,8 +5,22 @@ import com.comp2042.model.ClearRow;
 import com.comp2042.ui.view.GameViewAdapter;
 import com.comp2042.util.audio.SoundManager;
 
+/**
+ * Encapsulates the logic for processing line clears.
+ * <p>
+ *     This involves checking the board for full rows, calculating scores,
+ *     triggering sound effects, updating the UI, and running post-clear animations.
+ * </p>
+ */
 public class LineClearProcessor {
 
+    /**
+     * Detects and processes any cleared lines on the board.
+     * @param board The game board to check.
+     * @param scoreEvaluator The engine to calculate points for the cleared lines.
+     * @param viewAdapter The adapter to update the UI.
+     * @param onComplete Callback to run after processing (and animations) is complete.
+     */
     public void processLineClears(Board board,
                                   ScoreEvaluator scoreEvaluator,
                                   GameViewAdapter viewAdapter,

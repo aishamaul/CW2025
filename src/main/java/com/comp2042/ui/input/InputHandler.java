@@ -9,6 +9,13 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.function.BiConsumer;
 
+/**
+ * The specific JavaFX {@link EventHandler} that processes raw keyboard events.
+ * <p>
+ * This class translates KeyEvents (e.g., UP, DOWN, LEFT, RIGHT) into semantic game actions
+ * and filters input based on the current game state.
+ * </p>
+ */
 public class InputHandler implements EventHandler<KeyEvent> {
     private final GameView gameView;
     private final EventDispatcher dispatcher;

@@ -17,6 +17,12 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.util.Duration;
 
+/**
+ * Animates the main title label of the application.
+ * <p>
+ * Applies a continuous rainbow gradient shift and a pulsating glow effect to the text.
+ * </p>
+ */
 public class TitleAnimator {
 
     private static final String TITLE_ANIMATOR_KEY = "TitleAnimator";

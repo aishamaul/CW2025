@@ -8,6 +8,13 @@ import javafx.scene.layout.StackPane;
 
 import java.util.function.BiConsumer;
 
+/**
+ * Configures the input handling setup for the JavaFX scene.
+ * <p>
+ * This class is responsible for creating the {@link InputHandler} and attaching it
+ * to the root pane of the scene to capture keyboard events.
+ * </p>
+ */
 public class InputController {
 
     public void bindInputs(StackPane rootPane,

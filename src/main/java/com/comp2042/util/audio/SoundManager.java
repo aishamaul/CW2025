@@ -7,6 +7,14 @@ import javafx.scene.media.AudioClip;
 
 import javafx.scene.input.MouseEvent;import java.net.URL;
 
+/**
+ * singleton manager for loading and playing short sound effects.
+ * <p>
+ *     This class pree-loads audio clips for game events (clears, movement, game over)
+ *     and provides methods to trigger them. It also includes utilities for attaching
+ *     UI sounds to buttons.
+ * </p>
+ */
 public class SoundManager {
 
     private static SoundManager instance;
@@ -42,7 +50,10 @@ public class SoundManager {
     }
 
     /**
-     * Helper to load audio clips safely
+     * Helper to load audio clips safely from resources.
+     * @param path The resource path to the audio file.
+     * @param volume The playback volume.
+     * @return The loaded{@link AudioClip}, or null if loading failed.
      */
     private AudioClip loadClip(String path, double volume) {
         URL resource = getClass().getResource(path);
@@ -54,6 +65,10 @@ public class SoundManager {
         return null;
     }
 
+    /**
+     * Retrieves the singleton instance of the sound manager.
+     * @return The single {@link SoundManager} instance.
+     */
     public static SoundManager getInstance() {
         if (instance == null) {
             instance = new SoundManager();

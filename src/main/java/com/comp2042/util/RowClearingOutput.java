@@ -2,6 +2,13 @@ package com.comp2042.util;
 
 import java.util.List;
 
+/**
+ * A data container holding the result of a row clearing operation.
+ * <p>
+ *     Encapsulates the modified board matrix, the number of lines removed,
+ *     and the indices of the removed rows for use by the game core and UI.
+ * </p>
+ */
 public class RowClearingOutput {
 
     private final int linesRemoved;

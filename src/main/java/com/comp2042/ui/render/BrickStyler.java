@@ -2,6 +2,13 @@ package com.comp2042.ui.render;
 
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Responsible for applying visual styles to brick components.
+ * <p>
+ * This class translates integer color codes from the game model into JavaFX CSS style classes,
+ * ensuring consistent coloring and effects for bricks across the UI.
+ * </p>
+ */
 public class BrickStyler {
 
 

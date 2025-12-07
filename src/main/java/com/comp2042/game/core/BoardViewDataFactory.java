@@ -7,8 +7,25 @@ import com.comp2042.model.ViewData;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A factory class responsible for creating {@link ViewData} snapshots.
+ * <p>
+ *     This class extracts the necessary state from the active piece, board grid,
+ *     generators, and hold managers to create an immutable data transfer object (DTO)
+ *     used by the UI renderer.
+ * </p>
+ */
 public class BoardViewDataFactory {
 
+    /**
+     * Creates a {@link ViewData} object representing the current state of the game components.
+     * @param activePiece The current active piece.
+     * @param grid The game board grid.
+     * @param brickGenerator The generator managing the queue of next bricks.
+     * @param holdManager The manager handling the held brick.
+     * @param isBrickActive A flag indicating if there is currently a brick falling.
+     * @return A populated {@link ViewData} instance.
+     */
     public ViewData createViewData(ActivePiece activePiece,
                                    BoardGrid grid,
                                    BrickGenerator brickGenerator,

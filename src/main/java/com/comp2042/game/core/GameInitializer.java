@@ -5,6 +5,13 @@ import com.comp2042.game.scoring.ScoreEvaluator;
 import com.comp2042.ui.view.GameView;
 import com.comp2042.ui.view.GameViewAdapter;
 
+/**
+ * A utility class responsible for starting the game core components.
+ * <p>
+ * It instantiates the Board, ScoreEvaluator, LifecycleManager, and Controller,
+ * and wires them together with GameView.
+ * </p>
+ */
 public class GameInitializer {
 
     public GameInitializer(GameView view){
