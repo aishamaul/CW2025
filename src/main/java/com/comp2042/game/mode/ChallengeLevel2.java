@@ -36,6 +36,14 @@ public class ChallengeLevel2 implements GameMode {
     }
 
     @Override
+    public void onStart(Board board) {
+        tickCounter = 0;
+        countdownTimer = 0;
+        notificationTimer = 0;
+        bonusTriggered = false;
+    }
+
+    @Override
     public void onLinesUpdated(int totalLines, GameLoopManager loopManager){
 
         loopManager.setRate(1.1);
