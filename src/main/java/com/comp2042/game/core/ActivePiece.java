@@ -17,6 +17,9 @@ public class ActivePiece {
     private final BrickRotator rotator;
     private Point position;
 
+    /**
+     * Constructs a new ActivePiece with a default position (0,0) and rotation.
+     */
     public ActivePiece(){
         this.rotator = new BrickRotator();
         this.position = new Point(0,0);
@@ -56,22 +59,44 @@ public class ActivePiece {
         return rotator.tryRotate(grid, position);
     }
 
+    /**
+     * Gets the matrix shape of the current rotation state.
+     * @return A 2D integer array of the shape.
+     */
     public int[][] getShape(){
         return rotator.getCurrentShape();
     }
 
+    /**
+     * Gets the underlying brick type.
+     * @return The {@link Brick} instance.
+     */
     public Brick getBrick(){
         return rotator.getBrick();
     }
 
+    /**
+     * Gets the current x-coordinate.
+     * @return The x position.
+     */
     public int getX(){
         return (int)position.getX();
     }
 
+    /**
+     * Gets the current y-coordinate.
+     * @return The y position.
+     */
     public int getY(){
         return (int)position.getY();
     }
 
+    /**
+     * Calculates the lowest valid y-position for the ghost piece.
+     *
+     * @param grid The board grid to check against.
+     * @return The y-coordinate where the piece would land.
+     */
     public int calculateGhostY(BoardGrid grid){
         return grid.calculateDropPosition(getShape(), getX(), getY());
     }

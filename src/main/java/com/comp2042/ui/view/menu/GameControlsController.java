@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
  *     Displays a list of key bindings and actions to the user. It supports being shown
  *     either as a standalone screen or as an overlay within the game scene.
  * </p>
- * </p>
  */
 public class GameControlsController implements Initializable {
 

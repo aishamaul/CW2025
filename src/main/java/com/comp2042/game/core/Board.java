@@ -9,6 +9,13 @@ import java.util.List;
 
 import java.awt.*;
 
+/**
+ * Defines the core behavior and state of the Tetris game board.
+ * <p>
+ *      Implementations of this interface manage the grid state, active piece movement,
+ *      collision detection, and interaction with game mechanics like holding and scoring.
+ * </p>
+ */
 public interface Board {
 
     /**

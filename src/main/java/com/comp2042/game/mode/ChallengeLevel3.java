@@ -19,7 +19,6 @@ import java.util.List;
  * <li>Starts with the board partially filled with garbage rows.</li>
  * <li>Introduces the {@link BombBrick} which clears a 3x3 area upon landing.</li>
  * </ul>
- * </p>
  */
 public class ChallengeLevel3  implements GameMode{
 

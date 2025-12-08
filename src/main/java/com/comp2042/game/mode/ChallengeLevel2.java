@@ -13,7 +13,6 @@ import com.comp2042.util.audio.SoundManager;
  * <li>Garbage rows rise from the bottom periodically.</li>
  * <li>A "Time Freeze" event occurs at 10 lines, pausing gravity for 10 seconds.</li>
  * </ul>
- * </p>
  */
 public class ChallengeLevel2 implements GameMode {
 
